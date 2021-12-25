@@ -1,16 +1,17 @@
-# wt_quiz
+# War Thunder Quiz
 
-War Thunder Quiz 2
+- Started: ***25.12.2021***
+- Status: ***Developing***
+- **Used:**
+- 
 
-## Getting Started
+# War Thunder Quiz
 
-This project is a starting point for a Flutter application.
+Started: ***25.12.2021***
 
-A few resources to get you started if this is your first Flutter project:
+Status: ***Developing***
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Used:
+* Flutter
+* Firebase Authentication
+* Firebase Cloud Firestore
