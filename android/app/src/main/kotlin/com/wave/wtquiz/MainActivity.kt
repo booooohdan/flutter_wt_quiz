@@ -1,4 +1,4 @@
-package com.wave.wtquiz.wt_quiz
+package com.wave.wtquiz
 
 import io.flutter.embedding.android.FlutterActivity
 

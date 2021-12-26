@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 class ButtonCutBottomEdges extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
-    var path = Path()
+  Path getClip(Size size) {
+    final path = Path()
     ..lineTo(0, size.height * 0.01)
     ..cubicTo(0, size.height * 0.01, size.width, size.height * 0.01, size.width, size.height * 0.01)
     ..cubicTo(size.width, size.height * 0.01, size.width, size.height * 0.81, size.width, size.height * 0.81)
