@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wt_quiz/screens/login_screen.dart';
-import 'package:wt_quiz/screens/menu_screen.dart';
 
-import 'providers/first_provider.dart';
+import '../providers/first_provider.dart';
+import '../screens/levels_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/menu_screen.dart';
 
 void main() {
   runApp(
@@ -17,9 +18,8 @@ void main() {
         title: 'WT Quiz',
         routes: {
           '/': (context) => MenuScreen(),
-          '/login':(context) => LoginScreen(),
-          // '/mainmenu': (context) => HomeTabBarScreen(),
-          // '/profile': (context) => Profile(),
+          '/login': (context) => LoginScreen(),
+          '/levels': (context) => LevelsScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),

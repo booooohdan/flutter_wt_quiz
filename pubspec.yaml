@@ -38,6 +38,7 @@ dependencies:
   intl: ^0.17.0
   google_fonts: ^2.1.1
   flutter_svg: ^1.0.0
+  shared_preferences: ^2.0.11
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +61,7 @@ flutter_icons:
   remove_alpha_ios: true
 
 flutter_native_splash:
-  color: "#5c6373"
+  color: "#052334"
   image: assets/icons/splash_icon.png
   fullscreen: true
   android: true

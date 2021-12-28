@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_bottom_edges.dart';
 
@@ -56,9 +56,9 @@ class _MenuScreenState extends State<MenuScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                       //TODO: Change mocked routes to correct
-                      _buildMenuButton('CLASSIC', '/login'),
-                      _buildMenuButton('HARDCORE', '/login'),
-                      _buildMenuButton('TRAINING', '/login'),
+                      _buildMenuButton('CLASSIC', '/levels'),
+                      _buildMenuButton('HARDCORE', '/levels'),
+                      _buildMenuButton('TRAINING', '/levels'),
                       GestureDetector(
                         //TODO: Change mocked routes to correct
                         onTap: () => Navigator.pushNamed(context, '/login'),
