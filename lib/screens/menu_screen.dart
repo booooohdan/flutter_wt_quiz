@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utilities/constants.dart';
-import '../utilities/svg_paths/button_cut_bottom_edges.dart';
+import '../widgets/button_menu_wide.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -56,9 +56,24 @@ class _MenuScreenState extends State<MenuScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                       //TODO: Change mocked routes to correct
-                      _buildMenuButton('CLASSIC', '/levels'),
-                      _buildMenuButton('HARDCORE', '/levels'),
-                      _buildMenuButton('TRAINING', '/levels'),
+                      ButtonMenuWide(
+                        context: context,
+                        title: 'CLASSIC',
+                        details: '',
+                        route: '/levels',
+                      ),
+                      ButtonMenuWide(
+                        context: context,
+                        title: 'HARDCORE',
+                        details: '',
+                        route: '/levels',
+                      ),
+                      ButtonMenuWide(
+                        context: context,
+                        title: 'TRAINING',
+                        details: '',
+                        route: '/levels',
+                      ),
                       GestureDetector(
                         //TODO: Change mocked routes to correct
                         onTap: () => Navigator.pushNamed(context, '/login'),
@@ -90,63 +105,6 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  Padding _buildMenuButton(String title, String route) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
-      child: ClipPath(
-        clipper: ButtonCutBottomEdges(),
-        child: Padding(
-          padding: const EdgeInsets.all(1),
-          child: Container(
-            height: 60,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                        'assets/buttons/wide_button_cut_bottom_edges.png'),
-                    fit: BoxFit.fill)),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () => Navigator.pushNamed(context, route),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: GoogleFonts.oxygen(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                      //   child: Text(
-                      //     '4/100',
-                      //     style: GoogleFonts.oxygen(
-                      //       fontSize: 16,
-                      //       color: greyTextColor,
-                      //     ),
-                      //   ),
-                      // ),
-                      SvgPicture.asset(
-                        'assets/icons/right_arrow.svg',
-                        height: 16,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class ButtonCutBottomEdges extends CustomClipper<Path> {
+class WideButtonCutBottomEdges extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path()

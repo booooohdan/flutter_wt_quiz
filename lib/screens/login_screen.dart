@@ -10,11 +10,24 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Center(child: Text('Login screen')),
-        //TODO: Implement login screen
-      ),
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/backgrounds/main_menu.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            child: Placeholder(),
+            //TODO: Implement login screen
+          ),
+        ),
+      ],
     );
   }
 }
