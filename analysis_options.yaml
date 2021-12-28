@@ -32,7 +32,7 @@ linter:
     - empty_catches
     - empty_constructor_bodies
     - empty_statements
-    - flutter_style_todos
+#    - flutter_style_todos
     - hash_and_equals
     - implementation_imports
     - iterable_contains_unrelated_type
@@ -77,7 +77,7 @@ linter:
     - recursive_getters
     - slash_for_doc_comments
     - sort_constructors_first
-    - sort_pub_dependencies
+#    - sort_pub_dependencies
     - sort_unnamed_constructors_first
     - test_types_in_equals
     - throw_in_finally
