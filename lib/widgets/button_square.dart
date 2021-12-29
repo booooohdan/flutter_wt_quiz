@@ -27,21 +27,22 @@ class ButtonSquare extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(1),
         child: Container(
-          height: 70,
+          height: 60,
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(backgroundImage), fit: BoxFit.fill)),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => Navigator.pushNamed(context, 'route'),
+              //TODO: Change onTap to correct
+              onTap: () {},
               child: Stack(children: [
                 Positioned(
                   top: 5,
                   right: 10,
                   child: Text(
                     count,
-                    style: GoogleFonts.oxygen(
+                    style: GoogleFonts.chakraPetch(
                         fontSize: 14,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
@@ -53,7 +54,7 @@ class ButtonSquare extends StatelessWidget {
                     children: [
                       SvgPicture.asset(
                         leadingIcon,
-                        height: 16,
+                        height: 20,
                       ),
                       Text(
                         text,

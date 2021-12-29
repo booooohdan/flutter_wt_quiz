@@ -9,15 +9,13 @@ class ButtonGameplayWide extends StatelessWidget {
   const ButtonGameplayWide({
     Key? key,
     required this.context,
+    required this.icon,
     required this.title,
-    required this.details,
-    required this.route,
   }) : super(key: key);
 
   final BuildContext context;
+  final String icon;
   final String title;
-  final String details;
-  final String route;
 
   @override
   Widget build(BuildContext context) {
@@ -37,37 +35,32 @@ class ButtonGameplayWide extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () => Navigator.pushNamed(context, route),
-                child: Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: GoogleFonts.oxygen(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                        child: Text(
-                          details,
-                          style: GoogleFonts.oxygen(
-                            fontSize: 16,
-                            color: greyTextColor,
-                          ),
-                        ),
-                      ),
-                      SvgPicture.asset(
-                        'assets/icons/right_arrow.svg',
-                        height: 16,
-                      ),
-                    ],
-                  ),
+                //TODO: Change onTap to correct
+              onTap: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    icon.isNotEmpty
+                        ? Row(
+                            children: [
+                              SvgPicture.asset(
+                                icon,
+                                height: 24,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              )
+                            ],
+                          )
+                        : Container(),
+                    Text(
+                      title,
+                      style: GoogleFonts.oxygen(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
             ),

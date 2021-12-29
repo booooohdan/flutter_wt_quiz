@@ -34,6 +34,7 @@ class ListItemLevel extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
+                //TODO: Change onTap to correct
                 onTap: () => Navigator.pushNamed(context, '/gameplay'),
                 child: Padding(
                   padding:

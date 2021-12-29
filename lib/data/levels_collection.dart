@@ -49,5 +49,37 @@ class LevelsCollection {
       number: 5,
       questionCount: 10,
     ),
+    Level(
+      number: 2,
+      questionCount: 5,
+    ),
+    Level(
+      number: 3,
+      questionCount: 5,
+    ),
+    Level(
+      number: 4,
+      questionCount: 10,
+    ),
+    Level(
+      number: 5,
+      questionCount: 10,
+    ),
+    Level(
+      number: 2,
+      questionCount: 5,
+    ),
+    Level(
+      number: 3,
+      questionCount: 5,
+    ),
+    Level(
+      number: 4,
+      questionCount: 10,
+    ),
+    Level(
+      number: 5,
+      questionCount: 10,
+    ),
   ];
 }

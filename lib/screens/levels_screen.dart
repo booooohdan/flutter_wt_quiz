@@ -34,6 +34,7 @@ class _LevelsScreenState extends State<LevelsScreen> {
                 AppBarRegular(context: context),
                 Expanded(
                   child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
                       itemCount: levels.length,
                       itemBuilder: (context, index) {
                         return ListItemLevel(

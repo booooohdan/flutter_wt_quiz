@@ -62,14 +62,10 @@ class _GameplayScreenState extends State<GameplayScreen> {
                   ),
                 ),
                 Expanded(
-                  flex: 6,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                    child: Image(
-                      image: AssetImage('assets/planes/a2d.png'),
-                      fit: BoxFit.contain,
-                    ),
+                  flex: 5,
+                  child: Image(
+                    image: AssetImage('assets/planes/a2d.png'),
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
                 Expanded(
@@ -128,28 +124,28 @@ class _GameplayScreenState extends State<GameplayScreen> {
                     children: [
                       ButtonGameplayWide(
                         context: context,
-                        title: 'CLASSIC',
-                        details: '',
-                        route: '/levels',
+                        icon: '',
+                        title: 'Fw.190D-9',
                       ),
+                      SizedBox(height: 10,),
                       ButtonGameplayWide(
                         context: context,
-                        title: 'CLASSIC',
-                        details: '',
-                        route: '/levels',
+                        icon: '',
+                        title: 'J29D',
                       ),
+                      SizedBox(height: 10,),
                       ButtonGameplayWide(
                         context: context,
-                        title: 'CLASSIC',
-                        details: '',
-                        route: '/levels',
+                        icon: '',
+                        title: 'Yak-3P',
                       ),
+                      SizedBox(height: 10,),
                       ButtonGameplayWide(
                         context: context,
-                        title: 'CLASSIC',
-                        details: '',
-                        route: '/levels',
+                        icon: '',
+                        title: 'Spitfire Mk.IX',
                       ),
+
                     ],
                   ),
                 ),
