@@ -2,7 +2,7 @@ import '../models/level_status.dart';
 import '../models/period_of_time.dart';
 
 class Level {
-  Level(
+    Level(
       {this.number,
       this.questionCount,
       this.answeredCount,
