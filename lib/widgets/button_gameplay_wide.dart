@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
@@ -36,7 +35,7 @@ class ButtonGameplayWide extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 //TODO: Change onTap to correct
-              onTap: () {},
+              onTap: () => Navigator.pushReplacementNamed(context, '/finish'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -55,10 +54,7 @@ class ButtonGameplayWide extends StatelessWidget {
                         : Container(),
                     Text(
                       title,
-                      style: GoogleFonts.oxygen(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                      style: oxygen16white,
                     ),
                   ],
                 ),

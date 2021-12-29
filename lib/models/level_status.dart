@@ -1,6 +1,6 @@
 enum LevelStatus{
   locked,
   unlocked,
-  finished,
+  passed,
   starred,
 }

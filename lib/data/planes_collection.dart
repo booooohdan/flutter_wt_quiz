@@ -1,7 +1,6 @@
-import 'package:wt_quiz/models/period_of_time.dart';
-import 'package:wt_quiz/models/vehicle_type.dart';
-
+import '../models/period_of_time.dart';
 import '../models/vehicle.dart';
+import '../models/vehicle_type.dart';
 
 class PlanesCollection {
   List<Vehicle> planes = [

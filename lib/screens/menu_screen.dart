@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../utilities/constants.dart';
 import '../widgets/button_menu_wide.dart';
@@ -36,10 +35,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Center(
                     child: Text(
                       'WT QUIZ',
-                      style: GoogleFonts.chakraPetch(
-                          fontSize: 48,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                      style: chakra48white,
                     ),
                   ),
                 ),
@@ -50,10 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     children: [
                       Text(
                         'Game modes:',
-                        style: GoogleFonts.chakraPetch(
-                            fontSize: 16,
-                            color: greyTextColor,
-                            fontWeight: FontWeight.bold),
+                        style: chakra16grey,
                       ),
                       //TODO: Change mocked routes to correct
                       ButtonMenuWide(
@@ -82,10 +75,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           children: [
                             Text(
                               'FEEDBACK',
-                              style: GoogleFonts.oxygen(
-                                  fontSize: 16,
-                                  color: greyTextColor,
-                                  fontWeight: FontWeight.bold),
+                              style: oxygen16grey,
                             ),
                             SizedBox(
                               width: 20,

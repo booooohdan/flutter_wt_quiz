@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_right_bottom_edge.dart';
 
 class ListItemLevel extends StatelessWidget {
@@ -44,18 +44,12 @@ class ListItemLevel extends StatelessWidget {
                       Expanded(
                         child: Text(
                           'Level $number',
-                          style: GoogleFonts.oxygen(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                          style: oxygen16white
                         ),
                       ),
                       Text(
                         '$questionCount/10',
-                        style: GoogleFonts.oxygen(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                        style: oxygen16white,
                       ),
                     ],
                   ),

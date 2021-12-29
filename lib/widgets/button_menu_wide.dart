@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
@@ -40,26 +39,21 @@ class ButtonMenuWide extends StatelessWidget {
                 onTap: () => Navigator.pushNamed(context, route),
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
                   child: Row(
                     children: [
                       Expanded(
                         child: Text(
                           title,
-                          style: GoogleFonts.oxygen(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                          style: oxygen16white,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 0),
                         child: Text(
                           details,
-                          style: GoogleFonts.oxygen(
-                            fontSize: 16,
-                            color: greyTextColor,
-                          ),
+                          style: oxygen16grey,
                         ),
                       ),
                       SvgPicture.asset(
