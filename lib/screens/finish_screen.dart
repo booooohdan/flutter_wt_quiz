@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wt_quiz/utilities/constants.dart';
+
 import '../widgets/appbar_regular.dart';
 
 class FinishScreen extends StatefulWidget {
@@ -20,7 +22,8 @@ class _FinishScreenState extends State<FinishScreen> {
     }
   }
 
-  @override void initState() {
+  @override
+  void initState() {
     SetImage(true);
     super.initState();
   }
@@ -50,17 +53,58 @@ class _FinishScreenState extends State<FinishScreen> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Column(
-                    children: [
-                      Row(children: [
-                        Text('Answers accuracy: ')
-                      ],)
-                    ],
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 200,
+                    child: Table(
+                      columnWidths: {
+                        0: FlexColumnWidth(2),
+                        1: FlexColumnWidth(1),
+                      },
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.bottom,
+                      children: [
+                        TableRow(children: [
+                          Text(
+                            'Answers Accuracy: ',
+                            style: oxygen10white,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '908%: ',
+                              style: chakra16white,
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Text(
+                            'Average Answer Time: ',
+                            style: oxygen10white,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '21s: ',
+                              style: chakra16white,
+                            ),
+                          )
+                        ]),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   flex: 3,
-                  child: Placeholder(),
+                  child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Level 1',
+                        style: chakra16white,
+                      ),
+                      Image.asset('assets/images/success.png')
+                    ],
+                  ),
                 ),
                 Expanded(
                   flex: 1,
