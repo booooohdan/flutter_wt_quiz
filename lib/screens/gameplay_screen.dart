@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
@@ -42,10 +41,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                     children: [
                       Text(
                         '59 s',
-                        style: GoogleFonts.oxygen(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                        style: oxygen16white,
                       ),
                       SizedBox(
                         height: 10,

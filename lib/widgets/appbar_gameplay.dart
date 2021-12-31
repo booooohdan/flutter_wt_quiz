@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../utilities/constants.dart';
 
 class AppBarGameplay extends StatelessWidget {
   const AppBarGameplay({
@@ -27,10 +28,7 @@ class AppBarGameplay extends StatelessWidget {
                     children: [
                       Text(
                         '22',
-                        style: GoogleFonts.chakraPetch(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                        style: chakra16white,
                       ),
                       SizedBox(
                         width: 10,
@@ -68,10 +66,7 @@ class AppBarGameplay extends StatelessWidget {
                   child: Text(
                     '1/100',
                     textAlign: TextAlign.end,
-                    style: GoogleFonts.chakraPetch(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                    style: chakra16white,
                   ),
                 ),
               ),

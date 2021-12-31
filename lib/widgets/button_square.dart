@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../utilities/constants.dart';
 
 class ButtonSquare extends StatelessWidget {
   const ButtonSquare({
@@ -42,10 +43,7 @@ class ButtonSquare extends StatelessWidget {
                   right: 10,
                   child: Text(
                     count,
-                    style: GoogleFonts.chakraPetch(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                    style: chakra14white,
                   ),
                 ),
                 Center(
@@ -58,10 +56,7 @@ class ButtonSquare extends StatelessWidget {
                       ),
                       Text(
                         text,
-                        style: GoogleFonts.oxygen(
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                        style: oxygen10white,
                       ),
                     ],
                   ),

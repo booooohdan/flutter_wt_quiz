@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../data/levels_collection.dart';
-import '../widgets/list_item_level.dart';
 import '../widgets/appbar_regular.dart';
+import '../widgets/list_item_level.dart';
 
 class LevelsScreen extends StatefulWidget {
   const LevelsScreen({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _LevelsScreenState extends State<LevelsScreen> {
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
-                AppBarRegular(context: context),
+                AppBarRegular(context: context, isBackArrowShown: true, centerLabel: 'Classic', rightLabel: '1/100'),
                 Expanded(
                   child: ListView.builder(
                       physics: BouncingScrollPhysics(),

@@ -1,6 +1,5 @@
-import 'package:wt_quiz/models/vehicle_type.dart';
-
 import '../models/period_of_time.dart';
+import '../models/vehicle_type.dart';
 
 class Vehicle {
   Vehicle({

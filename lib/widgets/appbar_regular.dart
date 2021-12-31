@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../utilities/constants.dart';
 
 class AppBarRegular extends StatelessWidget {
-  const AppBarRegular({
+  AppBarRegular({
     Key? key,
     required this.context,
+    required this.isBackArrowShown,
+    required this.centerLabel,
+    required this.rightLabel,
   }) : super(key: key);
 
   final BuildContext context;
+  final bool isBackArrowShown;
+  final String centerLabel;
+  final String rightLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +30,21 @@ class AppBarRegular extends StatelessWidget {
                 onTap: () => Navigator.of(context).pop(),
                 child: SizedBox(
                   width: 80,
-                  child: SvgPicture.asset(
-                    'assets/icons/left_arrow.svg',
-                    height: 20,
-                  ),
+                  child: isBackArrowShown
+                      ? SvgPicture.asset('assets/icons/left_arrow.svg',
+                          height: 20)
+                      : Container(),
                 ),
               ),
               Text(
-                'CLASSIC',
-                style: GoogleFonts.chakraPetch(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                centerLabel,
+                style: chakra16white,
               ),
               SizedBox(
                 width: 80,
                 child: Text(
-                  '1/100',
-                  style: GoogleFonts.chakraPetch(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  rightLabel,
+                  style: chakra16white,
                 ),
               ),
             ],
