@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wt_quiz/utilities/constants.dart';
+import 'package:wt_quiz/utilities/svg_paths/wide_button_cut_bottom_edges.dart';
+import 'package:wt_quiz/widgets/button_gameplay_wide.dart';
 
+import '../utilities/constants.dart';
+import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
+import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../widgets/appbar_regular.dart';
+import '../widgets/button_square.dart';
 
 class FinishScreen extends StatefulWidget {
   const FinishScreen({Key? key}) : super(key: key);
@@ -10,15 +15,19 @@ class FinishScreen extends StatefulWidget {
   _FinishScreenState createState() => _FinishScreenState();
 }
 
-class _FinishScreenState extends State<FinishScreen> {
+class _FinishScreenState extends State<FinishScreen>
+    with SingleTickerProviderStateMixin {
   bool isSuccess = true;
   String SuccessOrFailedImage = '';
+  String SuccessOrFailedGlowImage = '';
 
   void SetImage(bool isSuccess) {
     if (isSuccess) {
       SuccessOrFailedImage = 'assets/backgrounds/finish_success.png';
+      SuccessOrFailedGlowImage = 'assets/images/glow_success.png';
     } else {
       SuccessOrFailedImage = 'assets/backgrounds/finish_failed.png';
+      SuccessOrFailedGlowImage = 'assets/images/glow_failed.png';
     }
   }
 
@@ -38,6 +47,12 @@ class _FinishScreenState extends State<FinishScreen> {
               image: AssetImage(SuccessOrFailedImage),
               fit: BoxFit.cover,
             ),
+          ),
+        ),
+        Center(
+          child: Image.asset(
+            SuccessOrFailedGlowImage,
+            fit: BoxFit.cover,
           ),
         ),
         SafeArea(
@@ -95,21 +110,92 @@ class _FinishScreenState extends State<FinishScreen> {
                   ),
                 ),
                 Expanded(
-                  flex: 3,
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Level 1',
                         style: chakra16white,
                       ),
-                      Image.asset('assets/images/success.png')
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20, bottom: 30, left: 20, right: 20),
+                        child: Image.asset('assets/images/success.png'),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                            '99',
+                            style: chakra48white,
+                          ),
+                          Text(
+                            '/100',
+                            style: chakra16white,
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
                 Expanded(
-                  flex: 1,
-                  child: Placeholder(),
-                ),
+                    flex: 2,
+                    child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Visibility(visible: true, maintainState: true,
+                          maintainAnimation: true,
+                          maintainSize: true,
+                          child: ButtonGameplayWide(
+                            context: context,
+                            icon: '',
+                            title: 'DOUBLE POINTS',
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: ButtonSquare(
+                                    context: context,
+                                    clipper: ButtonCutLeftBottomEdge(),
+                                    backgroundImage:
+                                        'assets/buttons/button_cut_left_bottom_edge.png',
+                                    leadingIcon: 'assets/icons/home.svg',
+                                    text: 'HOME',
+                                    count: ''),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Container(),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: ButtonSquare(
+                                    context: context,
+                                    clipper: ButtonCutRightBottomEdge(),
+                                    backgroundImage:
+                                        'assets/buttons/button_cut_right_bottom_edge.png',
+                                    leadingIcon: 'assets/icons/right_arrow.svg',
+                                    text: 'NEXT LEVEL',
+                                    count: ''),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
               ],
             ),
           ),
