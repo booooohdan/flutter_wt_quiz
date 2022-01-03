@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
 
 class ButtonGameplayWide extends StatelessWidget {
-  const ButtonGameplayWide({
+  ButtonGameplayWide({
     Key? key,
     required this.context,
     required this.icon,
     required this.title,
+    this.backgroundColor = Colors.transparent,
+    this.textColor = Colors.white,
   }) : super(key: key);
 
   final BuildContext context;
   final String icon;
   final String title;
+  final Color backgroundColor;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +36,10 @@ class ButtonGameplayWide extends StatelessWidget {
                         'assets/buttons/wide_button_cut_bottom_edges.png'),
                     fit: BoxFit.fill)),
             child: Material(
-              color: Colors.transparent,
+              color: backgroundColor,
               child: InkWell(
                 //TODO: Change onTap to correct
-              onTap: () => Navigator.pushReplacementNamed(context, '/finish'),
+                onTap: () => Navigator.pushReplacementNamed(context, '/finish'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -54,7 +58,8 @@ class ButtonGameplayWide extends StatelessWidget {
                         : Container(),
                     Text(
                       title,
-                      style: oxygen16white,
+                      style: GoogleFonts.oxygen(
+                          fontSize: 16, color: textColor, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

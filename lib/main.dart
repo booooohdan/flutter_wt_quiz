@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/first_provider.dart';
+import '../screens/about_screen.dart';
 import '../screens/finish_screen.dart';
 import '../screens/gameplay_screen.dart';
 import '../screens/levels_screen.dart';
@@ -30,6 +31,7 @@ void main() {
           '/levels': (context) => LevelsScreen(),
           '/gameplay': (context) => GameplayScreen(),
           '/finish': (context) => FinishScreen(),
+          '/about': (context) => AboutScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),

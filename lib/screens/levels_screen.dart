@@ -31,7 +31,13 @@ class _LevelsScreenState extends State<LevelsScreen> {
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
-                AppBarRegular(context: context, isBackArrowShown: true, centerLabel: 'Classic', rightLabel: '1/100'),
+                AppBarRegular(
+                  context: context,
+                  isBackArrowShown: true,
+                  centerLabel: 'Classic',
+                  rightLabel: '1/100',
+                  icon: '',
+                ),
                 Expanded(
                   child: ListView.builder(
                       physics: BouncingScrollPhysics(),

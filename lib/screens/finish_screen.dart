@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:wt_quiz/utilities/svg_paths/wide_button_cut_bottom_edges.dart';
-import 'package:wt_quiz/widgets/button_gameplay_wide.dart';
 
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../widgets/appbar_regular.dart';
+import '../widgets/button_gameplay_wide.dart';
 import '../widgets/button_square.dart';
 
 class FinishScreen extends StatefulWidget {
@@ -65,6 +64,7 @@ class _FinishScreenState extends State<FinishScreen>
                   isBackArrowShown: false,
                   centerLabel: 'Finish',
                   rightLabel: '',
+                  icon: '',
                 ),
                 Expanded(
                   flex: 1,
@@ -145,7 +145,7 @@ class _FinishScreenState extends State<FinishScreen>
                     flex: 2,
                     child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Visibility(visible: true, maintainState: true,
+                        Visibility(visible: false, maintainState: true,
                           maintainAnimation: true,
                           maintainSize: true,
                           child: ButtonGameplayWide(
