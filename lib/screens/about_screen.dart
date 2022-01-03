@@ -55,7 +55,6 @@ class _AboutScreenState extends State<AboutScreen> {
                             image: AssetImage('assets/icons/icon.png'),
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          color: Colors.redAccent,
                         ),
                       ),
                       SizedBox(

@@ -1,6 +1,3 @@
-import '../models/level_status.dart';
-import '../models/period_of_time.dart';
-
 class Level {
     Level(
       {this.number,
@@ -19,6 +16,6 @@ class Level {
   bool? isPlane;
   bool? isTank;
   bool? isShip;
-  LevelStatus? levelStatus;
-  PeriodOfTime? periodOfTime;
+  String? levelStatus;
+  String? periodOfTime;
 }

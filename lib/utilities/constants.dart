@@ -18,6 +18,9 @@ final chakra16white = GoogleFonts.chakraPetch(
 final chakra16grey = GoogleFonts.chakraPetch(
     fontSize: 16, color: Color(0xFF9DA5B6), fontWeight: FontWeight.bold);
 
+final chakra20white = GoogleFonts.chakraPetch(
+    fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold);
+
 final chakra48white = GoogleFonts.chakraPetch(
     fontSize: 48, color: Colors.white, fontWeight: FontWeight.bold);
 
@@ -29,5 +32,28 @@ final oxygen16white = GoogleFonts.oxygen(
 
 final oxygen16grey = GoogleFonts.oxygen(
     fontSize: 16, color: Color(0xFF9DA5B6), fontWeight: FontWeight.bold);
+
+//#endregion
+
+//#region Static lists
+
+final levelsCollection = {
+  'locked': 'level_locked',
+  'unlocked': 'level_unlocked',
+  'passed': 'level_passed',
+  'starred': 'level_starred',
+};
+
+final periodsCollection = {
+  'pre_ww2': 'Pre-WWII',
+  'ww_2': 'WWII',
+  'cold_war': 'Cold War',
+};
+
+final vehiclesType = {
+  'plane': 'Plane',
+  'tank': 'Tank',
+  'ship': 'Ship',
+};
 
 //#endregion

@@ -61,7 +61,7 @@ flutter_icons:
   remove_alpha_ios: true
 
 flutter_native_splash:
-  color: "#052334"
+  color: "#2d2d2d"
   image: assets/icons/splash_icon.png
   fullscreen: true
   android: true

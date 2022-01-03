@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_right_bottom_edge.dart';
@@ -9,11 +10,23 @@ class ListItemLevel extends StatelessWidget {
     required this.context,
     required this.number,
     required this.questionCount,
+    required this.answeredCount,
+    this.isPlane = false,
+    this.isTank = false,
+    this.isShip = false,
+    required this.levelStatus,
+    required this.periodOfTime,
   }) : super(key: key);
 
   final BuildContext context;
   final int? number;
   final int? questionCount;
+  final int? answeredCount;
+  final bool? isPlane;
+  final bool? isTank;
+  final bool? isShip;
+  final String? levelStatus;
+  final String? periodOfTime;
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +51,63 @@ class ListItemLevel extends StatelessWidget {
                 onTap: () => Navigator.pushNamed(context, '/gameplay'),
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: Row(
                     children: [
-                      Expanded(
-                        child: Text(
-                          'Level $number',
-                          style: oxygen16white
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10, right: 20),
+                        child: Image.asset(
+                            'assets/images/$levelStatus.png'),
                       ),
-                      Text(
-                        '$questionCount/10',
-                        style: oxygen16white,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Level $number',
+                            style: chakra16white,
+                          ),
+                          Row(
+                            children: [
+                              isPlane!
+                                  ? SvgPicture.asset(
+                                      'assets/icons/plane.svg',
+                                      width: 15,
+                                    )
+                                  : Container(),
+                              SizedBox(width: 5),
+                              isTank!
+                                  ? SvgPicture.asset(
+                                      'assets/icons/tank.svg',
+                                      width: 25,
+                                    )
+                                  : Container(),
+                              SizedBox(width: 5),
+                              isShip!
+                                  ? SvgPicture.asset(
+                                      'assets/icons/ship.svg',
+                                      width: 25,
+                                    )
+                                  : Container(),
+                            ],
+                          )
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          RichText(
+                              text: TextSpan(style: chakra20white, children: [
+                            TextSpan(text: '$answeredCount'),
+                            TextSpan(text: '/$questionCount', style: chakra14white),
+                          ])),
+                          Text(
+                            periodOfTime!,
+                            style: oxygen10white,
+                          ),
+                        ],
                       ),
                     ],
                   ),

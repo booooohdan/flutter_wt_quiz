@@ -1,85 +1,102 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/level.dart';
-import '../models/level_status.dart';
-import '../models/period_of_time.dart';
+import '../utilities/constants.dart';
 
 class LevelsCollection {
-  LevelsCollection() {
-    AddLevel();
-  }
+  Level? level;
+  List<Level> classicLevels = [];
 
-  Level? le;
-  List<Level> classicoLevels = [];
-
-  void AddLevel() async{
+  Future<List<Level>> AddLevel() async {
     final prefs = await SharedPreferences.getInstance();
 
-    le = Level()
+    level = Level()
+      ..number = 1
+      ..questionCount = 5
+      ..answeredCount = prefs.getInt('answers_level1_key') ?? 0
+      ..isPlane = true
+      ..isTank = true
       ..isShip = false
-      ..questionCount = 1
-    ..answeredCount = prefs.getInt('key') ?? 0;
-    classicoLevels.add(le!);
-  }
+      ..levelStatus = levelsCollection['locked']
+      ..periodOfTime = periodsCollection['cold_war'];
+    classicLevels.add(level!);
 
-  List<Level> classicLevels = [
-    Level(
-      number: 1,
-      questionCount: 5,
-      answeredCount: 0,
-      isPlane: false,
-      isTank: false,
-      isShip: false,
-      levelStatus: LevelStatus.unlocked,
-      periodOfTime: PeriodOfTime.preWWII,
-    ),
-    Level(
-      number: 2,
-      questionCount: 5,
-    ),
-    Level(
-      number: 3,
-      questionCount: 5,
-    ),
-    Level(
-      number: 4,
-      questionCount: 10,
-    ),
-    Level(
-      number: 5,
-      questionCount: 10,
-    ),
-    Level(
-      number: 2,
-      questionCount: 5,
-    ),
-    Level(
-      number: 3,
-      questionCount: 5,
-    ),
-    Level(
-      number: 4,
-      questionCount: 10,
-    ),
-    Level(
-      number: 5,
-      questionCount: 10,
-    ),
-    Level(
-      number: 2,
-      questionCount: 5,
-    ),
-    Level(
-      number: 3,
-      questionCount: 5,
-    ),
-    Level(
-      number: 4,
-      questionCount: 10,
-    ),
-    Level(
-      number: 5,
-      questionCount: 10,
-    ),
-  ];
+    level = Level()
+      ..number = 2
+      ..questionCount = 10
+      ..answeredCount = prefs.getInt('answers_level2_key') ?? 0
+      ..isPlane = false
+      ..isTank = true
+      ..isShip = false
+      ..levelStatus = levelsCollection['unlocked']
+      ..periodOfTime = periodsCollection['pre_ww2'];
+    classicLevels.add(level!);
+
+    level = Level()
+      ..number = 3
+      ..questionCount = 15
+      ..answeredCount = prefs.getInt('answers_level3_key') ?? 0
+      ..isPlane = true
+      ..isTank = true
+      ..isShip = true
+      ..levelStatus = levelsCollection['passed']
+      ..periodOfTime = periodsCollection['pre_ww2'];
+    classicLevels.add(level!);
+
+    level = Level()
+      ..number = 4
+      ..questionCount = 20
+      ..answeredCount = prefs.getInt('answers_level4_key') ?? 0
+      ..isPlane = true
+      ..isTank = false
+      ..isShip = true
+      ..levelStatus = levelsCollection['starred']
+      ..periodOfTime = periodsCollection['ww_2'];
+    classicLevels.add(level!);
+
+    level = Level()
+      ..number = 5
+      ..questionCount = 5
+      ..answeredCount = prefs.getInt('answers_level5_key') ?? 0
+      ..isPlane = true
+      ..isTank = true
+      ..isShip = false
+      ..levelStatus = levelsCollection['unlocked']
+      ..periodOfTime = periodsCollection['cold_war'];
+    classicLevels.add(level!);
+
+    level = Level()
+      ..number = 6
+      ..questionCount = 10
+      ..answeredCount = prefs.getInt('answers_level6_key') ?? 0
+      ..isPlane = false
+      ..isTank = true
+      ..isShip = false
+      ..levelStatus = levelsCollection['unlocked']
+      ..periodOfTime = periodsCollection['pre_ww2'];
+    classicLevels.add(level!);
+
+    level = Level()
+      ..number = 7
+      ..questionCount = 15
+      ..answeredCount = prefs.getInt('answers_level7_key') ?? 0
+      ..isPlane = true
+      ..isTank = true
+      ..isShip = true
+      ..levelStatus = levelsCollection['locked']
+      ..periodOfTime = periodsCollection['pre_ww2'];
+    classicLevels.add(level!);
+
+    level = Level()
+      ..number = 8
+      ..questionCount = 20
+      ..answeredCount = prefs.getInt('answers_level8_key') ?? 0
+      ..isPlane = true
+      ..isTank = false
+      ..isShip = true
+      ..levelStatus = levelsCollection['locked']
+      ..periodOfTime = periodsCollection['ww_2'];
+    classicLevels.add(level!);
+
+    return classicLevels;
+  }
 }
