@@ -122,24 +122,28 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         context: context,
                         icon: '',
                         title: 'Fw.190D-9',
+                        onTap: (){},
                       ),
                       SizedBox(height: 10,),
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
                         title: 'J29D',
+                        onTap: (){},
                       ),
                       SizedBox(height: 10,),
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
                         title: 'Yak-3P',
+                        onTap: (){},
                       ),
                       SizedBox(height: 10,),
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
                         title: 'Spitfire Mk.IX',
+                        onTap: (){},
                       ),
 
                     ],

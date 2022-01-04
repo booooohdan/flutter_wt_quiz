@@ -152,6 +152,7 @@ class _FinishScreenState extends State<FinishScreen>
                             context: context,
                             icon: '',
                             title: 'DOUBLE POINTS',
+                            onTap: (){},
                           ),
                         ),
                         Padding(

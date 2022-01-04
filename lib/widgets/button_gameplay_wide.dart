@@ -10,6 +10,7 @@ class ButtonGameplayWide extends StatelessWidget {
     required this.context,
     required this.icon,
     required this.title,
+    required this.onTap,
     this.backgroundColor = Colors.transparent,
     this.textColor = Colors.white,
   }) : super(key: key);
@@ -17,6 +18,7 @@ class ButtonGameplayWide extends StatelessWidget {
   final BuildContext context;
   final String icon;
   final String title;
+  final Function()? onTap;
   final Color backgroundColor;
   final Color textColor;
 
@@ -38,8 +40,7 @@ class ButtonGameplayWide extends StatelessWidget {
             child: Material(
               color: backgroundColor,
               child: InkWell(
-                //TODO: Change onTap to correct
-                onTap: () => Navigator.pushReplacementNamed(context, '/finish'),
+                onTap: onTap,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
