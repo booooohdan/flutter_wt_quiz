@@ -45,7 +45,7 @@ class ButtonMenuWide extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title,
-                          style: oxygen16white,
+                          style: oxygen18white,
                         ),
                       ),
                       Padding(
@@ -53,7 +53,7 @@ class ButtonMenuWide extends StatelessWidget {
                             horizontal: 20, vertical: 0),
                         child: Text(
                           details,
-                          style: oxygen16grey,
+                          style: oxygen18grey,
                         ),
                       ),
                       SvgPicture.asset(

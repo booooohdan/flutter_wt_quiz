@@ -63,14 +63,13 @@ class _FinishScreenState extends State<FinishScreen>
                   context: context,
                   isBackArrowShown: false,
                   centerLabel: 'Finish',
-                  rightLabel: '',
                   icon: '',
                 ),
                 Expanded(
                   flex: 1,
                   child: Container(
                     alignment: Alignment.center,
-                    width: 200,
+                    width: 250,
                     child: Table(
                       columnWidths: {
                         0: FlexColumnWidth(2),
@@ -82,26 +81,26 @@ class _FinishScreenState extends State<FinishScreen>
                         TableRow(children: [
                           Text(
                             'Answers Accuracy: ',
-                            style: oxygen10white,
+                            style: oxygen14whiteNormal,
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
                               '908%: ',
-                              style: chakra16white,
+                              style: chakra22white,
                             ),
                           )
                         ]),
                         TableRow(children: [
                           Text(
                             'Average Answer Time: ',
-                            style: oxygen10white,
+                            style: oxygen14whiteNormal,
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
                               '21s: ',
-                              style: chakra16white,
+                              style: chakra22white,
                             ),
                           )
                         ]),
@@ -116,29 +115,25 @@ class _FinishScreenState extends State<FinishScreen>
                     children: [
                       Text(
                         'Level 1',
-                        style: chakra16white,
+                        style: chakra22white,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 20, bottom: 30, left: 20, right: 20),
                         child: Image.asset('assets/images/success.png'),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          Text(
-                            '99',
-                            style: chakra48white,
-                          ),
-                          Text(
-                            '/100',
-                            style: chakra16white,
-                          ),
-                        ],
-                      )
-                    ],
+                      RichText(
+                        text: TextSpan(
+                          style: chakra48white,
+                          children: [
+                            TextSpan(text: '99'),
+                             TextSpan(text: ' / ', style: chakra22white),
+                            TextSpan(
+                                text: '100',
+                                style: chakra22white),
+                          ],
+                        ),
+                      )                    ],
                   ),
                 ),
                 Expanded(

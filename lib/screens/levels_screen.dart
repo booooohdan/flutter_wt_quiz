@@ -38,7 +38,6 @@ class _LevelsScreenState extends State<LevelsScreen> {
                   context: context,
                   isBackArrowShown: true,
                   centerLabel: 'Classic',
-                  rightLabel: '1/100',
                   icon: '',
                 ),
                 Expanded(

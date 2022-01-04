@@ -9,14 +9,12 @@ class AppBarRegular extends StatelessWidget {
     required this.context,
     required this.isBackArrowShown,
     required this.centerLabel,
-    required this.rightLabel,
     required this.icon,
   }) : super(key: key);
 
   final BuildContext context;
   final bool isBackArrowShown;
   final String centerLabel;
-  final String rightLabel;
   final String icon;
 
   @override
@@ -40,19 +38,16 @@ class AppBarRegular extends StatelessWidget {
               ),
               Text(
                 centerLabel,
-                style: chakra16white,
+                style: chakra22white,
               ),
               SizedBox(
                 width: 80,
-                child: icon.isEmpty
-                    ? Text(
-                        rightLabel,
-                        style: chakra16white,
-                      )
-                    : SvgPicture.asset(
+                child: icon.isNotEmpty
+                    ? SvgPicture.asset(
                         icon,
                         height: 24,
-                      ),
+                      )
+                    : Container(),
               ),
             ],
           ),

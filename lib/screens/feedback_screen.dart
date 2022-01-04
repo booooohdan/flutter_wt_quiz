@@ -4,6 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -83,7 +84,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   context: context,
                   isBackArrowShown: true,
                   centerLabel: 'Feedback',
-                  rightLabel: '',
                   icon: '',
                 ),
                 Expanded(
@@ -160,17 +160,18 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       ),
                       Text(
                         'Version $version',
-                        style: chakra16grey,
+                        style: chakra18grey,
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 50),
+                            vertical: 0, horizontal: 40),
                         child: Text(
-                          'WT Quiz is a trivia game with vehicles from the game War Thunder. All images and description have been taken from wiki.warthunder.com',
-                          style: oxygen10white,
+                          'WT Quiz is a trivia game with vehicles from the game War Thunder. '
+                          'All images and description have been taken from wiki.warthunder.com',
+                          style: oxygen13whiteNormal,
                           textAlign: TextAlign.center,
                         ),
                       )
@@ -186,7 +187,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         context: context,
                         icon: 'assets/icons/github.svg',
                         title: 'GitHub',
-                        backgroundColor: Colors.green,
+                        backgroundColor: greenButtonColor,
                         textColor: Colors.black,
                         onTap: () async {
                           final url =
@@ -343,7 +344,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                 ),
                                 Text(
                                   'PRIVACY',
-                                  style: oxygen10white,
+                                  style: oxygen10grey,
                                 ),
                               ],
                             ),

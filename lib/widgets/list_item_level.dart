@@ -56,8 +56,7 @@ class ListItemLevel extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10, right: 20),
-                        child: Image.asset(
-                            'assets/images/$levelStatus.png'),
+                        child: Image.asset('assets/images/$levelStatus.png'),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -65,7 +64,7 @@ class ListItemLevel extends StatelessWidget {
                         children: [
                           Text(
                             'Level $number',
-                            style: chakra16white,
+                            style: chakra18white,
                           ),
                           Row(
                             children: [
@@ -99,10 +98,16 @@ class ListItemLevel extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           RichText(
-                              text: TextSpan(style: chakra20white, children: [
-                            TextSpan(text: '$answeredCount'),
-                            TextSpan(text: '/$questionCount', style: chakra14white),
-                          ])),
+                            text: TextSpan(
+                              style: chakra22white,
+                              children: [
+                                TextSpan(text: '$answeredCount'),
+                                TextSpan(
+                                    text: '/$questionCount',
+                                    style: chakra14white),
+                              ],
+                            ),
+                          ),
                           Text(
                             periodOfTime!,
                             style: oxygen10white,

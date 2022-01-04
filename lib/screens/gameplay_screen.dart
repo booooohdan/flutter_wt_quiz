@@ -41,7 +41,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                     children: [
                       Text(
                         '59 s',
-                        style: oxygen16white,
+                        style: oxygen14white,
                       ),
                       SizedBox(
                         height: 10,
@@ -127,7 +127,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         context: context,
                         icon: '',
                         title: 'Fw.190D-9',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).pushReplacementNamed('/finish');
+                        },
                       ),
                       SizedBox(
                         height: 10,
