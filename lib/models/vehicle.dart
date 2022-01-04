@@ -1,6 +1,3 @@
-import '../models/period_of_time.dart';
-import '../models/vehicle_type.dart';
-
 class Vehicle {
   Vehicle({
     this.image,
@@ -13,6 +10,6 @@ class Vehicle {
   String? image;
   String? name;
   String? nation;
-  VehicleType? type;
-  PeriodOfTime? periodOfTime;
+  String? type;
+  String? periodOfTime;
 }

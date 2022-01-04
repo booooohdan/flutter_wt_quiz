@@ -28,7 +28,7 @@ class AppBarGameplay extends StatelessWidget {
                     children: [
                       Text(
                         '22',
-                        style: chakra16white,
+                        style: chakra18white,
                       ),
                       SizedBox(
                         width: 10,
@@ -63,10 +63,15 @@ class AppBarGameplay extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 30),
                 child: SizedBox(
                   width: 80,
-                  child: Text(
-                    '1/100',
+                  child: RichText(
                     textAlign: TextAlign.end,
-                    style: chakra16white,
+                    text: TextSpan(
+                      style: chakra22white,
+                      children: [
+                        TextSpan(text: '1'),
+                        TextSpan(text: '/100', style: chakra14white),
+                      ],
+                    ),
                   ),
                 ),
               ),

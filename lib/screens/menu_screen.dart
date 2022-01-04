@@ -46,7 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     children: [
                       Text(
                         'Game modes:',
-                        style: chakra16grey,
+                        style: chakra18grey,
                       ),
                       //TODO: Change mocked routes to correct
                       ButtonMenuWide(
@@ -68,14 +68,13 @@ class _MenuScreenState extends State<MenuScreen> {
                         route: '/levels',
                       ),
                       GestureDetector(
-                        //TODO: Change mocked routes to correct
-                        onTap: () => Navigator.pushNamed(context, '/login'),
+                        onTap: () => Navigator.pushNamed(context, '/feedback'),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               'FEEDBACK',
-                              style: oxygen16grey,
+                              style: oxygen18grey,
                             ),
                             SizedBox(
                               width: 20,
