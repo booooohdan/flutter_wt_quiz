@@ -74,13 +74,15 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         Expanded(
                           flex: 1,
                           child: ButtonSquare(
-                              context: context,
-                              clipper: ButtonCutLeftBottomEdge(),
-                              backgroundImage:
-                                  'assets/buttons/button_cut_left_bottom_edge.png',
-                              leadingIcon: 'assets/icons/fifty_fifty.svg',
-                              text: '50/50',
-                              count: '1'),
+                            context: context,
+                            clipper: ButtonCutLeftBottomEdge(),
+                            backgroundImage:
+                                'assets/buttons/button_cut_left_bottom_edge.png',
+                            leadingIcon: 'assets/icons/fifty_fifty.svg',
+                            text: '50/50',
+                            count: '1',
+                            onTap: () {},
+                          ),
                         ),
                         SizedBox(
                           width: 10,
@@ -88,13 +90,14 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         Expanded(
                           flex: 1,
                           child: ButtonSquare(
-                              context: context,
-                              clipper: ButtonNoCut(),
-                              backgroundImage:
-                                  'assets/buttons/button_no_cut.png',
-                              leadingIcon: 'assets/icons/flag.svg',
-                              text: 'NATION',
-                              count: '0'),
+                            context: context,
+                            clipper: ButtonNoCut(),
+                            backgroundImage: 'assets/buttons/button_no_cut.png',
+                            leadingIcon: 'assets/icons/flag.svg',
+                            text: 'NATION',
+                            count: '0',
+                            onTap: () {},
+                          ),
                         ),
                         SizedBox(
                           width: 10,
@@ -102,13 +105,15 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         Expanded(
                           flex: 1,
                           child: ButtonSquare(
-                              context: context,
-                              clipper: ButtonCutRightBottomEdge(),
-                              backgroundImage:
-                                  'assets/buttons/button_cut_right_bottom_edge.png',
-                              leadingIcon: 'assets/icons/skip.svg',
-                              text: 'SKIP',
-                              count: '2'),
+                            context: context,
+                            clipper: ButtonCutRightBottomEdge(),
+                            backgroundImage:
+                                'assets/buttons/button_cut_right_bottom_edge.png',
+                            leadingIcon: 'assets/icons/skip.svg',
+                            text: 'SKIP',
+                            count: '2',
+                            onTap: () {},
+                          ),
                         ),
                       ],
                     ),
@@ -122,30 +127,35 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         context: context,
                         icon: '',
                         title: 'Fw.190D-9',
-                        onTap: (){},
+                        onTap: () {},
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
                         title: 'J29D',
-                        onTap: (){},
+                        onTap: () {},
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
                         title: 'Yak-3P',
-                        onTap: (){},
+                        onTap: () {},
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
                         title: 'Spitfire Mk.IX',
-                        onTap: (){},
+                        onTap: () {},
                       ),
-
                     ],
                   ),
                 ),

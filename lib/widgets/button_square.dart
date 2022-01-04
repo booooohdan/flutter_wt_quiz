@@ -12,6 +12,7 @@ class ButtonSquare extends StatelessWidget {
     required this.leadingIcon,
     required this.text,
     required this.count,
+    required this.onTap,
   }) : super(key: key);
 
   final BuildContext context;
@@ -20,6 +21,7 @@ class ButtonSquare extends StatelessWidget {
   final String leadingIcon;
   final String text;
   final String count;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +37,7 @@ class ButtonSquare extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              //TODO: Change onTap to correct
-              onTap: () {},
+              onTap: onTap,
               child: Stack(children: [
                 Positioned(
                   top: 5,

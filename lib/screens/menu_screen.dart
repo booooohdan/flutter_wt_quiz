@@ -68,7 +68,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         route: '/levels',
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, '/about'),
+                        onTap: () => Navigator.pushNamed(context, '/feedback'),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

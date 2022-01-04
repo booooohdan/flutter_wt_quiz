@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
@@ -15,14 +17,15 @@ import '../widgets/appbar_regular.dart';
 import '../widgets/button_gameplay_wide.dart';
 import '../widgets/button_square.dart';
 
-class AboutScreen extends StatefulWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+class FeedbackScreen extends StatefulWidget {
+  const FeedbackScreen({Key? key}) : super(key: key);
 
   @override
-  _AboutScreenState createState() => _AboutScreenState();
+  _FeedbackScreenState createState() => _FeedbackScreenState();
 }
 
-class _AboutScreenState extends State<AboutScreen> {
+class _FeedbackScreenState extends State<FeedbackScreen> {
+  final InAppReview inAppReview = InAppReview.instance;
   String? appName;
   String? version;
   String? buildNumber;
@@ -53,28 +56,11 @@ class _AboutScreenState extends State<AboutScreen> {
       deviceOs = 'Android ${deviceInfo.version.release}';
     } else if (Platform.isIOS) {
       final deviceInfo = await deviceInfoPlugin.iosInfo;
-      // deviceName = '${deviceInfo.brand} ${deviceInfo.model}';
-      // deviceOs = 'Android ${deviceInfo.version.release}';
+      deviceName = '${deviceInfo.name}';
+      deviceOs = 'iOS ${deviceInfo.systemVersion}';
     }
     setState(() {});
   }
-
-  // Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo data) {
-  //   return <String, dynamic>{
-  //     'name': data.name,
-  //     'systemName': data.systemName,
-  //     'systemVersion': data.systemVersion,
-  //     'model': data.model,
-  //     'localizedModel': data.localizedModel,
-  //     'identifierForVendor': data.identifierForVendor,
-  //     'isPhysicalDevice': data.isPhysicalDevice,
-  //     'utsname.sysname:': data.utsname.sysname,
-  //     'utsname.nodename:': data.utsname.nodename,
-  //     'utsname.release:': data.utsname.release,
-  //     'utsname.version:': data.utsname.version,
-  //     'utsname.machine:': data.utsname.machine,
-  //   };
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +82,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 AppBarRegular(
                   context: context,
                   isBackArrowShown: true,
-                  centerLabel: 'About',
+                  centerLabel: 'Feedback',
                   rightLabel: '',
                   icon: '',
                 ),
@@ -224,13 +210,19 @@ class _AboutScreenState extends State<AboutScreen> {
                             Expanded(
                               flex: 1,
                               child: ButtonSquare(
-                                  context: context,
-                                  clipper: ButtonCutLeftBottomEdge(),
-                                  backgroundImage:
-                                      'assets/buttons/button_cut_left_bottom_edge.png',
-                                  leadingIcon: 'assets/icons/star.svg',
-                                  text: 'RATE APP',
-                                  count: ''),
+                                context: context,
+                                clipper: ButtonCutLeftBottomEdge(),
+                                backgroundImage:
+                                    'assets/buttons/button_cut_left_bottom_edge.png',
+                                leadingIcon: 'assets/icons/star.svg',
+                                text: 'RATE APP',
+                                count: '',
+                                onTap: () async {
+                                  if (await inAppReview.isAvailable()) {
+                                    inAppReview.requestReview();
+                                  }
+                                },
+                              ),
                             ),
                             SizedBox(
                               width: 10,
@@ -238,13 +230,26 @@ class _AboutScreenState extends State<AboutScreen> {
                             Expanded(
                               flex: 1,
                               child: ButtonSquare(
-                                  context: context,
-                                  clipper: ButtonNoCut(),
-                                  backgroundImage:
-                                      'assets/buttons/button_no_cut.png',
-                                  leadingIcon: 'assets/icons/share.svg',
-                                  text: 'SHARE',
-                                  count: ''),
+                                context: context,
+                                clipper: ButtonNoCut(),
+                                backgroundImage:
+                                    'assets/buttons/button_no_cut.png',
+                                leadingIcon: 'assets/icons/share.svg',
+                                text: 'SHARE',
+                                count: '',
+                                onTap: () {
+                                  var url = '';
+                                  if (Platform.isAndroid) {
+                                    url =
+                                        'https://play.google.com/store/apps/details?id=com.wave.wtquiz';
+                                  } else if (Platform.isIOS) {
+                                    //TODO: Add appstore url when app will be published
+                                    url = '';
+                                  }
+                                  Share.share(
+                                      'Check this cool quiz for War Thunder: $url');
+                                },
+                              ),
                             ),
                             SizedBox(
                               width: 10,
@@ -252,13 +257,33 @@ class _AboutScreenState extends State<AboutScreen> {
                             Expanded(
                               flex: 1,
                               child: ButtonSquare(
-                                  context: context,
-                                  clipper: ButtonCutRightBottomEdge(),
-                                  backgroundImage:
-                                      'assets/buttons/button_cut_right_bottom_edge.png',
-                                  leadingIcon: 'assets/icons/gmail.svg',
-                                  text: 'REPORT A BUG',
-                                  count: ''),
+                                context: context,
+                                clipper: ButtonCutRightBottomEdge(),
+                                backgroundImage:
+                                    'assets/buttons/button_cut_right_bottom_edge.png',
+                                leadingIcon: 'assets/icons/gmail.svg',
+                                text: 'EMAIL',
+                                count: '',
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('Warning!'),
+                                      content: Text(
+                                          'Please use the GitHub button for bug report or suggestions (Sign-in via Google). '
+                                          '\nOn GitHub you are guaranteed to get an answer and a quick response'
+                                          '\n\nemail: waveappfeedback@gmail.com'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: const Text('Got it'),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -266,29 +291,46 @@ class _AboutScreenState extends State<AboutScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          //TODO: Show when Reset feature will be implemented
+                          // GestureDetector(
+                          //   //onTap: () => Navigator.pushNamed(context, '/feedback'),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       SvgPicture.asset(
+                          //         'assets/icons/reset.svg',
+                          //         height: 20,
+                          //       ),
+                          //       SizedBox(
+                          //         width: 10,
+                          //       ),
+                          //       Text(
+                          //         'RESET',
+                          //         style: oxygen10white,
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           GestureDetector(
-                            //TODO: Set correct command for Reset
-                            //onTap: () => Navigator.pushNamed(context, '/about'),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/icons/reset.svg',
-                                  height: 20,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'RESET',
-                                  style: oxygen10white,
-                                ),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            //TODO: Set correct command for Privacy
-                            //onTap: () => Navigator.pushNamed(context, '/about'),
+                            onTap: () async {
+                              String url = '';
+                              if (Platform.isAndroid) {
+                                url =
+                                    'https://pages.flycricket.io/war-thunder-quiz/privacy.html';
+                              } else if (Platform.isIOS) {
+                                url =
+                                    'https://pages.flycricket.io/thunder-quiz/privacy.html';
+                              }
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Could not launch $url'),
+                                  ),
+                                );
+                              }
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

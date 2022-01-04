@@ -143,16 +143,19 @@ class _FinishScreenState extends State<FinishScreen>
                 ),
                 Expanded(
                     flex: 2,
-                    child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Visibility(visible: false, maintainState: true,
+                        Visibility(
+                          visible: false,
+                          maintainState: true,
                           maintainAnimation: true,
                           maintainSize: true,
                           child: ButtonGameplayWide(
                             context: context,
                             icon: '',
                             title: 'DOUBLE POINTS',
-                            onTap: (){},
+                            onTap: () {},
                           ),
                         ),
                         Padding(
@@ -163,13 +166,15 @@ class _FinishScreenState extends State<FinishScreen>
                               Expanded(
                                 flex: 1,
                                 child: ButtonSquare(
-                                    context: context,
-                                    clipper: ButtonCutLeftBottomEdge(),
-                                    backgroundImage:
-                                        'assets/buttons/button_cut_left_bottom_edge.png',
-                                    leadingIcon: 'assets/icons/home.svg',
-                                    text: 'HOME',
-                                    count: ''),
+                                  context: context,
+                                  clipper: ButtonCutLeftBottomEdge(),
+                                  backgroundImage:
+                                      'assets/buttons/button_cut_left_bottom_edge.png',
+                                  leadingIcon: 'assets/icons/home.svg',
+                                  text: 'HOME',
+                                  count: '',
+                                  onTap: () {},
+                                ),
                               ),
                               SizedBox(
                                 width: 10,
@@ -184,13 +189,15 @@ class _FinishScreenState extends State<FinishScreen>
                               Expanded(
                                 flex: 1,
                                 child: ButtonSquare(
-                                    context: context,
-                                    clipper: ButtonCutRightBottomEdge(),
-                                    backgroundImage:
-                                        'assets/buttons/button_cut_right_bottom_edge.png',
-                                    leadingIcon: 'assets/icons/right_arrow.svg',
-                                    text: 'NEXT LEVEL',
-                                    count: ''),
+                                  context: context,
+                                  clipper: ButtonCutRightBottomEdge(),
+                                  backgroundImage:
+                                      'assets/buttons/button_cut_right_bottom_edge.png',
+                                  leadingIcon: 'assets/icons/right_arrow.svg',
+                                  text: 'NEXT LEVEL',
+                                  count: '',
+                                  onTap: () {},
+                                ),
                               ),
                             ],
                           ),
