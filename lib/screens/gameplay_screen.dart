@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/level.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';

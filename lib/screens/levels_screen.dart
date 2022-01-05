@@ -55,18 +55,7 @@ class _LevelsScreenState extends State<LevelsScreen> {
                               itemBuilder: (context, index) {
                                 return ListItemLevel(
                                   context: context,
-                                  number: snapshot.data![index].number,
-                                  questionCount:
-                                      snapshot.data![index].questionCount,
-                                  answeredCount:
-                                      snapshot.data![index].answeredCount,
-                                  isPlane: snapshot.data![index].isPlane,
-                                  isTank: snapshot.data![index].isTank,
-                                  isShip: snapshot.data![index].isShip,
-                                  levelStatus:
-                                      snapshot.data![index].levelStatus,
-                                  periodOfTime:
-                                      snapshot.data![index].periodOfTime,
+                                  level: snapshot.data![index],
                                 );
                               });
                         }
