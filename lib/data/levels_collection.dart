@@ -24,7 +24,7 @@ class LevelsCollection {
       ..number = 2
       ..questionCount = 10
       ..answeredCount = prefs.getInt('answers_level2_key') ?? 0
-      ..isPlane = false
+      ..isPlane = true
       ..isTank = true
       ..isShip = false
       ..levelStatus = levelsCollection['unlocked']

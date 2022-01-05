@@ -1,6 +1,13 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../data/planes_collection.dart';
+import '../models/game_process.dart';
 import '../models/level.dart';
+import '../models/vehicle.dart';
+import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
@@ -10,15 +17,53 @@ import '../widgets/button_gameplay_wide.dart';
 import '../widgets/button_square.dart';
 
 class GameplayScreen extends StatefulWidget {
-  const GameplayScreen({Key? key}) : super(key: key);
+  GameplayScreen({Key? key}) : super(key: key);
 
   @override
   _GameplayScreenState createState() => _GameplayScreenState();
 }
 
 class _GameplayScreenState extends State<GameplayScreen> {
+  late Level level;
+  late List<Vehicle> vehicles = [];
+  late GameProcess gameProcess;
+
+  final _random = Random();
+  String firstAnswerText = '';
+  String secondAnswerText = '';
+  String thirdAnswerText = '';
+  String fourthAnswerText = '';
+  Vehicle? vehicleCorrectAnswer;
+
+  void shuffleTempList() {
+    final shuffledList = List.from(vehicles)..shuffle();
+    firstAnswerText = shuffledList[0].name!;
+    secondAnswerText = shuffledList[1].name!;
+    thirdAnswerText = shuffledList[2].name!;
+    fourthAnswerText = shuffledList[3].name!;
+
+    vehicleCorrectAnswer = shuffledList[_random.nextInt(4)];
+    setState(() {});
+  }
+
+  Function()? answerSelected() {
+    shuffleTempList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // level = context.watch<LevelProvider>().currentLevel;
+    // if (level.isPlane!) {
+    //   vehicles.addAll(planes);
+    // }
+    // if (level.isTank!) {
+    //   //vehicles.addAll(tanks);
+    // }
+    // if (level.isTank!) {
+    //   //vehicles.addAll(ships);
+    // }
+    // shuffleTempList();
+
     return Stack(
       children: [
         Container(
@@ -61,7 +106,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                 Expanded(
                   flex: 5,
                   child: Image(
-                    image: AssetImage('assets/planes/a2d.png'),
+                    image: AssetImage(
+                        'assets/planes/${vehicleCorrectAnswer!.image}.png'),
                     fit: BoxFit.fitHeight,
                   ),
                 ),
@@ -127,10 +173,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
-                        title: 'Fw.190D-9',
-                        onTap: () {
-                          Navigator.of(context).pushReplacementNamed('/finish');
-                        },
+                        title: firstAnswerText,
+                        onTap: answerSelected,
                       ),
                       SizedBox(
                         height: 10,
@@ -138,8 +182,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
-                        title: 'J29D',
-                        onTap: () {},
+                        title: secondAnswerText,
+                        onTap: answerSelected,
                       ),
                       SizedBox(
                         height: 10,
@@ -147,8 +191,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
-                        title: 'Yak-3P',
-                        onTap: () {},
+                        title: thirdAnswerText,
+                        onTap: answerSelected,
                       ),
                       SizedBox(
                         height: 10,
@@ -156,8 +200,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       ButtonGameplayWide(
                         context: context,
                         icon: '',
-                        title: 'Spitfire Mk.IX',
-                        onTap: () {},
+                        title: fourthAnswerText,
+                        onTap: answerSelected,
                       ),
                     ],
                   ),

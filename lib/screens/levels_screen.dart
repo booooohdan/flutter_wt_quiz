@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wt_quiz/models/level.dart';
 
 import '../data/levels_collection.dart';
+import '../models/level.dart';
 import '../widgets/appbar_regular.dart';
 import '../widgets/list_item_level.dart';
 

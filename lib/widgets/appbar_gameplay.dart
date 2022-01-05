@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 
 class AppBarGameplay extends StatelessWidget {
@@ -13,6 +15,7 @@ class AppBarGameplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final level = context.watch<LevelProvider>().currentLevel;
     return Column(
       children: [
         Container(
@@ -69,7 +72,7 @@ class AppBarGameplay extends StatelessWidget {
                       style: chakra22white,
                       children: [
                         TextSpan(text: '1'),
-                        TextSpan(text: '/100', style: chakra14white),
+                        TextSpan(text: '/${level.questionCount}', style: chakra14white),
                       ],
                     ),
                   ),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../models/level.dart';
+import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_right_bottom_edge.dart';
 
 class ListItemLevel extends StatelessWidget {
-  const ListItemLevel({
+  ListItemLevel({
     Key? key,
     required this.context,
     required this.level,
@@ -34,9 +36,10 @@ class ListItemLevel extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                //TODO: Change onTap to correct
-                onTap: () =>
-                    Navigator.pushNamed(context, '/gameplay', arguments: level),
+                onTap: () {
+                  context.read<LevelProvider>().changeLevel(level);
+                  Navigator.pushNamed(context, '/gameplay');
+                },
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
