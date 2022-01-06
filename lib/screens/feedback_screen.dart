@@ -14,7 +14,7 @@ import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../utilities/svg_paths/button_no_cut.dart';
 import '../widgets/appbar_regular.dart';
-import '../widgets/button_gameplay_wide.dart';
+import '../widgets/button_wide.dart';
 import '../widgets/button_square.dart';
 
 class FeedbackScreen extends StatefulWidget {
@@ -182,7 +182,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ButtonGameplayWide(
+                      ButtonWide(
                         context: context,
                         icon: 'assets/icons/github.svg',
                         title: 'GitHub',
