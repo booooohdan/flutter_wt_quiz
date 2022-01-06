@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class GameplayScreen extends StatefulWidget {
 }
 
 class _GameplayScreenState extends State<GameplayScreen> {
-  late Level level;
+  Level? level;
   late List<Vehicle> vehicles = [];
   late GameProcess gameProcess;
 
@@ -33,6 +34,11 @@ class _GameplayScreenState extends State<GameplayScreen> {
   String secondAnswerText = '';
   String thirdAnswerText = '';
   String fourthAnswerText = '';
+
+  Color firstButtonColor = Colors.transparent;
+  Color secondButtonColor = Colors.transparent;
+  Color thirdButtonColor = Colors.transparent;
+  Color fourthButtonColor = Colors.transparent;
   Vehicle? vehicleCorrectAnswer;
 
   void shuffleTempList() {
@@ -46,24 +52,61 @@ class _GameplayScreenState extends State<GameplayScreen> {
     setState(() {});
   }
 
-  Function()? answerSelected() {
+  Function()? answerSelected(String answerText) {
+    if (answerText == vehicleCorrectAnswer!.name) {
+      var a = 5;
+    } else {
+      var a = 6;
+    }
+
+    checkCorrectButton();
+    //shuffleTempList();
+  }
+
+  void checkCorrectButton(){
+    if(firstAnswerText == vehicleCorrectAnswer!.name){
+      blinkButton(firstButtonColor);
+    }
+    if(secondAnswerText == vehicleCorrectAnswer!.name){
+      blinkButton(secondButtonColor);
+    }
+    if(thirdAnswerText == vehicleCorrectAnswer!.name){
+      blinkButton(thirdButtonColor);
+    }
+    if(fourthAnswerText == vehicleCorrectAnswer!.name){
+      blinkButton(fourthButtonColor);
+    }
+  }
+
+  Future blinkButton(Color buttonColor) async {
+    setState(() {firstButtonColor = greenButtonColor;});
+    await Future.delayed(Duration(milliseconds: 500));
+    setState(() {firstButtonColor = Colors.transparent;});
+    await Future.delayed(Duration(milliseconds: 500));
+    setState(() {firstButtonColor = greenButtonColor;});
+    await Future.delayed(Duration(milliseconds: 500));
+    setState(() {firstButtonColor = Colors.transparent;});
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    level = context.watch<LevelProvider>().currentLevel;
+
+    if (level!.isPlane!) {
+      vehicles.addAll(planes);
+    }
+    if (level!.isTank!) {
+      //vehicles.addAll(tanks);
+    }
+    if (level!.isTank!) {
+      //vehicles.addAll(ships);
+    }
     shuffleTempList();
   }
 
   @override
   Widget build(BuildContext context) {
-    // level = context.watch<LevelProvider>().currentLevel;
-    // if (level.isPlane!) {
-    //   vehicles.addAll(planes);
-    // }
-    // if (level.isTank!) {
-    //   //vehicles.addAll(tanks);
-    // }
-    // if (level.isTank!) {
-    //   //vehicles.addAll(ships);
-    // }
-    // shuffleTempList();
-
     return Stack(
       children: [
         Container(
@@ -174,7 +217,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         context: context,
                         icon: '',
                         title: firstAnswerText,
-                        onTap: answerSelected,
+                        backgroundColor: firstButtonColor,
+                        onTap: () => answerSelected(firstAnswerText),
                       ),
                       SizedBox(
                         height: 10,
@@ -183,7 +227,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         context: context,
                         icon: '',
                         title: secondAnswerText,
-                        onTap: answerSelected,
+                        backgroundColor: secondButtonColor,
+                        onTap: () => answerSelected(secondAnswerText),
                       ),
                       SizedBox(
                         height: 10,
@@ -192,7 +237,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         context: context,
                         icon: '',
                         title: thirdAnswerText,
-                        onTap: answerSelected,
+                        backgroundColor: thirdButtonColor,
+                        onTap: () => answerSelected(thirdAnswerText),
                       ),
                       SizedBox(
                         height: 10,
@@ -201,7 +247,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         context: context,
                         icon: '',
                         title: fourthAnswerText,
-                        onTap: answerSelected,
+                        backgroundColor: fourthButtonColor,
+                        onTap: () => answerSelected(fourthAnswerText),
                       ),
                     ],
                   ),
