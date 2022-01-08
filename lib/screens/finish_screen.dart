@@ -4,8 +4,8 @@ import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../widgets/appbar_regular.dart';
-import '../widgets/button_wide.dart';
 import '../widgets/button_square.dart';
+import '../widgets/button_wide.dart';
 
 class FinishScreen extends StatefulWidget {
   const FinishScreen({Key? key}) : super(key: key);

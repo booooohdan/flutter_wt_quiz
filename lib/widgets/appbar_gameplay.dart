@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:wt_quiz/models/game_process.dart';
 
-import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 
 class AppBarGameplay extends StatelessWidget {
   const AppBarGameplay({
     Key? key,
     required this.context,
+    required this.gameProcess,
   }) : super(key: key);
 
   final BuildContext context;
+  final GameProcess gameProcess;
+
+  List<String> heartsList() {
+    switch (gameProcess.heartsCount) {
+      case 1:
+        return ['heart_fill', 'heart_stroke', 'heart_stroke'];
+      case 2:
+        return ['heart_fill', 'heart_fill', 'heart_stroke'];
+      case 3:
+        return ['heart_fill', 'heart_fill', 'heart_fill'];
+      default:
+        return ['heart_stroke', 'heart_stroke', 'heart_stroke'];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final level = context.watch<LevelProvider>().currentLevel;
     return Column(
       children: [
         Container(
@@ -30,7 +43,7 @@ class AppBarGameplay extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        '22',
+                        '${gameProcess.correctAnswersCount}',
                         style: chakra18white,
                       ),
                       SizedBox(
@@ -47,17 +60,17 @@ class AppBarGameplay extends StatelessWidget {
               Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/heart_fill.svg',
+                    'assets/icons/${heartsList()[0]}.svg',
                     width: 20,
                   ),
                   SizedBox(width: 10),
                   SvgPicture.asset(
-                    'assets/icons/heart_stroke.svg',
+                    'assets/icons/${heartsList()[1]}.svg',
                     width: 20,
                   ),
                   SizedBox(width: 10),
                   SvgPicture.asset(
-                    'assets/icons/heart_stroke.svg',
+                    'assets/icons/${heartsList()[2]}.svg',
                     width: 20,
                   ),
                 ],
@@ -71,8 +84,10 @@ class AppBarGameplay extends StatelessWidget {
                     text: TextSpan(
                       style: chakra22white,
                       children: [
-                        TextSpan(text: '1'),
-                        TextSpan(text: '/${level.questionCount}', style: chakra14white),
+                        TextSpan(text: '${gameProcess.questionCurrent}'),
+                        TextSpan(
+                            text: '/${gameProcess.questionsTotal}',
+                            style: chakra14white),
                       ],
                     ),
                   ),
