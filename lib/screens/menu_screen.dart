@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utilities/constants.dart';
-import '../widgets/button_menu_wide.dart';
+import '../widgets/button_menu_wide_widget.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -49,19 +49,19 @@ class _MenuScreenState extends State<MenuScreen> {
                         style: chakra18grey,
                       ),
                       //TODO: Change mocked routes to correct
-                      ButtonMenuWide(
+                      ButtonMenuWideWidget(
                         context: context,
                         title: 'CLASSIC',
                         details: '',
                         route: '/levels',
                       ),
-                      ButtonMenuWide(
+                      ButtonMenuWideWidget(
                         context: context,
                         title: 'HARDCORE',
                         details: '',
                         route: '/levels',
                       ),
-                      ButtonMenuWide(
+                      ButtonMenuWideWidget(
                         context: context,
                         title: 'TRAINING',
                         details: '',

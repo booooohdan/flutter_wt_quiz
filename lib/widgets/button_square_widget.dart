@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utilities/constants.dart';
 
-class ButtonSquare extends StatelessWidget {
-  const ButtonSquare({
+class ButtonSquareWidget extends StatelessWidget {
+  const ButtonSquareWidget({
     Key? key,
     required this.context,
     required this.clipper,

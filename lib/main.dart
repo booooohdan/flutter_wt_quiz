@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/first_provider.dart';
+import '../providers/level_provider.dart';
 import '../screens/feedback_screen.dart';
 import '../screens/finish_screen.dart';
 import '../screens/gameplay_screen.dart';
@@ -13,8 +13,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<FirstProvider>(
-          create: (_) => FirstProvider(),
+        ChangeNotifierProvider<LevelProvider>(
+          create: (_) => LevelProvider(),
         ),
       ],
       child: MaterialApp(

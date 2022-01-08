@@ -1,63 +1,61 @@
-import '../models/vehicle.dart';
+import '../models/vehicle_model.dart';
 import '../utilities/constants.dart';
 
-class PlanesCollection {
-  List<Vehicle> planes = [
-    Vehicle(
-      image: 'assets/planes/a2d.png',
-      name: 'A2D',
-      nation: 'USA',
-      type: vehiclesType['plane'],
-      periodOfTime: periodsCollection['wWII'],
-    ),
-    Vehicle(
-      image: 'assets/planes/a5m4.png',
-      name: 'A5M4',
-      nation: 'Japan',
-      type: vehiclesType['plane'],
-      periodOfTime: periodsCollection['preWWII'],
-    ),
-    Vehicle(
-      image: 'assets/planes/a6m2_n_zero.png',
-      name: 'A6M2-N-0',
-      nation: 'Japan',
-      type: vehiclesType['plane'],
-      periodOfTime: periodsCollection['preWWII'],
-    ),
-    Vehicle(
-      image: 'assets/planes/a6m2_zero.png',
-      name: 'A6M2',
-      nation: 'Japan',
-      type: vehiclesType['plane'],
-      periodOfTime: periodsCollection['wWII'],
-    ),
-    Vehicle(
-      image: 'assets/planes/a7m2.png',
-      name: 'A7M2',
-      nation: 'Japan',
-      type: vehiclesType['plane'],
-      periodOfTime: periodsCollection['wWII'],
-    ),
-    Vehicle(
-      image: 'assets/planes/a26b.png',
-      name: 'A5M4',
-      nation: 'Japan',
-      type: vehiclesType['plane'],
-      periodOfTime: periodsCollection['preWWII'],
-    ),
-    Vehicle(
-      image: 'assets/planes/a129.png',
-      name: 'A.129',
-      nation: 'Italy',
-      type: vehiclesType['plane'],
-      periodOfTime: periodsCollection['coldWar'],
-    ),
-    Vehicle(
-      image: 'assets/planes/ah1f.png',
-      name: 'AH-1F',
-      nation: 'USA',
-      type: vehiclesType['plane'],
-      periodOfTime: periodsCollection['coldWar'],
-    ),
-  ];
-}
+List<VehicleModel> planes = [
+  VehicleModel(
+    image: 'a2d',
+    name: 'A2D',
+    nation: 'USA',
+    type: vehiclesType['plane'],
+    periodOfTime: periodsCollection['wWII'],
+  ),
+  VehicleModel(
+    image: 'a5m4',
+    name: 'A5M4',
+    nation: 'Japan',
+    type: vehiclesType['plane'],
+    periodOfTime: periodsCollection['preWWII'],
+  ),
+  VehicleModel(
+    image: 'a6m2_n_zero',
+    name: 'A6M2-N-0',
+    nation: 'Japan',
+    type: vehiclesType['plane'],
+    periodOfTime: periodsCollection['preWWII'],
+  ),
+  VehicleModel(
+    image: 'a6m2_zero',
+    name: 'A6M2',
+    nation: 'Japan',
+    type: vehiclesType['plane'],
+    periodOfTime: periodsCollection['wWII'],
+  ),
+  VehicleModel(
+    image: 'a7m2',
+    name: 'A7M2',
+    nation: 'Japan',
+    type: vehiclesType['plane'],
+    periodOfTime: periodsCollection['wWII'],
+  ),
+  VehicleModel(
+    image: 'a26b',
+    name: 'A-26B',
+    nation: 'Japan',
+    type: vehiclesType['plane'],
+    periodOfTime: periodsCollection['preWWII'],
+  ),
+  VehicleModel(
+    image: 'a129',
+    name: 'A.129',
+    nation: 'Italy',
+    type: vehiclesType['plane'],
+    periodOfTime: periodsCollection['coldWar'],
+  ),
+  VehicleModel(
+    image: 'ah1f',
+    name: 'AH-1F',
+    nation: 'USA',
+    type: vehiclesType['plane'],
+    periodOfTime: periodsCollection['coldWar'],
+  ),
+];

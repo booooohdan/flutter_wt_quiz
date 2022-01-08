@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utilities/constants.dart';
 
-class AppBarRegular extends StatelessWidget {
-  AppBarRegular({
+class AppBarRegularWidget extends StatelessWidget {
+  AppBarRegularWidget({
     Key? key,
     required this.context,
     required this.isBackArrowShown,

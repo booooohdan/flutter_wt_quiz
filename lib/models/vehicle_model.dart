@@ -1,5 +1,5 @@
-class Vehicle {
-  Vehicle({
+class VehicleModel {
+  VehicleModel({
     this.image,
     this.name,
     this.nation,

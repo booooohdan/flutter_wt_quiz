@@ -1,5 +1,5 @@
-class Level {
-    Level(
+class LevelModel {
+    LevelModel(
       {this.number,
       this.questionCount,
       this.answeredCount,

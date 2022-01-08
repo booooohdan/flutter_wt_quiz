@@ -1,32 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
+import '../models/level_model.dart';
+import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_right_bottom_edge.dart';
 
-class ListItemLevel extends StatelessWidget {
-  const ListItemLevel({
+class ListItemLevelWidget extends StatelessWidget {
+  ListItemLevelWidget({
     Key? key,
     required this.context,
-    required this.number,
-    required this.questionCount,
-    required this.answeredCount,
-    this.isPlane = false,
-    this.isTank = false,
-    this.isShip = false,
-    required this.levelStatus,
-    required this.periodOfTime,
+    required this.level,
   }) : super(key: key);
 
   final BuildContext context;
-  final int? number;
-  final int? questionCount;
-  final int? answeredCount;
-  final bool? isPlane;
-  final bool? isTank;
-  final bool? isShip;
-  final String? levelStatus;
-  final String? periodOfTime;
+  final LevelModel level;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +36,10 @@ class ListItemLevel extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                //TODO: Change onTap to correct
-                onTap: () => Navigator.pushNamed(context, '/gameplay'),
+                onTap: () {
+                  context.read<LevelProvider>().changeLevel(level);
+                  Navigator.pushNamed(context, '/gameplay');
+                },
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -56,33 +47,34 @@ class ListItemLevel extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10, right: 20),
-                        child: Image.asset('assets/images/$levelStatus.png'),
+                        child: Image.asset(
+                            'assets/images/${level.levelStatus}.png'),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Level $number',
+                            'Level ${level.number}',
                             style: chakra18white,
                           ),
                           Row(
                             children: [
-                              isPlane!
+                              level.isPlane!
                                   ? SvgPicture.asset(
                                       'assets/icons/plane.svg',
                                       width: 15,
                                     )
                                   : Container(),
                               SizedBox(width: 5),
-                              isTank!
+                              level.isTank!
                                   ? SvgPicture.asset(
                                       'assets/icons/tank.svg',
                                       width: 25,
                                     )
                                   : Container(),
                               SizedBox(width: 5),
-                              isShip!
+                              level.isShip!
                                   ? SvgPicture.asset(
                                       'assets/icons/ship.svg',
                                       width: 25,
@@ -101,15 +93,15 @@ class ListItemLevel extends StatelessWidget {
                             text: TextSpan(
                               style: chakra22white,
                               children: [
-                                TextSpan(text: '$answeredCount'),
+                                TextSpan(text: '${level.answeredCount}'),
                                 TextSpan(
-                                    text: '/$questionCount',
+                                    text: '/${level.questionCount}',
                                     style: chakra14white),
                               ],
                             ),
                           ),
                           Text(
-                            periodOfTime!,
+                            level.periodOfTime!,
                             style: oxygen10white,
                           ),
                         ],

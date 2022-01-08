@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../models/gameplay_button_model.dart';
+import '../utilities/constants.dart';
 
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
 
-class ButtonGameplayWide extends StatelessWidget {
-  ButtonGameplayWide({
+class ButtonGameplayWidget extends StatelessWidget {
+  ButtonGameplayWidget({
     Key? key,
     required this.context,
-    required this.icon,
-    required this.title,
     required this.onTap,
-    this.backgroundColor = Colors.transparent,
-    this.textColor = Colors.white,
+    required this.model,
   }) : super(key: key);
 
   final BuildContext context;
-  final String icon;
-  final String title;
   final Function()? onTap;
-  final Color backgroundColor;
-  final Color textColor;
+  final GameplayButtonModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -38,29 +34,18 @@ class ButtonGameplayWide extends StatelessWidget {
                         'assets/buttons/wide_button_cut_bottom_edges.png'),
                     fit: BoxFit.fill)),
             child: Material(
-              color: backgroundColor,
+              color: model.isGreenBlink ? greenButtonColor : Colors.transparent,
               child: InkWell(
                 onTap: onTap,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    icon.isNotEmpty
-                        ? Row(
-                            children: [
-                              SvgPicture.asset(
-                                icon,
-                                height: 24,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              )
-                            ],
-                          )
-                        : Container(),
                     Text(
-                      title,
+                      model.answerText,
                       style: GoogleFonts.oxygen(
-                          fontSize: 16, color: textColor, fontWeight: FontWeight.bold),
+                          fontSize: 16,
+                          color: model.isGreenBlink ? Colors.black : Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

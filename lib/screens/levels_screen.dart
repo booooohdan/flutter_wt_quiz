@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:wt_quiz/models/level.dart';
 
 import '../data/levels_collection.dart';
-import '../widgets/appbar_regular.dart';
-import '../widgets/list_item_level.dart';
+import '../models/level_model.dart';
+import '../widgets/appbar_regular_widget.dart';
+import '../widgets/list_item_level_widget.dart';
 
 class LevelsScreen extends StatefulWidget {
   const LevelsScreen({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class LevelsScreen extends StatefulWidget {
 }
 
 class _LevelsScreenState extends State<LevelsScreen> {
-  Future<List<Level>> getLevels() async {
+  Future<List<LevelModel>> getLevels() async {
     return await LevelsCollection().AddLevel();
   }
 
@@ -34,14 +34,14 @@ class _LevelsScreenState extends State<LevelsScreen> {
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
-                AppBarRegular(
+                AppBarRegularWidget(
                   context: context,
                   isBackArrowShown: true,
                   centerLabel: 'Classic',
                   icon: '',
                 ),
                 Expanded(
-                  child: FutureBuilder<List<Level>>(
+                  child: FutureBuilder<List<LevelModel>>(
                       future: getLevels(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
@@ -53,20 +53,9 @@ class _LevelsScreenState extends State<LevelsScreen> {
                               physics: BouncingScrollPhysics(),
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
-                                return ListItemLevel(
+                                return ListItemLevelWidget(
                                   context: context,
-                                  number: snapshot.data![index].number,
-                                  questionCount:
-                                      snapshot.data![index].questionCount,
-                                  answeredCount:
-                                      snapshot.data![index].answeredCount,
-                                  isPlane: snapshot.data![index].isPlane,
-                                  isTank: snapshot.data![index].isTank,
-                                  isShip: snapshot.data![index].isShip,
-                                  levelStatus:
-                                      snapshot.data![index].levelStatus,
-                                  periodOfTime:
-                                      snapshot.data![index].periodOfTime,
+                                  level: snapshot.data![index],
                                 );
                               });
                         }

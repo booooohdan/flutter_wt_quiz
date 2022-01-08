@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
-import '../widgets/appbar_regular.dart';
-import '../widgets/button_gameplay_wide.dart';
-import '../widgets/button_square.dart';
+import '../widgets/appbar_regular_widget.dart';
+import '../widgets/button_square_widget.dart';
+import '../widgets/button_wide_widget.dart';
 
 class FinishScreen extends StatefulWidget {
   const FinishScreen({Key? key}) : super(key: key);
@@ -59,7 +59,7 @@ class _FinishScreenState extends State<FinishScreen>
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
-                AppBarRegular(
+                AppBarRegularWidget(
                   context: context,
                   isBackArrowShown: false,
                   centerLabel: 'Finish',
@@ -146,7 +146,7 @@ class _FinishScreenState extends State<FinishScreen>
                           maintainState: true,
                           maintainAnimation: true,
                           maintainSize: true,
-                          child: ButtonGameplayWide(
+                          child: ButtonWideWidget(
                             context: context,
                             icon: '',
                             title: 'DOUBLE POINTS',
@@ -160,7 +160,7 @@ class _FinishScreenState extends State<FinishScreen>
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: ButtonSquare(
+                                child: ButtonSquareWidget(
                                   context: context,
                                   clipper: ButtonCutLeftBottomEdge(),
                                   backgroundImage:
@@ -183,7 +183,7 @@ class _FinishScreenState extends State<FinishScreen>
                               ),
                               Expanded(
                                 flex: 1,
-                                child: ButtonSquare(
+                                child: ButtonSquareWidget(
                                   context: context,
                                   clipper: ButtonCutRightBottomEdge(),
                                   backgroundImage:
