@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
 
-class ButtonMenuWide extends StatelessWidget {
-  const ButtonMenuWide({
+class ButtonMenuWideWidget extends StatelessWidget {
+  const ButtonMenuWideWidget({
     Key? key,
     required this.context,
     required this.title,

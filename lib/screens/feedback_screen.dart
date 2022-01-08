@@ -13,9 +13,9 @@ import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../utilities/svg_paths/button_no_cut.dart';
-import '../widgets/appbar_regular.dart';
-import '../widgets/button_square.dart';
-import '../widgets/button_wide.dart';
+import '../widgets/appbar_regular_widget.dart';
+import '../widgets/button_square_widget.dart';
+import '../widgets/button_wide_widget.dart';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
-                AppBarRegular(
+                AppBarRegularWidget(
                   context: context,
                   isBackArrowShown: true,
                   centerLabel: 'Feedback',
@@ -182,7 +182,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ButtonWide(
+                      ButtonWideWidget(
                         context: context,
                         icon: 'assets/icons/github.svg',
                         title: 'GitHub',
@@ -209,7 +209,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: ButtonSquare(
+                              child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonCutLeftBottomEdge(),
                                 backgroundImage:
@@ -229,7 +229,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             ),
                             Expanded(
                               flex: 1,
-                              child: ButtonSquare(
+                              child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonNoCut(),
                                 backgroundImage:
@@ -256,7 +256,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             ),
                             Expanded(
                               flex: 1,
-                              child: ButtonSquare(
+                              child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonCutRightBottomEdge(),
                                 backgroundImage:

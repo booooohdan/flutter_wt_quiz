@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wt_quiz/models/gameplay_button_model.dart';
-import 'package:wt_quiz/utilities/constants.dart';
+
+import '../models/gameplay_button_model.dart';
+import '../utilities/constants.dart';
 
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
 

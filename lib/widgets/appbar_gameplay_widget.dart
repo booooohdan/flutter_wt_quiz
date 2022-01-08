@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wt_quiz/models/game_process.dart';
+
+import '../models/game_process_model.dart';
 
 import '../utilities/constants.dart';
 
-class AppBarGameplay extends StatelessWidget {
-  const AppBarGameplay({
+class AppBarGameplayWidget extends StatelessWidget {
+  const AppBarGameplayWidget({
     Key? key,
     required this.context,
     required this.gameProcess,
   }) : super(key: key);
 
   final BuildContext context;
-  final GameProcess gameProcess;
+  final GameProcessModel gameProcess;
 
   List<String> heartsList() {
     switch (gameProcess.heartsCount) {

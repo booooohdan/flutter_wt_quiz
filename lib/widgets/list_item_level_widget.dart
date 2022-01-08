@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../models/level.dart';
+import '../models/level_model.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_right_bottom_edge.dart';
 
-class ListItemLevel extends StatelessWidget {
-  ListItemLevel({
+class ListItemLevelWidget extends StatelessWidget {
+  ListItemLevelWidget({
     Key? key,
     required this.context,
     required this.level,
   }) : super(key: key);
 
   final BuildContext context;
-  final Level level;
+  final LevelModel level;
 
   @override
   Widget build(BuildContext context) {

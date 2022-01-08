@@ -3,20 +3,20 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wt_quiz/models/gameplay_button_model.dart';
-import 'package:wt_quiz/widgets/button_gameplay_widget.dart';
 
 import '../data/planes_collection.dart';
-import '../models/game_process.dart';
-import '../models/level.dart';
-import '../models/vehicle.dart';
+import '../models/game_process_model.dart';
+import '../models/gameplay_button_model.dart';
+import '../models/level_model.dart';
+import '../models/vehicle_model.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../utilities/svg_paths/button_no_cut.dart';
-import '../widgets/appbar_gameplay.dart';
-import '../widgets/button_square.dart';
+import '../widgets/appbar_gameplay_widget.dart';
+import '../widgets/button_gameplay_widget.dart';
+import '../widgets/button_square_widget.dart';
 
 class GameplayScreen extends StatefulWidget {
   GameplayScreen({Key? key}) : super(key: key);
@@ -26,20 +26,19 @@ class GameplayScreen extends StatefulWidget {
 }
 
 class _GameplayScreenState extends State<GameplayScreen> {
-  Level? level;
-  late List<Vehicle> vehicles = [];
+  LevelModel? level;
+  List<VehicleModel> vehicles = [];
   List<GameplayButtonModel> buttons = [];
-  GameProcess gameProcess = GameProcess();
-  Vehicle? vehicleCorrectAnswer;
+  late GameProcessModel gameProcess;
+  late VehicleModel vehicleCorrectAnswer;
+  late Timer timer;
   bool ignoreClicks = false;
-
-  final _random = Random();
-  Timer? _timer;
 
   var button1 = GameplayButtonModel();
   var button2 = GameplayButtonModel();
   var button3 = GameplayButtonModel();
   var button4 = GameplayButtonModel();
+  var random = Random();
 
   @override
   void didChangeDependencies() {
@@ -57,31 +56,33 @@ class _GameplayScreenState extends State<GameplayScreen> {
       //TODO: Uncomment when collection of ships will be ready
       //vehicles.addAll(ships);
     }
+
     buttons
       ..add(button1)
       ..add(button2)
       ..add(button3)
       ..add(button4);
 
-    gameProcess.heartsCount = 3;
-    gameProcess.questionsTotal = level!.questionCount!;
-    gameProcess.timeExpected = 5;
-    gameProcess.hintFiftyFifty = 1;
-    gameProcess.hintNation = 1;
-    gameProcess.hintSkip = 1;
-    shuffleListSetupImageAndButtons();
+    gameProcess = GameProcessModel()
+      ..heartsCount = 3
+      ..questionsTotal = level!.questionCount!
+      ..timeExpected = 5
+      ..hintFiftyFifty = 1
+      ..hintNation = 1
+      ..hintSkip = 1;
+
+    initNewQuestion();
   }
 
   @override
   void dispose() {
-    _timer!.cancel();
+    timer.cancel();
     super.dispose();
   }
 
-  void shuffleListSetupImageAndButtons() {
+  void initNewQuestion() {
     gameProcess.questionCurrent++;
 
-    //region Temporary solution
     final isQuestionOver =
         gameProcess.questionCurrent > gameProcess.questionsTotal;
     final isLivesOver = gameProcess.heartsCount <= 0;
@@ -89,11 +90,13 @@ class _GameplayScreenState extends State<GameplayScreen> {
       Navigator.pushReplacementNamed(context, '/finish');
       return;
     }
-    //endregion
-    //TODO: Move this code to answerButtonTapped method, while understand how to break Future
 
+    selectQuestionsAndRandomAnswers();
+  }
+
+  void selectQuestionsAndRandomAnswers() {
     final shuffledList = List.from(vehicles)..shuffle();
-    vehicleCorrectAnswer = shuffledList[_random.nextInt(4)];
+    vehicleCorrectAnswer = shuffledList[random.nextInt(4)];
 
     buttons[0].answerText = shuffledList[0].name!;
     buttons[1].answerText = shuffledList[1].name!;
@@ -102,29 +105,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
     startTimer();
   }
 
-  Function()? answerButtonTapped(GameplayButtonModel model) {
-    ignoreClicks = true;
-    gameProcess.timeAverage += _timer!.tick;
-    _timer!.cancel();
-
-    blinkCorrectButton()
-        .then((value) => correctAnswerHandler(
-            model.answerText == vehicleCorrectAnswer!.name))
-        .then((value) => shuffleListSetupImageAndButtons())
-        .then((value) => ignoreClicks = false);
-  }
-
-  void correctAnswerHandler(bool isCorrect) {
-    if (isCorrect) {
-      gameProcess.correctAnswersCount++;
-    } else {
-      gameProcess.heartsCount--;
-    }
-  }
-
   void startTimer() {
     gameProcess.timeCurrent = gameProcess.timeExpected;
-    _timer = Timer.periodic(
+    timer = Timer.periodic(
       Duration(seconds: 1),
       (Timer timer) {
         if (gameProcess.timeCurrent == 0) {
@@ -140,9 +123,29 @@ class _GameplayScreenState extends State<GameplayScreen> {
     );
   }
 
+  Function()? answerButtonTapped(GameplayButtonModel model) {
+    ignoreClicks = true;
+    gameProcess.timeAverage += timer.tick;
+    timer.cancel();
+
+    blinkCorrectButton()
+        .then((value) =>
+            correctAnswerHandler(model.answerText == vehicleCorrectAnswer.name))
+        .then((value) => initNewQuestion())
+        .then((value) => ignoreClicks = false);
+  }
+
+  void correctAnswerHandler(bool isCorrect) {
+    if (isCorrect) {
+      gameProcess.correctAnswersCount++;
+    } else {
+      gameProcess.heartsCount--;
+    }
+  }
+
   Future blinkCorrectButton() async {
     final correctButton = buttons
-        .where((element) => element.answerText == vehicleCorrectAnswer!.name)
+        .where((element) => element.answerText == vehicleCorrectAnswer.name)
         .first;
 
     setState(() => correctButton.isGreenBlink = true);
@@ -171,7 +174,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
-                AppBarGameplay(
+                AppBarGameplayWidget(
                   context: context,
                   gameProcess: gameProcess,
                 ),
@@ -205,7 +208,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                     padding: const EdgeInsets.all(5),
                     child: Image(
                       image: AssetImage(
-                          'assets/planes/${vehicleCorrectAnswer!.image}.png'),
+                          'assets/planes/${vehicleCorrectAnswer.image}.png'),
                       fit: BoxFit.fitHeight,
                     ),
                   ),
@@ -219,7 +222,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: ButtonSquare(
+                          child: ButtonSquareWidget(
                             context: context,
                             clipper: ButtonCutLeftBottomEdge(),
                             backgroundImage:
@@ -235,7 +238,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: ButtonSquare(
+                          child: ButtonSquareWidget(
                             context: context,
                             clipper: ButtonNoCut(),
                             backgroundImage: 'assets/buttons/button_no_cut.png',
@@ -250,7 +253,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: ButtonSquare(
+                          child: ButtonSquareWidget(
                             context: context,
                             clipper: ButtonCutRightBottomEdge(),
                             backgroundImage:

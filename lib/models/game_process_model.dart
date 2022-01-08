@@ -1,5 +1,5 @@
-class GameProcess {
-  GameProcess({
+class GameProcessModel {
+  GameProcessModel({
     this.correctAnswersCount =0,
     this.heartsCount = 0,
     this.questionCurrent = 0,

@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
 
-class ButtonWide extends StatelessWidget {
-  ButtonWide({
+class ButtonWideWidget extends StatelessWidget {
+  ButtonWideWidget({
     Key? key,
     required this.context,
     required this.icon,
