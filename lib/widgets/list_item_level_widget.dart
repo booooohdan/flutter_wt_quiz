@@ -37,7 +37,7 @@ class ListItemLevelWidget extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  context.read<LevelProvider>().changeLevel(level);
+                  context.read<LevelProvider>().setLevel(level);
                   Navigator.pushNamed(context, '/gameplay');
                 },
                 child: Padding(
