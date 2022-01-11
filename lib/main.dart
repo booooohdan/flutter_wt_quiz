@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../screens/feedback_screen.dart';
 import '../screens/finish_screen.dart';
@@ -16,14 +17,14 @@ void main() {
         ChangeNotifierProvider<LevelProvider>(
           create: (_) => LevelProvider(),
         ),
+        ChangeNotifierProvider<GameProcessProvider>(
+          create: (_) => GameProcessProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'WT Quiz',
         theme: ThemeData(
           brightness: Brightness.light,
-          textTheme: TextTheme(
-
-          )
         ),
         routes: {
           '/': (context) => MenuScreen(),

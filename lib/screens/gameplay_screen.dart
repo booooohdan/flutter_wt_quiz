@@ -9,6 +9,7 @@ import '../models/game_process_model.dart';
 import '../models/gameplay_button_model.dart';
 import '../models/level_model.dart';
 import '../models/vehicle_model.dart';
+import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
@@ -87,6 +88,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
         gameProcess.questionCurrent > gameProcess.questionsTotal;
     final isLivesOver = gameProcess.heartsCount <= 0;
     if (isQuestionOver || isLivesOver) {
+      context.read<GameProcessProvider>().setGameProcess(gameProcess);
       Navigator.pushReplacementNamed(context, '/finish');
       return;
     }
@@ -125,7 +127,13 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   Function()? answerButtonTapped(GameplayButtonModel model) {
     ignoreClicks = true;
-    gameProcess.timeAverage += timer.tick;
+
+    //Small fix for timer tick +1 bug
+    timer.tick > gameProcess.timeExpected
+        ? gameProcess.timeAverage += gameProcess.timeExpected
+        : gameProcess.timeAverage += timer.tick;
+    //Small fix for timer tick +1 bug
+
     timer.cancel();
 
     blinkCorrectButton()
@@ -159,151 +167,211 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/backgrounds/gameplay.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        SafeArea(
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Column(
-              children: [
-                AppBarGameplayWidget(
-                  context: context,
-                  gameProcess: gameProcess,
-                ),
-                Expanded(
-                  flex: 1,
+    return WillPopScope(
+      onWillPop: () async {
+        return await showDialog<bool>(
+              context: context,
+              builder: (c) => Dialog(
+                //backgroundColor: Colors.transparent,
+                child: Container(
+                  height: 150,
+                  width: MediaQuery.of(context).size.width * .9,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        '${gameProcess.timeCurrent} s',
-                        style: oxygen14white,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        width: 200,
-                        child: LinearProgressIndicator(
-                          color: Colors.white,
-                          backgroundColor: greyTextColor,
-                          value: gameProcess.timeCurrent /
-                              gameProcess.timeExpected,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Image(
-                      image: AssetImage(
-                          'assets/planes/${vehicleCorrectAnswer.image}.png'),
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: ButtonSquareWidget(
+                      Text('Do you really want to exit?'),
+                      Row(
+                        children: [
+                          ButtonSquareWidget(
                             context: context,
                             clipper: ButtonCutLeftBottomEdge(),
                             backgroundImage:
                                 'assets/buttons/button_cut_left_bottom_edge.png',
                             leadingIcon: 'assets/icons/fifty_fifty.svg',
-                            text: '50/50',
-                            count: '${gameProcess.hintFiftyFifty}',
+                            text: 'Yes',
+                            count: '',
                             onTap: () {},
                           ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: ButtonSquareWidget(
-                            context: context,
-                            clipper: ButtonNoCut(),
-                            backgroundImage: 'assets/buttons/button_no_cut.png',
-                            leadingIcon: 'assets/icons/flag.svg',
-                            text: 'NATION',
-                            count: '${gameProcess.hintNation}',
-                            onTap: () {},
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: ButtonSquareWidget(
+                          ButtonSquareWidget(
                             context: context,
                             clipper: ButtonCutRightBottomEdge(),
                             backgroundImage:
                                 'assets/buttons/button_cut_right_bottom_edge.png',
-                            leadingIcon: 'assets/icons/skip.svg',
-                            text: 'SKIP',
-                            count: '${gameProcess.hintSkip}',
+                            leadingIcon: 'assets/icons/fifty_fifty.svg',
+                            text: 'No',
+                            count: '',
                             onTap: () {},
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                //backgroundColor: Colors.red,
+                // title: Text('Warning'),
+                // content: Text('Do you really want to exit?'),
+                // actions: [
+                //   TextButton(
+                //     child: Text('Yes'),
+                //     onPressed: () => Navigator.pop(c, true),
+                //   ),
+                //   TextButton(
+                //     child: Text('No'),
+                //     onPressed: () => Navigator.pop(c, false),
+                //   ),
+                // ],
+              ),
+            ) ??
+            false;
+      },
+      child: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/backgrounds/gameplay.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Column(
+                children: [
+                  AppBarGameplayWidget(
+                    context: context,
+                    gameProcess: gameProcess,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${gameProcess.timeCurrent} s',
+                          style: oxygen14white,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: LinearProgressIndicator(
+                            color: Colors.white,
+                            backgroundColor: greyTextColor,
+                            value: gameProcess.timeCurrent /
+                                gameProcess.timeExpected,
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 6,
-                  child: IgnorePointer(
-                    ignoring: ignoreClicks,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ButtonGameplayWidget(
-                          context: context,
-                          onTap: () => answerButtonTapped(buttons[0]),
-                          model: buttons[0],
+                  Expanded(
+                    flex: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: InteractiveViewer(
+                        child: Image(
+                          image: AssetImage(
+                              'assets/planes/${vehicleCorrectAnswer.image}.png'),
+                          fit: BoxFit.fitHeight,
                         ),
-                        ButtonGameplayWidget(
-                          context: context,
-                          onTap: () => answerButtonTapped(buttons[1]),
-                          model: buttons[1],
-                        ),
-                        ButtonGameplayWidget(
-                          context: context,
-                          onTap: () => answerButtonTapped(buttons[2]),
-                          model: buttons[2],
-                        ),
-                        ButtonGameplayWidget(
-                          context: context,
-                          onTap: () => answerButtonTapped(buttons[3]),
-                          model: buttons[3],
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: ButtonSquareWidget(
+                              context: context,
+                              clipper: ButtonCutLeftBottomEdge(),
+                              backgroundImage:
+                                  'assets/buttons/button_cut_left_bottom_edge.png',
+                              leadingIcon: 'assets/icons/fifty_fifty.svg',
+                              text: '50/50',
+                              count: '${gameProcess.hintFiftyFifty}',
+                              onTap: () {},
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ButtonSquareWidget(
+                              context: context,
+                              clipper: ButtonNoCut(),
+                              backgroundImage:
+                                  'assets/buttons/button_no_cut.png',
+                              leadingIcon: 'assets/icons/flag.svg',
+                              text: 'NATION',
+                              count: '${gameProcess.hintNation}',
+                              onTap: () {},
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ButtonSquareWidget(
+                              context: context,
+                              clipper: ButtonCutRightBottomEdge(),
+                              backgroundImage:
+                                  'assets/buttons/button_cut_right_bottom_edge.png',
+                              leadingIcon: 'assets/icons/skip.svg',
+                              text: 'SKIP',
+                              count: '${gameProcess.hintSkip}',
+                              onTap: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 6,
+                    child: IgnorePointer(
+                      ignoring: ignoreClicks,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ButtonGameplayWidget(
+                            context: context,
+                            onTap: () => answerButtonTapped(buttons[0]),
+                            model: buttons[0],
+                          ),
+                          ButtonGameplayWidget(
+                            context: context,
+                            onTap: () => answerButtonTapped(buttons[1]),
+                            model: buttons[1],
+                          ),
+                          ButtonGameplayWidget(
+                            context: context,
+                            onTap: () => answerButtonTapped(buttons[2]),
+                            model: buttons[2],
+                          ),
+                          ButtonGameplayWidget(
+                            context: context,
+                            onTap: () => answerButtonTapped(buttons[3]),
+                            model: buttons[3],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

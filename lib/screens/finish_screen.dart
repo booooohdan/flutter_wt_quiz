@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/game_process_model.dart';
+import '../models/level_model.dart';
+import '../providers/game_process_provider.dart';
+import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../widgets/appbar_regular_widget.dart';
 import '../widgets/button_square_widget.dart';
 import '../widgets/button_wide_widget.dart';
+import '../utilities/constants.dart';
 
 class FinishScreen extends StatefulWidget {
   const FinishScreen({Key? key}) : super(key: key);
@@ -14,26 +21,38 @@ class FinishScreen extends StatefulWidget {
   _FinishScreenState createState() => _FinishScreenState();
 }
 
-class _FinishScreenState extends State<FinishScreen>
-    with SingleTickerProviderStateMixin {
-  bool isSuccess = true;
-  String SuccessOrFailedImage = '';
-  String SuccessOrFailedGlowImage = '';
-
-  void SetImage(bool isSuccess) {
-    if (isSuccess) {
-      SuccessOrFailedImage = 'assets/backgrounds/finish_success.png';
-      SuccessOrFailedGlowImage = 'assets/images/glow_success.png';
-    } else {
-      SuccessOrFailedImage = 'assets/backgrounds/finish_failed.png';
-      SuccessOrFailedGlowImage = 'assets/images/glow_failed.png';
-    }
-  }
+class _FinishScreenState extends State<FinishScreen> {
+  //with SingleTickerProviderStateMixin {
+  GameProcessModel? gameResult;
+  LevelModel? level;
+  bool isSuccess = false;
+  double answerAccuracy = 0.0;
+  double averageTime = 0.0;
+  double leaderboardPoints = 0.0;
 
   @override
-  void initState() {
-    SetImage(true);
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    gameResult = context.watch<GameProcessProvider>().currentGameProcess;
+    level = context.watch<LevelProvider>().currentLevel;
+    initResultData();
+  }
+
+  void initResultData() {
+    final double multiplier;
+    final correctToTotalRatio =
+        gameResult!.correctAnswersCount / gameResult!.questionsTotal;
+    averageTime = gameResult!.timeAverage / (gameResult!.questionCurrent - 1);
+    isSuccess = correctToTotalRatio >= 0.9;
+    answerAccuracy = correctToTotalRatio * 100;
+
+    gameResult!.timeExpected - averageTime < 1
+        ? multiplier = 1
+        : multiplier = gameResult!.timeExpected - averageTime;
+
+    leaderboardPoints = gameResult!.correctAnswersCount * multiplier;
+
+    context.read<LevelProvider>().saveResultToPreferences(correctToTotalRatio, gameResult!.correctAnswersCount);
   }
 
   @override
@@ -43,16 +62,23 @@ class _FinishScreenState extends State<FinishScreen>
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(SuccessOrFailedImage),
+              image: isSuccess
+                  ? AssetImage('assets/backgrounds/finish_success.png')
+                  : AssetImage('assets/backgrounds/finish_failed.png'),
               fit: BoxFit.cover,
             ),
           ),
         ),
         Center(
-          child: Image.asset(
-            SuccessOrFailedGlowImage,
-            fit: BoxFit.cover,
-          ),
+          child: isSuccess
+              ? Image.asset(
+                  'assets/images/glow_success.png',
+                  fit: BoxFit.cover,
+                )
+              : Image.asset(
+                  'assets/images/glow_failed.png',
+                  fit: BoxFit.cover,
+                ),
         ),
         SafeArea(
           child: Scaffold(
@@ -80,26 +106,52 @@ class _FinishScreenState extends State<FinishScreen>
                       children: [
                         TableRow(children: [
                           Text(
-                            'Answers Accuracy: ',
+                            'Accuracy: ',
                             style: oxygen14whiteNormal,
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              '908%: ',
+                              '${answerAccuracy.toStringAsFixed(0)} %',
                               style: chakra22white,
                             ),
                           )
                         ]),
                         TableRow(children: [
                           Text(
-                            'Average Answer Time: ',
+                            'Average Time: ',
                             style: oxygen14whiteNormal,
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              '21s: ',
+                              '${averageTime.toStringAsFixed(1)} s',
+                              style: chakra22white,
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Text(
+                            'Points: ',
+                            style: oxygen14whiteNormal,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '${leaderboardPoints.toStringAsFixed(0)}',
+                              style: chakra22white,
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Text(
+                            'Hints used: ',
+                            style: oxygen14whiteNormal,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '1',
                               style: chakra22white,
                             ),
                           )
@@ -114,26 +166,31 @@ class _FinishScreenState extends State<FinishScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Level 1',
+                        'Classic: Level ${level!.number}',
                         style: chakra22white,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 20, bottom: 30, left: 20, right: 20),
-                        child: Image.asset('assets/images/success.png'),
+                        child: Stack(children: [
+                          isSuccess
+                              ? Image.asset('assets/images/success.png')
+                              : Image.asset('assets/images/failed.png'),
+                        ]),
                       ),
                       RichText(
                         text: TextSpan(
                           style: chakra48white,
                           children: [
-                            TextSpan(text: '99'),
-                             TextSpan(text: ' / ', style: chakra22white),
                             TextSpan(
-                                text: '100',
+                                text: '${gameResult!.correctAnswersCount}'),
+                            TextSpan(
+                                text: '/${level!.questionCount}',
                                 style: chakra22white),
                           ],
                         ),
-                      )                    ],
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
@@ -168,7 +225,9 @@ class _FinishScreenState extends State<FinishScreen>
                                   leadingIcon: 'assets/icons/home.svg',
                                   text: 'HOME',
                                   count: '',
-                                  onTap: () {},
+                                  onTap: () =>
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, '/', (r) => false),
                                 ),
                               ),
                               SizedBox(
@@ -189,9 +248,12 @@ class _FinishScreenState extends State<FinishScreen>
                                   backgroundImage:
                                       'assets/buttons/button_cut_right_bottom_edge.png',
                                   leadingIcon: 'assets/icons/right_arrow.svg',
-                                  text: 'NEXT LEVEL',
+                                  text: '${isSuccess ? 'NEXT LEVEL' : 'RETRY'}',
                                   count: '',
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pushNamedAndRemoveUntil(context, '/', (r) => false);
+                                    Navigator.pushNamed(context, '/levels');
+                                  },
                                 ),
                               ),
                             ],
