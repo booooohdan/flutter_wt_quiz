@@ -127,7 +127,13 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   Function()? answerButtonTapped(GameplayButtonModel model) {
     ignoreClicks = true;
-    gameProcess.timeAverage += timer.tick;
+
+    //Small fix for timer tick +1 bug
+    timer.tick > gameProcess.timeExpected
+        ? gameProcess.timeAverage += gameProcess.timeExpected
+        : gameProcess.timeAverage += timer.tick;
+    //Small fix for timer tick +1 bug
+
     timer.cancel();
 
     blinkCorrectButton()
@@ -165,20 +171,54 @@ class _GameplayScreenState extends State<GameplayScreen> {
       onWillPop: () async {
         return await showDialog<bool>(
               context: context,
-              builder: (c) => AlertDialog(
-                backgroundColor: Colors.red,
-                title: Text('Warning'),
-                content: Text('Do you really want to exit?'),
-                actions: [
-                  TextButton(
-                    child: Text('Yes'),
-                    onPressed: () => Navigator.pop(c, true),
+              builder: (c) => Dialog(
+                //backgroundColor: Colors.transparent,
+                child: Container(
+                  height: 150,
+                  width: MediaQuery.of(context).size.width * .9,
+                  child: Column(
+                    children: [
+                      Text('Do you really want to exit?'),
+                      Row(
+                        children: [
+                          ButtonSquareWidget(
+                            context: context,
+                            clipper: ButtonCutLeftBottomEdge(),
+                            backgroundImage:
+                                'assets/buttons/button_cut_left_bottom_edge.png',
+                            leadingIcon: 'assets/icons/fifty_fifty.svg',
+                            text: 'Yes',
+                            count: '',
+                            onTap: () {},
+                          ),
+                          ButtonSquareWidget(
+                            context: context,
+                            clipper: ButtonCutRightBottomEdge(),
+                            backgroundImage:
+                                'assets/buttons/button_cut_right_bottom_edge.png',
+                            leadingIcon: 'assets/icons/fifty_fifty.svg',
+                            text: 'No',
+                            count: '',
+                            onTap: () {},
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  TextButton(
-                    child: Text('No'),
-                    onPressed: () => Navigator.pop(c, false),
-                  ),
-                ],
+                ),
+                //backgroundColor: Colors.red,
+                // title: Text('Warning'),
+                // content: Text('Do you really want to exit?'),
+                // actions: [
+                //   TextButton(
+                //     child: Text('Yes'),
+                //     onPressed: () => Navigator.pop(c, true),
+                //   ),
+                //   TextButton(
+                //     child: Text('No'),
+                //     onPressed: () => Navigator.pop(c, false),
+                //   ),
+                // ],
               ),
             ) ??
             false;
@@ -230,10 +270,12 @@ class _GameplayScreenState extends State<GameplayScreen> {
                     flex: 5,
                     child: Padding(
                       padding: const EdgeInsets.all(5),
-                      child: Image(
-                        image: AssetImage(
-                            'assets/planes/${vehicleCorrectAnswer.image}.png'),
-                        fit: BoxFit.fitHeight,
+                      child: InteractiveViewer(
+                        child: Image(
+                          image: AssetImage(
+                              'assets/planes/${vehicleCorrectAnswer.image}.png'),
+                          fit: BoxFit.fitHeight,
+                        ),
                       ),
                     ),
                   ),
