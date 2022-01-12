@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wt_quiz/utilities/constants.dart';
 
 import '../data/planes_collection.dart';
 import '../models/game_process_model.dart';
@@ -64,13 +65,45 @@ class _GameplayScreenState extends State<GameplayScreen> {
       ..add(button3)
       ..add(button4);
 
-    gameProcess = GameProcessModel()
-      ..heartsCount = 3
-      ..questionsTotal = level!.questionCount!
-      ..timeExpected = 5
-      ..hintFiftyFifty = 1
-      ..hintNation = 1
-      ..hintSkip = 1;
+    if (level!.levelType == levelTypes['classic']) {
+      gameProcess = GameProcessModel()
+        ..heartsCount = 3
+        ..questionsTotal = level!.questionCount!
+        ..timeExpected = 10
+        ..hintFiftyFifty = 1
+        ..hintNation = 1
+        ..hintSkip = 1;
+    }
+
+    if (level!.levelType == levelTypes['hardcore']) {
+      gameProcess = GameProcessModel()
+        ..heartsCount = 1
+        ..questionsTotal = level!.questionCount!
+        ..timeExpected = 5
+        ..hintFiftyFifty = 1
+        ..hintNation = 1
+        ..hintSkip = 1;
+    }
+
+    if (level!.levelType == levelTypes['insane']) {
+      gameProcess = GameProcessModel()
+        ..heartsCount = 1
+        ..questionsTotal = level!.questionCount!
+        ..timeExpected = 3
+        ..hintFiftyFifty = 0
+        ..hintNation = 0
+        ..hintSkip = 0;
+    }
+
+    if (level!.levelType == levelTypes['training']) {
+      gameProcess = GameProcessModel()
+        ..heartsCount = level!.questionCount!
+        ..questionsTotal = level!.questionCount!
+        ..timeExpected = level!.questionCount!
+        ..hintFiftyFifty = level!.questionCount!
+        ..hintNation = level!.questionCount!
+        ..hintSkip = level!.questionCount!;
+    }
 
     initNewQuestion();
   }

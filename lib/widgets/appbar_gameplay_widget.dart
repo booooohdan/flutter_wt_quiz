@@ -17,14 +17,14 @@ class AppBarGameplayWidget extends StatelessWidget {
 
   List<String> heartsList() {
     switch (gameProcess.heartsCount) {
+      case 0:
+        return ['heart_stroke', 'heart_stroke', 'heart_stroke'];
       case 1:
         return ['heart_fill', 'heart_stroke', 'heart_stroke'];
       case 2:
         return ['heart_fill', 'heart_fill', 'heart_stroke'];
-      case 3:
-        return ['heart_fill', 'heart_fill', 'heart_fill'];
       default:
-        return ['heart_stroke', 'heart_stroke', 'heart_stroke'];
+        return ['heart_fill', 'heart_fill', 'heart_fill'];
     }
   }
 
@@ -100,7 +100,7 @@ class AppBarGameplayWidget extends StatelessWidget {
         SvgPicture.asset(
           'assets/divider.svg',
           height: 5,
-          fit: BoxFit.fill,
+          fit: BoxFit.fitWidth,
         ),
       ],
     );

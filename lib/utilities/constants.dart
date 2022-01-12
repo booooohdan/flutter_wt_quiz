@@ -57,13 +57,23 @@ final levelsCollection = {
   'starred': 'level_starred',
 };
 
+final levelTypes = {
+  'classic': 'Classic',
+  'hardcore': 'Hardcore',
+  'insane': 'Insane',
+  'training': 'Training',
+  'true_false': 'True or False',
+  'beat_the_clock': 'Beat the Clock',
+};
+
 final periodsCollection = {
   'pre_ww2': 'Pre-WWII',
   'ww_2': 'World War II',
   'cold_war': 'Cold War',
+  'all_times': 'All times',
 };
 
-final vehiclesType = {
+final vehicleTypes = {
   'plane': 'Plane',
   'tank': 'Tank',
   'ship': 'Ship',

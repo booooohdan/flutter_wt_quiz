@@ -13,12 +13,21 @@ class LevelsScreen extends StatefulWidget {
 }
 
 class _LevelsScreenState extends State<LevelsScreen> {
-  Future<List<LevelModel>> getLevels() async {
-    return await LevelsCollection().AddLevel();
+  Future<List<LevelModel>> getLevels(String args) async {
+
+    switch(args){
+      case 'HARDCORE':
+        return await LevelsCollection().AddHardcoreLevel();
+      case 'TRAINING':
+        return await LevelsCollection().AddTrainingLevel();
+      default:
+        return await LevelsCollection().AddClassicLevel();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as String;
     return Stack(
       children: [
         Container(
@@ -37,12 +46,12 @@ class _LevelsScreenState extends State<LevelsScreen> {
                 AppBarRegularWidget(
                   context: context,
                   isBackArrowShown: true,
-                  centerLabel: 'Classic',
+                  centerLabel: args,
                   icon: '',
                 ),
                 Expanded(
                   child: FutureBuilder<List<LevelModel>>(
-                      future: getLevels(),
+                      future: getLevels(args),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
                           return Center(

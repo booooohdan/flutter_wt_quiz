@@ -36,7 +36,7 @@ class ButtonMenuWideWidget extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () => Navigator.pushNamed(context, route),
+                onTap: () => Navigator.pushNamed(context, route, arguments: title),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
