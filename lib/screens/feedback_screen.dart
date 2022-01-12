@@ -100,7 +100,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      //TODO: Add useful info
                                       Text('App data',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
