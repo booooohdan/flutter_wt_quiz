@@ -55,7 +55,7 @@ class AppBarRegularWidget extends StatelessWidget {
         SvgPicture.asset(
           'assets/divider.svg',
           height: 5,
-          fit: BoxFit.fill,
+          fit: BoxFit.fitWidth
         ),
       ],
     );

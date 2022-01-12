@@ -34,79 +34,82 @@ class ListItemLevelWidget extends StatelessWidget {
                   fit: BoxFit.fill),
             ),
             child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  context.read<LevelProvider>().setLevel(level);
-                  Navigator.pushNamed(context, '/gameplay');
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10, right: 20),
-                        child: Image.asset(
-                            'assets/images/${level.levelStatus}.png'),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Level ${level.number}',
-                            style: chakra18white,
-                          ),
-                          Row(
-                            children: [
-                              level.isPlane!
-                                  ? SvgPicture.asset(
-                                      'assets/icons/plane.svg',
-                                      width: 15,
-                                    )
-                                  : Container(),
-                              SizedBox(width: 5),
-                              level.isTank!
-                                  ? SvgPicture.asset(
-                                      'assets/icons/tank.svg',
-                                      width: 25,
-                                    )
-                                  : Container(),
-                              SizedBox(width: 5),
-                              level.isShip!
-                                  ? SvgPicture.asset(
-                                      'assets/icons/ship.svg',
-                                      width: 25,
-                                    )
-                                  : Container(),
-                            ],
-                          )
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              style: chakra22white,
-                              children: [
-                                TextSpan(text: '${level.answeredCount}'),
-                                TextSpan(
-                                    text: '/${level.questionCount}',
-                                    style: chakra14white),
-                              ],
+              color: level.levelStatus == levelsCollection['locked'] ? Color(0x44808080) : Colors.transparent,
+              child: IgnorePointer(
+                ignoring: level.levelStatus == levelsCollection['locked'],
+                child: InkWell(
+                  onTap: () {
+                    context.read<LevelProvider>().setLevel(level);
+                    Navigator.pushNamed(context, '/gameplay');
+                  },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10, right: 20),
+                          child: Image.asset(
+                              'assets/images/${level.levelStatus}.png'),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${level.name}',
+                              style: chakra18white,
                             ),
-                          ),
-                          Text(
-                            level.periodOfTime!,
-                            style: oxygen10white,
-                          ),
-                        ],
-                      ),
-                    ],
+                            Row(
+                              children: [
+                                level.isPlane!
+                                    ? SvgPicture.asset(
+                                        'assets/icons/plane.svg',
+                                        width: 15,
+                                      )
+                                    : Container(),
+                                SizedBox(width: 5),
+                                level.isTank!
+                                    ? SvgPicture.asset(
+                                        'assets/icons/tank.svg',
+                                        width: 25,
+                                      )
+                                    : Container(),
+                                SizedBox(width: 5),
+                                level.isShip!
+                                    ? SvgPicture.asset(
+                                        'assets/icons/ship.svg',
+                                        width: 25,
+                                      )
+                                    : Container(),
+                              ],
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                style: chakra22white,
+                                children: [
+                                  TextSpan(text: '${level.answeredCount}'),
+                                  TextSpan(
+                                      text: '/${level.questionCount}',
+                                      style: chakra14white),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              level.periodOfTime!,
+                              style: oxygen10white,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

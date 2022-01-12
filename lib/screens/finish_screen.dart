@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/game_process_model.dart';
 import '../models/level_model.dart';
@@ -12,7 +11,6 @@ import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../widgets/appbar_regular_widget.dart';
 import '../widgets/button_square_widget.dart';
 import '../widgets/button_wide_widget.dart';
-import '../utilities/constants.dart';
 
 class FinishScreen extends StatefulWidget {
   const FinishScreen({Key? key}) : super(key: key);
@@ -88,7 +86,7 @@ class _FinishScreenState extends State<FinishScreen> {
                 AppBarRegularWidget(
                   context: context,
                   isBackArrowShown: false,
-                  centerLabel: 'Finish',
+                  centerLabel: 'FINISH',
                   icon: '',
                 ),
                 Expanded(
@@ -106,6 +104,19 @@ class _FinishScreenState extends State<FinishScreen> {
                       children: [
                         TableRow(children: [
                           Text(
+                            'Average answer time: ',
+                            style: oxygen14whiteNormal,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '${averageTime.toStringAsFixed(1)} s',
+                              style: chakra22white,
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Text(
                             'Accuracy: ',
                             style: oxygen14whiteNormal,
                           ),
@@ -117,19 +128,7 @@ class _FinishScreenState extends State<FinishScreen> {
                             ),
                           )
                         ]),
-                        TableRow(children: [
-                          Text(
-                            'Average Time: ',
-                            style: oxygen14whiteNormal,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${averageTime.toStringAsFixed(1)} s',
-                              style: chakra22white,
-                            ),
-                          )
-                        ]),
+
                         TableRow(children: [
                           Text(
                             'Points: ',
@@ -166,7 +165,7 @@ class _FinishScreenState extends State<FinishScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Classic: Level ${level!.number}',
+                        '${level!.levelType}: ${level!.name}',
                         style: chakra22white,
                       ),
                       Padding(
@@ -252,7 +251,7 @@ class _FinishScreenState extends State<FinishScreen> {
                                   count: '',
                                   onTap: () {
                                     Navigator.pushNamedAndRemoveUntil(context, '/', (r) => false);
-                                    Navigator.pushNamed(context, '/levels');
+                                    Navigator.pushNamed(context, '/levels', arguments: level!.levelType!.toUpperCase());
                                   },
                                 ),
                               ),

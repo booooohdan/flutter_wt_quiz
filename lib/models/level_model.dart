@@ -1,15 +1,17 @@
 class LevelModel {
-    LevelModel(
-      {this.number,
+  LevelModel(
+      {this.name,
+      this.number,
       this.questionCount,
       this.answeredCount,
-      this.isPlane,
-      this.isTank,
-      this.isShip,
+      this.isPlane = false,
+      this.isTank = false,
+      this.isShip = false,
       this.levelStatus,
-      this.periodOfTime
-      });
+      this.levelType = 'Classic',
+      this.periodOfTime});
 
+  String? name;
   int? number;
   int? questionCount;
   int? answeredCount;
@@ -17,5 +19,6 @@ class LevelModel {
   bool? isTank;
   bool? isShip;
   String? levelStatus;
+  String? levelType;
   String? periodOfTime;
 }
