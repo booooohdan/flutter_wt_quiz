@@ -48,7 +48,6 @@ class _MenuScreenState extends State<MenuScreen> {
                         'Game modes:',
                         style: chakra18grey,
                       ),
-                      //TODO: Change mocked routes to correct
                       ButtonMenuWideWidget(
                         context: context,
                         title: 'CLASSIC',

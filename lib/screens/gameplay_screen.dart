@@ -35,6 +35,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
   late VehicleModel vehicleCorrectAnswer;
   late Timer timer;
   bool ignoreClicks = false;
+  String nationHintIcon = 'assets/icons/flag.svg';
 
   var button1 = GameplayButtonModel();
   var button2 = GameplayButtonModel();
@@ -138,6 +139,47 @@ class _GameplayScreenState extends State<GameplayScreen> {
     buttons[2].answerText = shuffledList[2].name!;
     buttons[3].answerText = shuffledList[3].name!;
     startTimer();
+  }
+
+  void fiftyFiftyHints() {
+    final correctIndex = buttons.indexOf(buttons
+        .where((element) => element.answerText == vehicleCorrectAnswer.name)
+        .first);
+
+    switch (correctIndex) {
+      case 0:
+        buttons[1].answerText = '';
+        buttons[2].answerText = '';
+        break;
+      case 1:
+        buttons[0].answerText = '';
+        buttons[3].answerText = '';
+        break;
+      case 2:
+        buttons[0].answerText = '';
+        buttons[3].answerText = '';
+        break;
+      case 3:
+        buttons[1].answerText = '';
+        buttons[2].answerText = '';
+        break;
+    }
+
+    setState(() {});
+    gameProcess.hintFiftyFifty -= 1;
+  }
+
+  void nationHint() {
+    nationHintIcon = 'assets/icons/${vehicleCorrectAnswer.nation}.svg';
+    setState(() {});
+    gameProcess.hintNation -= 1;
+  }
+
+  void skipHint() {
+    timer.cancel();
+    selectQuestionsAndRandomAnswers();
+    setState(() {});
+    gameProcess.hintSkip -= 1;
   }
 
   void startTimer() {
@@ -321,15 +363,20 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         children: [
                           Expanded(
                             flex: 1,
-                            child: ButtonSquareWidget(
-                              context: context,
-                              clipper: ButtonCutLeftBottomEdge(),
-                              backgroundImage:
-                                  'assets/buttons/button_cut_left_bottom_edge.png',
-                              leadingIcon: 'assets/icons/fifty_fifty.svg',
-                              text: '50/50',
-                              count: '${gameProcess.hintFiftyFifty}',
-                              onTap: () {},
+                            child: IgnorePointer(
+                              ignoring: gameProcess.hintFiftyFifty == 0,
+                              child: ButtonSquareWidget(
+                                context: context,
+                                clipper: ButtonCutLeftBottomEdge(),
+                                backgroundImage:
+                                    'assets/buttons/button_cut_left_bottom_edge.png',
+                                leadingIcon: 'assets/icons/fifty_fifty.svg',
+                                text: '50/50',
+                                count: '${gameProcess.hintFiftyFifty}',
+                                onTap: () {
+                                  fiftyFiftyHints();
+                                },
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -337,15 +384,20 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: ButtonSquareWidget(
-                              context: context,
-                              clipper: ButtonNoCut(),
-                              backgroundImage:
-                                  'assets/buttons/button_no_cut.png',
-                              leadingIcon: 'assets/icons/flag.svg',
-                              text: 'NATION',
-                              count: '${gameProcess.hintNation}',
-                              onTap: () {},
+                            child: IgnorePointer(
+                              ignoring: gameProcess.hintNation == 0,
+                              child: ButtonSquareWidget(
+                                context: context,
+                                clipper: ButtonNoCut(),
+                                backgroundImage:
+                                    'assets/buttons/button_no_cut.png',
+                                leadingIcon: nationHintIcon,
+                                text: 'NATION',
+                                count: '${gameProcess.hintNation}',
+                                onTap: () {
+                                  nationHint();
+                                },
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -353,15 +405,20 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: ButtonSquareWidget(
-                              context: context,
-                              clipper: ButtonCutRightBottomEdge(),
-                              backgroundImage:
-                                  'assets/buttons/button_cut_right_bottom_edge.png',
-                              leadingIcon: 'assets/icons/skip.svg',
-                              text: 'SKIP',
-                              count: '${gameProcess.hintSkip}',
-                              onTap: () {},
+                            child: IgnorePointer(
+                              ignoring: gameProcess.hintSkip == 0,
+                              child: ButtonSquareWidget(
+                                context: context,
+                                clipper: ButtonCutRightBottomEdge(),
+                                backgroundImage:
+                                    'assets/buttons/button_cut_right_bottom_edge.png',
+                                leadingIcon: 'assets/icons/skip.svg',
+                                text: 'SKIP',
+                                count: '${gameProcess.hintSkip}',
+                                onTap: () {
+                                  skipHint();
+                                },
+                              ),
                             ),
                           ),
                         ],
@@ -375,25 +432,37 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          ButtonGameplayWidget(
-                            context: context,
-                            onTap: () => answerButtonTapped(buttons[0]),
-                            model: buttons[0],
+                          Visibility(
+                            visible: buttons[0].answerText.isNotEmpty,
+                            child: ButtonGameplayWidget(
+                              context: context,
+                              onTap: () => answerButtonTapped(buttons[0]),
+                              model: buttons[0],
+                            ),
                           ),
-                          ButtonGameplayWidget(
-                            context: context,
-                            onTap: () => answerButtonTapped(buttons[1]),
-                            model: buttons[1],
+                          Visibility(
+                            visible: buttons[1].answerText.isNotEmpty,
+                            child: ButtonGameplayWidget(
+                              context: context,
+                              onTap: () => answerButtonTapped(buttons[1]),
+                              model: buttons[1],
+                            ),
                           ),
-                          ButtonGameplayWidget(
-                            context: context,
-                            onTap: () => answerButtonTapped(buttons[2]),
-                            model: buttons[2],
+                          Visibility(
+                            visible: buttons[2].answerText.isNotEmpty,
+                            child: ButtonGameplayWidget(
+                              context: context,
+                              onTap: () => answerButtonTapped(buttons[2]),
+                              model: buttons[2],
+                            ),
                           ),
-                          ButtonGameplayWidget(
-                            context: context,
-                            onTap: () => answerButtonTapped(buttons[3]),
-                            model: buttons[3],
+                          Visibility(
+                            visible: buttons[3].answerText.isNotEmpty,
+                            child: ButtonGameplayWidget(
+                              context: context,
+                              onTap: () => answerButtonTapped(buttons[3]),
+                              model: buttons[3],
+                            ),
                           ),
                         ],
                       ),
