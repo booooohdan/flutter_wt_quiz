@@ -324,7 +324,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       children: [
                         Text(
                           '${gameProcess.timeCurrent} s',
-                          style: oxygen14white,
+                          style: oxygen14whiteBold,
                         ),
                         SizedBox(
                           height: 10,

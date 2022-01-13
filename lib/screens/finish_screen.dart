@@ -105,26 +105,26 @@ class _FinishScreenState extends State<FinishScreen> {
                         TableRow(children: [
                           Text(
                             'Average answer time: ',
-                            style: oxygen14whiteNormal,
+                            style: oxygen14whiteRegular,
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
                               '${averageTime.toStringAsFixed(1)} s',
-                              style: chakra22white,
+                              style: chakra22whiteBold,
                             ),
                           )
                         ]),
                         TableRow(children: [
                           Text(
                             'Accuracy: ',
-                            style: oxygen14whiteNormal,
+                            style: oxygen14whiteRegular,
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
                               '${answerAccuracy.toStringAsFixed(0)} %',
-                              style: chakra22white,
+                              style: chakra22whiteBold,
                             ),
                           )
                         ]),
@@ -132,26 +132,26 @@ class _FinishScreenState extends State<FinishScreen> {
                         TableRow(children: [
                           Text(
                             'Points: ',
-                            style: oxygen14whiteNormal,
+                            style: oxygen14whiteRegular,
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
                               '${leaderboardPoints.toStringAsFixed(0)}',
-                              style: chakra22white,
+                              style: chakra22whiteBold,
                             ),
                           )
                         ]),
                         TableRow(children: [
                           Text(
                             'Hints used: ',
-                            style: oxygen14whiteNormal,
+                            style: oxygen14whiteRegular,
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
                               '1',
-                              style: chakra22white,
+                              style: chakra22whiteBold,
                             ),
                           )
                         ]),
@@ -166,7 +166,7 @@ class _FinishScreenState extends State<FinishScreen> {
                     children: [
                       Text(
                         '${level!.levelType}: ${level!.name}',
-                        style: chakra22white,
+                        style: chakra22whiteBold,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
@@ -179,13 +179,13 @@ class _FinishScreenState extends State<FinishScreen> {
                       ),
                       RichText(
                         text: TextSpan(
-                          style: chakra48white,
+                          style: chakra48whiteBold,
                           children: [
                             TextSpan(
                                 text: '${gameResult!.correctAnswersCount}'),
                             TextSpan(
                                 text: '/${level!.questionCount}',
-                                style: chakra22white),
+                                style: chakra22whiteBold),
                           ],
                         ),
                       ),

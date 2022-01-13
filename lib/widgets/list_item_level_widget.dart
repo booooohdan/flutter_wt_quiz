@@ -58,7 +58,7 @@ class ListItemLevelWidget extends StatelessWidget {
                           children: [
                             Text(
                               '${level.name}',
-                              style: chakra18white,
+                              style: chakra18whiteBold,
                             ),
                             Row(
                               children: [
@@ -93,18 +93,18 @@ class ListItemLevelWidget extends StatelessWidget {
                           children: [
                             RichText(
                               text: TextSpan(
-                                style: chakra22white,
+                                style: chakra22whiteBold,
                                 children: [
                                   TextSpan(text: '${level.answeredCount}'),
                                   TextSpan(
                                       text: '/${level.questionCount}',
-                                      style: chakra14white),
+                                      style: chakra14whiteBold),
                                 ],
                               ),
                             ),
                             Text(
                               level.periodOfTime!,
-                              style: oxygen10white,
+                              style: oxygen10whiteBold,
                             ),
                           ],
                         ),

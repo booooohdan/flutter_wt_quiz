@@ -158,7 +158,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       ),
                       Text(
                         'Version $version',
-                        style: chakra18grey,
+                        style: chakra18greyBold,
                       ),
                       SizedBox(
                         height: 20,
@@ -169,7 +169,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         child: Text(
                           'WT Quiz is a trivia game with vehicles from the game War Thunder. '
                           'All images and description have been taken from wiki.warthunder.com',
-                          style: oxygen13whiteNormal,
+                          style: oxygen14whiteRegular,
                           textAlign: TextAlign.center,
                         ),
                       )
@@ -342,7 +342,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                 ),
                                 Text(
                                   'PRIVACY',
-                                  style: oxygen10grey,
+                                  style: oxygen10greyBold,
                                 ),
                               ],
                             ),

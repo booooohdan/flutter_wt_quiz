@@ -44,7 +44,7 @@ class ButtonSquareWidget extends StatelessWidget {
                   right: 10,
                   child: Text(
                     count,
-                    style: chakra14white,
+                    style: chakra14whiteBold,
                   ),
                 ),
                 Center(
@@ -57,7 +57,7 @@ class ButtonSquareWidget extends StatelessWidget {
                       ),
                       Text(
                         text,
-                        style: oxygen10white,
+                        style: oxygen10whiteBold,
                       ),
                     ],
                   ),

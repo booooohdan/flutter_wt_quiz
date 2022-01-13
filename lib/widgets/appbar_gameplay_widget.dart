@@ -45,7 +45,7 @@ class AppBarGameplayWidget extends StatelessWidget {
                     children: [
                       Text(
                         '${gameProcess.correctAnswersCount}',
-                        style: chakra18white,
+                        style: chakra18whiteBold,
                       ),
                       SizedBox(
                         width: 10,
@@ -83,12 +83,12 @@ class AppBarGameplayWidget extends StatelessWidget {
                   child: RichText(
                     textAlign: TextAlign.end,
                     text: TextSpan(
-                      style: chakra22white,
+                      style: chakra22whiteBold,
                       children: [
                         TextSpan(text: '${gameProcess.questionCurrent}'),
                         TextSpan(
                             text: '/${gameProcess.questionsTotal}',
-                            style: chakra14white),
+                            style: chakra14whiteBold),
                       ],
                     ),
                   ),

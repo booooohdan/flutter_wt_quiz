@@ -38,7 +38,7 @@ class AppBarRegularWidget extends StatelessWidget {
               ),
               Text(
                 centerLabel,
-                style: chakra22white,
+                style: chakra22whiteBold,
               ),
               SizedBox(
                 width: 80,
