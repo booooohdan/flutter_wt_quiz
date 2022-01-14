@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 final greyTextColor = Color(0xFF9DA5B6);
 final greenButtonColor = Color(0xFF73EF86);
+final greyTransparentColor = Color(0x44808080);
 
 //#endregion
 

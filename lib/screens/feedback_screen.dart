@@ -82,7 +82,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 AppBarRegularWidget(
                   context: context,
                   isBackArrowShown: true,
-                  centerLabel: 'Feedback',
+                  centerLabel: 'FEEDBACK',
                   icon: '',
                 ),
                 Expanded(

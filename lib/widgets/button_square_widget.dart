@@ -35,7 +35,7 @@ class ButtonSquareWidget extends StatelessWidget {
               image: DecorationImage(
                   image: AssetImage(backgroundImage), fit: BoxFit.fill)),
           child: Material(
-            color: Colors.transparent,
+            color: count == '0' ? greyTransparentColor : Colors.transparent,
             child: InkWell(
               onTap: onTap,
               child: Stack(children: [

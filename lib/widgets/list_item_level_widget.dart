@@ -34,7 +34,7 @@ class ListItemLevelWidget extends StatelessWidget {
                   fit: BoxFit.fill),
             ),
             child: Material(
-              color: level.levelStatus == levelsCollection['locked'] ? Color(0x44808080) : Colors.transparent,
+              color: level.levelStatus == levelsCollection['locked'] ? greyTransparentColor : Colors.transparent,
               child: IgnorePointer(
                 ignoring: level.levelStatus == levelsCollection['locked'],
                 child: InkWell(
