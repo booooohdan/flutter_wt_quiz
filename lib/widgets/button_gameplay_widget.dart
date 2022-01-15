@@ -28,7 +28,7 @@ class ButtonGameplayWidget extends StatelessWidget {
           padding: const EdgeInsets.all(1),
           child: Container(
             height: 60,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                         'assets/buttons/wide_button_cut_bottom_edges.png'),

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/level_model.dart';
 import '../utilities/constants.dart';
 
-class LevelsCollection {
+class DebugLevelsCollection {
   LevelModel? level;
   List<LevelModel> levels = [];
 

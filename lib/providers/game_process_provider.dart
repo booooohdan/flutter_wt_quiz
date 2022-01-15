@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:wt_quiz/data/planes_collection.dart';
-import 'package:wt_quiz/models/vehicle_model.dart';
 
+import '../data/debug_planes_collection.dart';
 import '../models/game_process_model.dart';
 import '../models/level_model.dart';
+import '../models/vehicle_model.dart';
 import '../utilities/constants.dart';
 
 
@@ -52,7 +52,7 @@ class GameProcessProvider with ChangeNotifier {
       return GameProcessModel()
         ..heartsCount = level.questionCount!
         ..questionsTotal = level.questionCount!
-        ..timeExpected = level.questionCount!
+        ..timeExpected = 10
         ..hintFiftyFifty = level.questionCount!
         ..hintNation = level.questionCount!
         ..hintSkip = level.questionCount!;
@@ -60,9 +60,10 @@ class GameProcessProvider with ChangeNotifier {
   }
 
   List<VehicleModel> addVehicles(LevelModel level) {
+    // ignore: prefer_final_locals
     List<VehicleModel> vehicles = [];
     if (level.isPlane!) {
-      vehicles.addAll(planes);
+      vehicles.addAll(debugPlanes);
     }
     if (level.isTank!) {
       //TODO: Uncomment when collection of tanks will be ready

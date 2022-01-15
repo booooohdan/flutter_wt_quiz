@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/levels_collection.dart';
+import '../data/debug_levels_collection.dart';
 import '../models/level_model.dart';
 
 class LevelProvider with ChangeNotifier {
@@ -38,11 +38,11 @@ class LevelProvider with ChangeNotifier {
   Future<List<LevelModel>> addLevels(String args) async {
     switch (args) {
       case 'HARDCORE':
-        return await LevelsCollection().addHardcoreLevel();
+        return await DebugLevelsCollection().addHardcoreLevel();
       case 'TRAINING':
-        return await LevelsCollection().addTrainingLevel();
+        return await DebugLevelsCollection().addTrainingLevel();
       default:
-        return await LevelsCollection().addClassicLevel();
+        return await DebugLevelsCollection().addClassicLevel();
     }
   }
 }

@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/planes_collection.dart';
 import '../models/game_process_model.dart';
 import '../models/gameplay_button_model.dart';
 import '../models/level_model.dart';
@@ -29,7 +28,8 @@ class GameplayScreen extends StatefulWidget {
 class _GameplayScreenState extends State<GameplayScreen> {
   LevelModel? level;
   GameProcessModel? gameProcess;
-  List<VehicleModel> vehicles = [];
+
+  //List<VehicleModel> vehicles = [];
   List<GameplayButtonModel> buttons = [];
   late VehicleModel vehicleCorrectAnswer;
   late Timer timer;
@@ -53,12 +53,11 @@ class _GameplayScreenState extends State<GameplayScreen> {
       ..add(button3)
       ..add(button4);
 
-    vehicles = context.read<GameProcessProvider>().addVehicles(level!);
-    gameProcess = context.read<GameProcessProvider>().setLevelDifficultParams(level!);
+    //vehicles = ;
+    gameProcess =
+        context.read<GameProcessProvider>().setLevelDifficultParams(level!);
     initNewQuestion();
   }
-
-
 
   @override
   void dispose() {
@@ -82,6 +81,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
   }
 
   void selectQuestionsAndRandomAnswers() {
+    final vehicles = context.read<GameProcessProvider>().addVehicles(level!);
     final shuffledList = List.from(vehicles)..shuffle();
     vehicleCorrectAnswer = shuffledList[random.nextInt(4)];
 
@@ -117,26 +117,29 @@ class _GameplayScreenState extends State<GameplayScreen> {
     }
 
     setState(() {});
-    gameProcess!.hintFiftyFifty -= 1;
+    gameProcess!.hintFiftyFifty--;
+    gameProcess!.hintsUsed++;
   }
 
   void nationHint() {
     nationHintIcon = 'assets/icons/${vehicleCorrectAnswer.nation}.svg';
     setState(() {});
-    gameProcess!.hintNation -= 1;
+    gameProcess!.hintNation--;
+    gameProcess!.hintsUsed++;
   }
 
   void skipHint() {
     timer.cancel();
     selectQuestionsAndRandomAnswers();
     setState(() {});
-    gameProcess!.hintSkip -= 1;
+    gameProcess!.hintSkip--;
+    gameProcess!.hintsUsed++;
   }
 
   void startTimer() {
     gameProcess!.timeCurrent = gameProcess!.timeExpected;
     timer = Timer.periodic(
-      Duration(seconds: 1),
+      const Duration(seconds: 1),
       (Timer timer) {
         if (gameProcess!.timeCurrent == 0) {
           setState(() {
@@ -183,11 +186,11 @@ class _GameplayScreenState extends State<GameplayScreen> {
         .first;
 
     setState(() => correctButton.isGreenBlink = true);
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     setState(() => correctButton.isGreenBlink = false);
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     setState(() => correctButton.isGreenBlink = true);
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     setState(() => correctButton.isGreenBlink = false);
   }
 
@@ -204,7 +207,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                   width: MediaQuery.of(context).size.width * .9,
                   child: Column(
                     children: [
-                      Text('Do you really want to exit?'),
+                      const Text('Do you really want to exit?'),
                       Row(
                         children: [
                           ButtonSquareWidget(
@@ -277,7 +280,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           '${gameProcess!.timeCurrent} s',
                           style: oxygen14whiteBold,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         SizedBox(
@@ -330,7 +333,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -351,7 +354,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(

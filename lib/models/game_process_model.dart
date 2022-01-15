@@ -10,6 +10,7 @@ class GameProcessModel {
     this.hintFiftyFifty = 0,
     this.hintNation = 0,
     this.hintSkip = 0,
+    this.hintsUsed = 0,
   });
 
   int correctAnswersCount;
@@ -22,4 +23,5 @@ class GameProcessModel {
   int hintFiftyFifty;
   int hintNation;
   int hintSkip;
+  int hintsUsed;
 }

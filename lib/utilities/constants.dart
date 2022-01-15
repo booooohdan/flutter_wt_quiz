@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 //#region Colors
 
-final greyTextColor = Color(0xFF9DA5B6);
-final greenButtonColor = Color(0xFF73EF86);
-final greyTransparentColor = Color(0x44808080);
+const greyTextColor = Color(0xFF9DA5B6);
+const greenButtonColor = Color(0xFF73EF86);
+const greyTransparentColor = Color(0x44808080);
 
 //#endregion
 
@@ -18,7 +18,7 @@ final chakra18whiteBold = GoogleFonts.chakraPetch(
     fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold);
 
 final chakra18greyBold = GoogleFonts.chakraPetch(
-    fontSize: 18, color: Color(0xFF9DA5B6), fontWeight: FontWeight.bold);
+    fontSize: 18, color: greyTextColor, fontWeight: FontWeight.bold);
 
 final chakra22whiteBold = GoogleFonts.chakraPetch(
     fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold);
@@ -30,7 +30,7 @@ final oxygen10whiteBold = GoogleFonts.oxygen(
     fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold);
 
 final oxygen10greyBold = GoogleFonts.oxygen(
-    fontSize: 10, color: Color(0xFF9DA5B6), fontWeight: FontWeight.bold);
+    fontSize: 10, color: greyTextColor, fontWeight: FontWeight.bold);
 
 final oxygen14whiteBold = GoogleFonts.oxygen(
     fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold);
@@ -42,7 +42,7 @@ final oxygen18whiteBold = GoogleFonts.oxygen(
     fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold);
 
 final oxygen18greyBold = GoogleFonts.oxygen(
-    fontSize: 18, color: Color(0xFF9DA5B6), fontWeight: FontWeight.bold);
+    fontSize: 18, color: greyTextColor, fontWeight: FontWeight.bold);
 
 //#endregion
 

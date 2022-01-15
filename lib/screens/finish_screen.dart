@@ -62,8 +62,8 @@ class _FinishScreenState extends State<FinishScreen> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: isSuccess
-                  ? AssetImage('assets/backgrounds/finish_success.png')
-                  : AssetImage('assets/backgrounds/finish_failed.png'),
+                  ? const AssetImage('assets/backgrounds/finish_success.png')
+                  : const AssetImage('assets/backgrounds/finish_failed.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -119,7 +119,8 @@ class _FinishScreenState extends State<FinishScreen> {
                             '${answerAccuracy.toStringAsFixed(0)} %'),
                         buildTableRow('Points: ',
                             '${leaderboardPoints.toStringAsFixed(0)}'),
-                        buildTableRow('Hints used: ', '1'),
+                        buildTableRow(
+                            'Hints used: ', '${gameResult!.hintsUsed}'),
                       ],
                     ),
                   ),
@@ -163,6 +164,7 @@ class _FinishScreenState extends State<FinishScreen> {
                             icon: '',
                             title: 'DOUBLE POINTS',
                             onTap: () {},
+                            //TODO: Implement double points
                           ),
                         ),
                         Padding(
@@ -213,7 +215,7 @@ class _FinishScreenState extends State<FinishScreen> {
                         ),
                       ],
                     )),
-                SizedBox(height: 50,)
+                const SizedBox(height: 50)
               ],
             ),
           ),

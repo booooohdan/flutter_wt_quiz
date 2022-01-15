@@ -47,8 +47,8 @@ class AppBarGameplayWidget extends StatelessWidget {
                         '${gameProcess.correctAnswersCount}',
                         style: chakra18whiteBold,
                       ),
-                      SizedBox(
-                        width: 10,
+                      const SizedBox(
+                        width: 10
                       ),
                       SvgPicture.asset(
                         'assets/icons/checkmark.svg',
@@ -64,12 +64,12 @@ class AppBarGameplayWidget extends StatelessWidget {
                     'assets/icons/${heartsList()[0]}.svg',
                     width: 20,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   SvgPicture.asset(
                     'assets/icons/${heartsList()[1]}.svg',
                     width: 20,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   SvgPicture.asset(
                     'assets/icons/${heartsList()[2]}.svg',
                     width: 20,

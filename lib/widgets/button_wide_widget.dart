@@ -32,7 +32,7 @@ class ButtonWideWidget extends StatelessWidget {
           padding: const EdgeInsets.all(1),
           child: Container(
             height: 60,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                         'assets/buttons/wide_button_cut_bottom_edges.png'),
@@ -51,16 +51,16 @@ class ButtonWideWidget extends StatelessWidget {
                                 icon,
                                 height: 24,
                               ),
-                              SizedBox(
-                                width: 10,
-                              )
+                              const SizedBox(width: 10)
                             ],
                           )
                         : Container(),
                     Text(
                       title,
                       style: GoogleFonts.oxygen(
-                          fontSize: 16, color: textColor, fontWeight: FontWeight.bold),
+                          fontSize: 16,
+                          color: textColor,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

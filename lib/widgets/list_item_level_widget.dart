@@ -27,7 +27,7 @@ class ListItemLevelWidget extends StatelessWidget {
           padding: const EdgeInsets.all(1),
           child: Container(
             height: 80,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
                       'assets/buttons/wide_button_cut_right_bottom_edge.png'),
@@ -68,14 +68,14 @@ class ListItemLevelWidget extends StatelessWidget {
                                         width: 15,
                                       )
                                     : Container(),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 level.isTank!
                                     ? SvgPicture.asset(
                                         'assets/icons/tank.svg',
                                         width: 25,
                                       )
                                     : Container(),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 level.isShip!
                                     ? SvgPicture.asset(
                                         'assets/icons/ship.svg',
@@ -86,7 +86,7 @@ class ListItemLevelWidget extends StatelessWidget {
                             )
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.end,
