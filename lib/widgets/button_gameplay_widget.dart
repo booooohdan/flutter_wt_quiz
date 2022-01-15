@@ -7,7 +7,7 @@ import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
 
 class ButtonGameplayWidget extends StatelessWidget {
-  ButtonGameplayWidget({
+  const ButtonGameplayWidget({
     Key? key,
     required this.context,
     required this.onTap,

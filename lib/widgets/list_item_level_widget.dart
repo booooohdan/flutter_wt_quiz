@@ -8,7 +8,7 @@ import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_right_bottom_edge.dart';
 
 class ListItemLevelWidget extends StatelessWidget {
-  ListItemLevelWidget({
+  const ListItemLevelWidget({
     Key? key,
     required this.context,
     required this.level,

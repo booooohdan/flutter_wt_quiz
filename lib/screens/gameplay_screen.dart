@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wt_quiz/utilities/constants.dart';
 
 import '../data/planes_collection.dart';
 import '../models/game_process_model.dart';
@@ -21,7 +20,7 @@ import '../widgets/button_gameplay_widget.dart';
 import '../widgets/button_square_widget.dart';
 
 class GameplayScreen extends StatefulWidget {
-  GameplayScreen({Key? key}) : super(key: key);
+  const GameplayScreen({Key? key}) : super(key: key);
 
   @override
   _GameplayScreenState createState() => _GameplayScreenState();
@@ -29,18 +28,18 @@ class GameplayScreen extends StatefulWidget {
 
 class _GameplayScreenState extends State<GameplayScreen> {
   LevelModel? level;
+  GameProcessModel? gameProcess;
   List<VehicleModel> vehicles = [];
   List<GameplayButtonModel> buttons = [];
-  late GameProcessModel gameProcess;
   late VehicleModel vehicleCorrectAnswer;
   late Timer timer;
-  bool ignoreClicks = false;
-  String nationHintIcon = 'assets/icons/flag.svg';
 
   var button1 = GameplayButtonModel();
   var button2 = GameplayButtonModel();
   var button3 = GameplayButtonModel();
   var button4 = GameplayButtonModel();
+  var nationHintIcon = 'assets/icons/flag.svg';
+  var ignoreClicks = false;
   var random = Random();
 
   @override
@@ -48,66 +47,18 @@ class _GameplayScreenState extends State<GameplayScreen> {
     super.didChangeDependencies();
     level = context.watch<LevelProvider>().currentLevel;
 
-    if (level!.isPlane!) {
-      vehicles.addAll(planes);
-    }
-    if (level!.isTank!) {
-      //TODO: Uncomment when collection of tanks will be ready
-      //vehicles.addAll(tanks);
-    }
-    if (level!.isTank!) {
-      //TODO: Uncomment when collection of ships will be ready
-      //vehicles.addAll(ships);
-    }
-
     buttons
       ..add(button1)
       ..add(button2)
       ..add(button3)
       ..add(button4);
 
-    if (level!.levelType == levelTypes['classic']) {
-      gameProcess = GameProcessModel()
-        ..heartsCount = 3
-        ..questionsTotal = level!.questionCount!
-        ..timeExpected = 10
-        ..hintFiftyFifty = 1
-        ..hintNation = 1
-        ..hintSkip = 1;
-    }
-
-    if (level!.levelType == levelTypes['hardcore']) {
-      gameProcess = GameProcessModel()
-        ..heartsCount = 1
-        ..questionsTotal = level!.questionCount!
-        ..timeExpected = 5
-        ..hintFiftyFifty = 1
-        ..hintNation = 1
-        ..hintSkip = 1;
-    }
-
-    if (level!.levelType == levelTypes['insane']) {
-      gameProcess = GameProcessModel()
-        ..heartsCount = 1
-        ..questionsTotal = level!.questionCount!
-        ..timeExpected = 3
-        ..hintFiftyFifty = 0
-        ..hintNation = 0
-        ..hintSkip = 0;
-    }
-
-    if (level!.levelType == levelTypes['training']) {
-      gameProcess = GameProcessModel()
-        ..heartsCount = level!.questionCount!
-        ..questionsTotal = level!.questionCount!
-        ..timeExpected = level!.questionCount!
-        ..hintFiftyFifty = level!.questionCount!
-        ..hintNation = level!.questionCount!
-        ..hintSkip = level!.questionCount!;
-    }
-
+    vehicles = context.read<GameProcessProvider>().addVehicles(level!);
+    gameProcess = context.read<GameProcessProvider>().setLevelDifficultParams(level!);
     initNewQuestion();
   }
+
+
 
   @override
   void dispose() {
@@ -116,13 +67,13 @@ class _GameplayScreenState extends State<GameplayScreen> {
   }
 
   void initNewQuestion() {
-    gameProcess.questionCurrent++;
+    gameProcess!.questionCurrent++;
 
     final isQuestionOver =
-        gameProcess.questionCurrent > gameProcess.questionsTotal;
-    final isLivesOver = gameProcess.heartsCount <= 0;
+        gameProcess!.questionCurrent > gameProcess!.questionsTotal;
+    final isLivesOver = gameProcess!.heartsCount <= 0;
     if (isQuestionOver || isLivesOver) {
-      context.read<GameProcessProvider>().setGameProcess(gameProcess);
+      context.read<GameProcessProvider>().setGameProcess(gameProcess!);
       Navigator.pushReplacementNamed(context, '/finish');
       return;
     }
@@ -166,34 +117,34 @@ class _GameplayScreenState extends State<GameplayScreen> {
     }
 
     setState(() {});
-    gameProcess.hintFiftyFifty -= 1;
+    gameProcess!.hintFiftyFifty -= 1;
   }
 
   void nationHint() {
     nationHintIcon = 'assets/icons/${vehicleCorrectAnswer.nation}.svg';
     setState(() {});
-    gameProcess.hintNation -= 1;
+    gameProcess!.hintNation -= 1;
   }
 
   void skipHint() {
     timer.cancel();
     selectQuestionsAndRandomAnswers();
     setState(() {});
-    gameProcess.hintSkip -= 1;
+    gameProcess!.hintSkip -= 1;
   }
 
   void startTimer() {
-    gameProcess.timeCurrent = gameProcess.timeExpected;
+    gameProcess!.timeCurrent = gameProcess!.timeExpected;
     timer = Timer.periodic(
       Duration(seconds: 1),
       (Timer timer) {
-        if (gameProcess.timeCurrent == 0) {
+        if (gameProcess!.timeCurrent == 0) {
           setState(() {
             timer.cancel();
           });
         } else {
           setState(() {
-            gameProcess.timeCurrent--;
+            gameProcess!.timeCurrent--;
           });
         }
       },
@@ -204,9 +155,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
     ignoreClicks = true;
 
     //Small fix for timer tick +1 bug
-    timer.tick > gameProcess.timeExpected
-        ? gameProcess.timeAverage += gameProcess.timeExpected
-        : gameProcess.timeAverage += timer.tick;
+    timer.tick > gameProcess!.timeExpected
+        ? gameProcess!.timeAverage += gameProcess!.timeExpected
+        : gameProcess!.timeAverage += timer.tick;
     //Small fix for timer tick +1 bug
 
     timer.cancel();
@@ -220,9 +171,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   void correctAnswerHandler(bool isCorrect) {
     if (isCorrect) {
-      gameProcess.correctAnswersCount++;
+      gameProcess!.correctAnswersCount++;
     } else {
-      gameProcess.heartsCount--;
+      gameProcess!.heartsCount--;
     }
   }
 
@@ -315,7 +266,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                 children: [
                   AppBarGameplayWidget(
                     context: context,
-                    gameProcess: gameProcess,
+                    gameProcess: gameProcess!,
                   ),
                   Expanded(
                     flex: 1,
@@ -323,7 +274,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${gameProcess.timeCurrent} s',
+                          '${gameProcess!.timeCurrent} s',
                           style: oxygen14whiteBold,
                         ),
                         SizedBox(
@@ -334,8 +285,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           child: LinearProgressIndicator(
                             color: Colors.white,
                             backgroundColor: greyTextColor,
-                            value: gameProcess.timeCurrent /
-                                gameProcess.timeExpected,
+                            value: gameProcess!.timeCurrent /
+                                gameProcess!.timeExpected,
                           ),
                         ),
                       ],
@@ -364,7 +315,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           Expanded(
                             flex: 1,
                             child: IgnorePointer(
-                              ignoring: gameProcess.hintFiftyFifty == 0,
+                              ignoring: gameProcess!.hintFiftyFifty == 0,
                               child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonCutLeftBottomEdge(),
@@ -372,7 +323,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                     'assets/buttons/button_cut_left_bottom_edge.png',
                                 leadingIcon: 'assets/icons/fifty_fifty.svg',
                                 text: '50/50',
-                                count: '${gameProcess.hintFiftyFifty}',
+                                count: '${gameProcess!.hintFiftyFifty}',
                                 onTap: () {
                                   fiftyFiftyHints();
                                 },
@@ -385,7 +336,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           Expanded(
                             flex: 1,
                             child: IgnorePointer(
-                              ignoring: gameProcess.hintNation == 0,
+                              ignoring: gameProcess!.hintNation == 0,
                               child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonNoCut(),
@@ -393,7 +344,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                     'assets/buttons/button_no_cut.png',
                                 leadingIcon: nationHintIcon,
                                 text: 'NATION',
-                                count: '${gameProcess.hintNation}',
+                                count: '${gameProcess!.hintNation}',
                                 onTap: () {
                                   nationHint();
                                 },
@@ -406,7 +357,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           Expanded(
                             flex: 1,
                             child: IgnorePointer(
-                              ignoring: gameProcess.hintSkip == 0,
+                              ignoring: gameProcess!.hintSkip == 0,
                               child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonCutRightBottomEdge(),
@@ -414,7 +365,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                     'assets/buttons/button_cut_right_bottom_edge.png',
                                 leadingIcon: 'assets/icons/skip.svg',
                                 text: 'SKIP',
-                                count: '${gameProcess.hintSkip}',
+                                count: '${gameProcess!.hintSkip}',
                                 onTap: () {
                                   skipHint();
                                 },

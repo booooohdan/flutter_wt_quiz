@@ -75,9 +75,7 @@ class _MenuScreenState extends State<MenuScreen> {
                               'FEEDBACK',
                               style: oxygen18greyBold,
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
+                            const SizedBox(width: 20),
                             SvgPicture.asset(
                               'assets/icons/right_arrow.svg',
                               height: 20,

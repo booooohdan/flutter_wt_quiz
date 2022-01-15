@@ -23,16 +23,14 @@ void main() {
       ],
       child: MaterialApp(
         title: 'WT Quiz',
-        theme: ThemeData(
-          brightness: Brightness.light,
-        ),
+        theme: ThemeData(brightness: Brightness.light),
         routes: {
-          '/': (context) => MenuScreen(),
-          '/login': (context) => LoginScreen(),
-          '/levels': (context) => LevelsScreen(),
-          '/gameplay': (context) => GameplayScreen(),
-          '/finish': (context) => FinishScreen(),
-          '/feedback': (context) => FeedbackScreen(),
+          '/': (context) => const MenuScreen(),
+          '/login': (context) => const LoginScreen(),
+          '/levels': (context) => const LevelsScreen(),
+          '/gameplay': (context) => const GameplayScreen(),
+          '/finish': (context) => const FinishScreen(),
+          '/feedback': (context) => const FeedbackScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),

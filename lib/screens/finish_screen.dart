@@ -50,7 +50,8 @@ class _FinishScreenState extends State<FinishScreen> {
 
     leaderboardPoints = gameResult!.correctAnswersCount * multiplier;
 
-    context.read<LevelProvider>().saveResultToPreferences(correctToTotalRatio, gameResult!.correctAnswersCount);
+    context.read<LevelProvider>().saveResultToPreferences(
+        correctToTotalRatio, gameResult!.correctAnswersCount);
   }
 
   @override
@@ -78,6 +79,16 @@ class _FinishScreenState extends State<FinishScreen> {
                   fit: BoxFit.cover,
                 ),
         ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            child: Stack(children: [
+              isSuccess
+                  ? Image.asset('assets/images/success.png')
+                  : Image.asset('assets/images/failed.png'),
+            ]),
+          ),
+        ),
         SafeArea(
           child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -90,71 +101,25 @@ class _FinishScreenState extends State<FinishScreen> {
                   icon: '',
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
                     alignment: Alignment.center,
                     width: 250,
                     child: Table(
-                      columnWidths: {
+                      columnWidths: const {
                         0: FlexColumnWidth(2),
                         1: FlexColumnWidth(1),
                       },
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.bottom,
                       children: [
-                        TableRow(children: [
-                          Text(
-                            'Average answer time: ',
-                            style: oxygen14whiteRegular,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${averageTime.toStringAsFixed(1)} s',
-                              style: chakra22whiteBold,
-                            ),
-                          )
-                        ]),
-                        TableRow(children: [
-                          Text(
-                            'Accuracy: ',
-                            style: oxygen14whiteRegular,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${answerAccuracy.toStringAsFixed(0)} %',
-                              style: chakra22whiteBold,
-                            ),
-                          )
-                        ]),
-
-                        TableRow(children: [
-                          Text(
-                            'Points: ',
-                            style: oxygen14whiteRegular,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${leaderboardPoints.toStringAsFixed(0)}',
-                              style: chakra22whiteBold,
-                            ),
-                          )
-                        ]),
-                        TableRow(children: [
-                          Text(
-                            'Hints used: ',
-                            style: oxygen14whiteRegular,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '1',
-                              style: chakra22whiteBold,
-                            ),
-                          )
-                        ]),
+                        buildTableRow('Average answer time: ',
+                            '${averageTime.toStringAsFixed(1)} s'),
+                        buildTableRow('Accuracy: ',
+                            '${answerAccuracy.toStringAsFixed(0)} %'),
+                        buildTableRow('Points: ',
+                            '${leaderboardPoints.toStringAsFixed(0)}'),
+                        buildTableRow('Hints used: ', '1'),
                       ],
                     ),
                   ),
@@ -162,20 +127,11 @@ class _FinishScreenState extends State<FinishScreen> {
                 Expanded(
                   flex: 2,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         '${level!.levelType}: ${level!.name}',
                         style: chakra22whiteBold,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20, bottom: 30, left: 20, right: 20),
-                        child: Stack(children: [
-                          isSuccess
-                              ? Image.asset('assets/images/success.png')
-                              : Image.asset('assets/images/failed.png'),
-                        ]),
                       ),
                       RichText(
                         text: TextSpan(
@@ -229,15 +185,9 @@ class _FinishScreenState extends State<FinishScreen> {
                                           context, '/', (r) => false),
                                 ),
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
                               Expanded(
                                 flex: 1,
                                 child: Container(),
-                              ),
-                              SizedBox(
-                                width: 10,
                               ),
                               Expanded(
                                 flex: 1,
@@ -250,8 +200,11 @@ class _FinishScreenState extends State<FinishScreen> {
                                   text: '${isSuccess ? 'NEXT LEVEL' : 'RETRY'}',
                                   count: '',
                                   onTap: () {
-                                    Navigator.pushNamedAndRemoveUntil(context, '/', (r) => false);
-                                    Navigator.pushNamed(context, '/levels', arguments: level!.levelType!.toUpperCase());
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/', (r) => false);
+                                    Navigator.pushNamed(context, '/levels',
+                                        arguments:
+                                            level!.levelType!.toUpperCase());
                                   },
                                 ),
                               ),
@@ -260,11 +213,28 @@ class _FinishScreenState extends State<FinishScreen> {
                         ),
                       ],
                     )),
+                SizedBox(height: 50,)
               ],
             ),
           ),
         ),
       ],
     );
+  }
+
+  TableRow buildTableRow(String name, String value) {
+    return TableRow(children: [
+      Text(
+        name,
+        style: oxygen14whiteRegular,
+      ),
+      Align(
+        alignment: Alignment.centerRight,
+        child: Text(
+          value,
+          style: chakra22whiteBold,
+        ),
+      ),
+    ]);
   }
 }
