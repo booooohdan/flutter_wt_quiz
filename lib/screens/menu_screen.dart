@@ -35,7 +35,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Center(
                     child: Text(
                       'WT QUIZ',
-                      style: chakra48white,
+                      style: chakra48whiteBold,
                     ),
                   ),
                 ),
@@ -46,7 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     children: [
                       Text(
                         'Game modes:',
-                        style: chakra18grey,
+                        style: chakra18greyBold,
                       ),
                       ButtonMenuWideWidget(
                         context: context,
@@ -73,11 +73,9 @@ class _MenuScreenState extends State<MenuScreen> {
                           children: [
                             Text(
                               'FEEDBACK',
-                              style: oxygen18grey,
+                              style: oxygen18greyBold,
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
+                            const SizedBox(width: 20),
                             SvgPicture.asset(
                               'assets/icons/right_arrow.svg',
                               height: 20,

@@ -45,10 +45,10 @@ class AppBarGameplayWidget extends StatelessWidget {
                     children: [
                       Text(
                         '${gameProcess.correctAnswersCount}',
-                        style: chakra18white,
+                        style: chakra18whiteBold,
                       ),
-                      SizedBox(
-                        width: 10,
+                      const SizedBox(
+                        width: 10
                       ),
                       SvgPicture.asset(
                         'assets/icons/checkmark.svg',
@@ -64,12 +64,12 @@ class AppBarGameplayWidget extends StatelessWidget {
                     'assets/icons/${heartsList()[0]}.svg',
                     width: 20,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   SvgPicture.asset(
                     'assets/icons/${heartsList()[1]}.svg',
                     width: 20,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   SvgPicture.asset(
                     'assets/icons/${heartsList()[2]}.svg',
                     width: 20,
@@ -83,12 +83,12 @@ class AppBarGameplayWidget extends StatelessWidget {
                   child: RichText(
                     textAlign: TextAlign.end,
                     text: TextSpan(
-                      style: chakra22white,
+                      style: chakra22whiteBold,
                       children: [
                         TextSpan(text: '${gameProcess.questionCurrent}'),
                         TextSpan(
                             text: '/${gameProcess.questionsTotal}',
-                            style: chakra14white),
+                            style: chakra14whiteBold),
                       ],
                     ),
                   ),

@@ -8,7 +8,7 @@ import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_right_bottom_edge.dart';
 
 class ListItemLevelWidget extends StatelessWidget {
-  ListItemLevelWidget({
+  const ListItemLevelWidget({
     Key? key,
     required this.context,
     required this.level,
@@ -27,14 +27,14 @@ class ListItemLevelWidget extends StatelessWidget {
           padding: const EdgeInsets.all(1),
           child: Container(
             height: 80,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
                       'assets/buttons/wide_button_cut_right_bottom_edge.png'),
                   fit: BoxFit.fill),
             ),
             child: Material(
-              color: level.levelStatus == levelsCollection['locked'] ? Color(0x44808080) : Colors.transparent,
+              color: level.levelStatus == levelsCollection['locked'] ? greyTransparentColor : Colors.transparent,
               child: IgnorePointer(
                 ignoring: level.levelStatus == levelsCollection['locked'],
                 child: InkWell(
@@ -58,7 +58,7 @@ class ListItemLevelWidget extends StatelessWidget {
                           children: [
                             Text(
                               '${level.name}',
-                              style: chakra18white,
+                              style: chakra18whiteBold,
                             ),
                             Row(
                               children: [
@@ -68,14 +68,14 @@ class ListItemLevelWidget extends StatelessWidget {
                                         width: 15,
                                       )
                                     : Container(),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 level.isTank!
                                     ? SvgPicture.asset(
                                         'assets/icons/tank.svg',
                                         width: 25,
                                       )
                                     : Container(),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 level.isShip!
                                     ? SvgPicture.asset(
                                         'assets/icons/ship.svg',
@@ -86,25 +86,25 @@ class ListItemLevelWidget extends StatelessWidget {
                             )
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             RichText(
                               text: TextSpan(
-                                style: chakra22white,
+                                style: chakra22whiteBold,
                                 children: [
                                   TextSpan(text: '${level.answeredCount}'),
                                   TextSpan(
                                       text: '/${level.questionCount}',
-                                      style: chakra14white),
+                                      style: chakra14whiteBold),
                                 ],
                               ),
                             ),
                             Text(
                               level.periodOfTime!,
-                              style: oxygen10white,
+                              style: oxygen10whiteBold,
                             ),
                           ],
                         ),

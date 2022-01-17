@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
-import 'package:wt_quiz/utilities/constants.dart';
 
-import '../data/planes_collection.dart';
 import '../models/game_process_model.dart';
 import '../models/gameplay_button_model.dart';
 import '../models/level_model.dart';
@@ -13,15 +12,17 @@ import '../models/vehicle_model.dart';
 import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
+import '../utilities/debug_ad_helper.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../utilities/svg_paths/button_no_cut.dart';
 import '../widgets/appbar_gameplay_widget.dart';
 import '../widgets/button_gameplay_widget.dart';
 import '../widgets/button_square_widget.dart';
+import '../widgets/custom_alert_dialog.dart';
 
 class GameplayScreen extends StatefulWidget {
-  GameplayScreen({Key? key}) : super(key: key);
+  const GameplayScreen({Key? key}) : super(key: key);
 
   @override
   _GameplayScreenState createState() => _GameplayScreenState();
@@ -29,108 +30,90 @@ class GameplayScreen extends StatefulWidget {
 
 class _GameplayScreenState extends State<GameplayScreen> {
   LevelModel? level;
-  List<VehicleModel> vehicles = [];
+  GameProcessModel? gameProcess;
+  InterstitialAd? _interstitialAd;
+  RewardedAd? _rewardedAd;
+
   List<GameplayButtonModel> buttons = [];
-  late GameProcessModel gameProcess;
   late VehicleModel vehicleCorrectAnswer;
   late Timer timer;
-  bool ignoreClicks = false;
-  String nationHintIcon = 'assets/icons/flag.svg';
 
   var button1 = GameplayButtonModel();
   var button2 = GameplayButtonModel();
   var button3 = GameplayButtonModel();
   var button4 = GameplayButtonModel();
+  var nationHintIcon = 'assets/icons/flag.svg';
+  var ignoreClicks = false;
   var random = Random();
+  bool isInterstitialAdReady = false;
+  bool isRewardedAdReady = false;
+  bool isFirstInit = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    level = context.watch<LevelProvider>().currentLevel;
+    if (!isFirstInit) {
+      isFirstInit = true;
+      level = context.watch<LevelProvider>().currentLevel;
 
-    if (level!.isPlane!) {
-      vehicles.addAll(planes);
-    }
-    if (level!.isTank!) {
-      //TODO: Uncomment when collection of tanks will be ready
-      //vehicles.addAll(tanks);
-    }
-    if (level!.isTank!) {
-      //TODO: Uncomment when collection of ships will be ready
-      //vehicles.addAll(ships);
-    }
+      buttons
+        ..add(button1)
+        ..add(button2)
+        ..add(button3)
+        ..add(button4);
 
-    buttons
-      ..add(button1)
-      ..add(button2)
-      ..add(button3)
-      ..add(button4);
-
-    if (level!.levelType == levelTypes['classic']) {
-      gameProcess = GameProcessModel()
-        ..heartsCount = 3
-        ..questionsTotal = level!.questionCount!
-        ..timeExpected = 10
-        ..hintFiftyFifty = 1
-        ..hintNation = 1
-        ..hintSkip = 1;
+      gameProcess =
+          context.read<GameProcessProvider>().setLevelDifficultParams(level!);
+      initNewQuestion();
+      loadInterstitialAd();
+      loadRewardedAd();
     }
-
-    if (level!.levelType == levelTypes['hardcore']) {
-      gameProcess = GameProcessModel()
-        ..heartsCount = 1
-        ..questionsTotal = level!.questionCount!
-        ..timeExpected = 5
-        ..hintFiftyFifty = 1
-        ..hintNation = 1
-        ..hintSkip = 1;
-    }
-
-    if (level!.levelType == levelTypes['insane']) {
-      gameProcess = GameProcessModel()
-        ..heartsCount = 1
-        ..questionsTotal = level!.questionCount!
-        ..timeExpected = 3
-        ..hintFiftyFifty = 0
-        ..hintNation = 0
-        ..hintSkip = 0;
-    }
-
-    if (level!.levelType == levelTypes['training']) {
-      gameProcess = GameProcessModel()
-        ..heartsCount = level!.questionCount!
-        ..questionsTotal = level!.questionCount!
-        ..timeExpected = level!.questionCount!
-        ..hintFiftyFifty = level!.questionCount!
-        ..hintNation = level!.questionCount!
-        ..hintSkip = level!.questionCount!;
-    }
-
-    initNewQuestion();
   }
 
   @override
   void dispose() {
     timer.cancel();
+    _interstitialAd!.dispose();
+    _rewardedAd!.dispose();
     super.dispose();
   }
 
   void initNewQuestion() {
-    gameProcess.questionCurrent++;
+    gameProcess!.questionCurrent++;
 
     final isQuestionOver =
-        gameProcess.questionCurrent > gameProcess.questionsTotal;
-    final isLivesOver = gameProcess.heartsCount <= 0;
-    if (isQuestionOver || isLivesOver) {
-      context.read<GameProcessProvider>().setGameProcess(gameProcess);
-      Navigator.pushReplacementNamed(context, '/finish');
+        gameProcess!.questionCurrent > gameProcess!.questionsTotal;
+    final isLivesOver = gameProcess!.heartsCount <= 0;
+    if (isQuestionOver) {
+      finishTheGame();
       return;
     }
 
-    selectQuestionsAndRandomAnswers();
+    if (isLivesOver) {
+      if (isRewardedAdReady) {
+        addExtraLifeCustomDialog(context);
+      }else{
+        finishTheGame();
+      }
+    }
+
+    if (!isQuestionOver && !isLivesOver) {
+      selectQuestionsAndRandomAnswers();
+    }
+  }
+
+  void finishTheGame() {
+    context.read<GameProcessProvider>().setGameProcess(gameProcess!);
+
+    if (isInterstitialAdReady) {
+      _interstitialAd?.show();
+    } else {
+      Navigator.pushReplacementNamed(context, '/finish');
+    }
   }
 
   void selectQuestionsAndRandomAnswers() {
+    final vehicles = context.read<GameProcessProvider>().addVehicles(level!);
     final shuffledList = List.from(vehicles)..shuffle();
     vehicleCorrectAnswer = shuffledList[random.nextInt(4)];
 
@@ -166,34 +149,37 @@ class _GameplayScreenState extends State<GameplayScreen> {
     }
 
     setState(() {});
-    gameProcess.hintFiftyFifty -= 1;
+    gameProcess!.hintFiftyFifty--;
+    gameProcess!.hintsUsed++;
   }
 
   void nationHint() {
     nationHintIcon = 'assets/icons/${vehicleCorrectAnswer.nation}.svg';
     setState(() {});
-    gameProcess.hintNation -= 1;
+    gameProcess!.hintNation--;
+    gameProcess!.hintsUsed++;
   }
 
   void skipHint() {
     timer.cancel();
     selectQuestionsAndRandomAnswers();
     setState(() {});
-    gameProcess.hintSkip -= 1;
+    gameProcess!.hintSkip--;
+    gameProcess!.hintsUsed++;
   }
 
   void startTimer() {
-    gameProcess.timeCurrent = gameProcess.timeExpected;
+    gameProcess!.timeCurrent = gameProcess!.timeExpected;
     timer = Timer.periodic(
-      Duration(seconds: 1),
+      const Duration(seconds: 1),
       (Timer timer) {
-        if (gameProcess.timeCurrent == 0) {
+        if (gameProcess!.timeCurrent == 0) {
           setState(() {
             timer.cancel();
           });
         } else {
           setState(() {
-            gameProcess.timeCurrent--;
+            gameProcess!.timeCurrent--;
           });
         }
       },
@@ -204,9 +190,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
     ignoreClicks = true;
 
     //Small fix for timer tick +1 bug
-    timer.tick > gameProcess.timeExpected
-        ? gameProcess.timeAverage += gameProcess.timeExpected
-        : gameProcess.timeAverage += timer.tick;
+    timer.tick > gameProcess!.timeExpected
+        ? gameProcess!.timeAverage += gameProcess!.timeExpected
+        : gameProcess!.timeAverage += timer.tick;
     //Small fix for timer tick +1 bug
 
     timer.cancel();
@@ -220,9 +206,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   void correctAnswerHandler(bool isCorrect) {
     if (isCorrect) {
-      gameProcess.correctAnswersCount++;
+      gameProcess!.correctAnswersCount++;
     } else {
-      gameProcess.heartsCount--;
+      gameProcess!.heartsCount--;
     }
   }
 
@@ -232,71 +218,74 @@ class _GameplayScreenState extends State<GameplayScreen> {
         .first;
 
     setState(() => correctButton.isGreenBlink = true);
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     setState(() => correctButton.isGreenBlink = false);
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     setState(() => correctButton.isGreenBlink = true);
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     setState(() => correctButton.isGreenBlink = false);
+  }
+
+  void loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              Navigator.pushReplacementNamed(context, '/finish');
+            },
+          );
+
+          isInterstitialAdReady = true;
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          isInterstitialAdReady = false;
+        },
+      ),
+    );
+  }
+
+  void loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: doublePointRewardAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              setState(() {
+                isRewardedAdReady = false;
+              });
+              loadRewardedAd();
+            },
+          );
+
+          setState(() {
+            isRewardedAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a rewarded ad: ${err.message}');
+          setState(() {
+            isRewardedAdReady = false;
+          });
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return await showDialog<bool>(
-              context: context,
-              builder: (c) => Dialog(
-                //backgroundColor: Colors.transparent,
-                child: Container(
-                  height: 150,
-                  width: MediaQuery.of(context).size.width * .9,
-                  child: Column(
-                    children: [
-                      Text('Do you really want to exit?'),
-                      Row(
-                        children: [
-                          ButtonSquareWidget(
-                            context: context,
-                            clipper: ButtonCutLeftBottomEdge(),
-                            backgroundImage:
-                                'assets/buttons/button_cut_left_bottom_edge.png',
-                            leadingIcon: 'assets/icons/fifty_fifty.svg',
-                            text: 'Yes',
-                            count: '',
-                            onTap: () {},
-                          ),
-                          ButtonSquareWidget(
-                            context: context,
-                            clipper: ButtonCutRightBottomEdge(),
-                            backgroundImage:
-                                'assets/buttons/button_cut_right_bottom_edge.png',
-                            leadingIcon: 'assets/icons/fifty_fifty.svg',
-                            text: 'No',
-                            count: '',
-                            onTap: () {},
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                //backgroundColor: Colors.red,
-                // title: Text('Warning'),
-                // content: Text('Do you really want to exit?'),
-                // actions: [
-                //   TextButton(
-                //     child: Text('Yes'),
-                //     onPressed: () => Navigator.pop(c, true),
-                //   ),
-                //   TextButton(
-                //     child: Text('No'),
-                //     onPressed: () => Navigator.pop(c, false),
-                //   ),
-                // ],
-              ),
-            ) ??
-            false;
+        return await backButtonCustomDialog(context);
       },
       child: Stack(
         children: [
@@ -315,7 +304,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                 children: [
                   AppBarGameplayWidget(
                     context: context,
-                    gameProcess: gameProcess,
+                    gameProcess: gameProcess!,
                   ),
                   Expanded(
                     flex: 1,
@@ -323,10 +312,10 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${gameProcess.timeCurrent} s',
-                          style: oxygen14white,
+                          '${gameProcess!.timeCurrent} s',
+                          style: oxygen14whiteBold,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         SizedBox(
@@ -334,8 +323,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           child: LinearProgressIndicator(
                             color: Colors.white,
                             backgroundColor: greyTextColor,
-                            value: gameProcess.timeCurrent /
-                                gameProcess.timeExpected,
+                            value: gameProcess!.timeCurrent /
+                                gameProcess!.timeExpected,
                           ),
                         ),
                       ],
@@ -364,7 +353,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           Expanded(
                             flex: 1,
                             child: IgnorePointer(
-                              ignoring: gameProcess.hintFiftyFifty == 0,
+                              ignoring: gameProcess!.hintFiftyFifty == 0,
                               child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonCutLeftBottomEdge(),
@@ -372,20 +361,20 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                     'assets/buttons/button_cut_left_bottom_edge.png',
                                 leadingIcon: 'assets/icons/fifty_fifty.svg',
                                 text: '50/50',
-                                count: '${gameProcess.hintFiftyFifty}',
+                                count: '${gameProcess!.hintFiftyFifty}',
                                 onTap: () {
                                   fiftyFiftyHints();
                                 },
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
                             flex: 1,
                             child: IgnorePointer(
-                              ignoring: gameProcess.hintNation == 0,
+                              ignoring: gameProcess!.hintNation == 0,
                               child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonNoCut(),
@@ -393,20 +382,20 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                     'assets/buttons/button_no_cut.png',
                                 leadingIcon: nationHintIcon,
                                 text: 'NATION',
-                                count: '${gameProcess.hintNation}',
+                                count: '${gameProcess!.hintNation}',
                                 onTap: () {
                                   nationHint();
                                 },
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
                             flex: 1,
                             child: IgnorePointer(
-                              ignoring: gameProcess.hintSkip == 0,
+                              ignoring: gameProcess!.hintSkip == 0,
                               child: ButtonSquareWidget(
                                 context: context,
                                 clipper: ButtonCutRightBottomEdge(),
@@ -414,7 +403,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                     'assets/buttons/button_cut_right_bottom_edge.png',
                                 leadingIcon: 'assets/icons/skip.svg',
                                 text: 'SKIP',
-                                count: '${gameProcess.hintSkip}',
+                                count: '${gameProcess!.hintSkip}',
                                 onTap: () {
                                   skipHint();
                                 },
@@ -475,5 +464,63 @@ class _GameplayScreenState extends State<GameplayScreen> {
         ],
       ),
     );
+  }
+
+  Future<bool> backButtonCustomDialog(BuildContext context) async {
+    return await showDialog<bool>(
+          barrierDismissible: false,
+          context: context,
+          builder: (c) => CustomAlertDialog(
+            title: 'Do you really want to exit?',
+            leftButtonIcon: 'assets/icons/yes.svg',
+            leftButtonText: 'Yes',
+            rightButtonIcon: 'assets/icons/no.svg',
+            rightButtonText: 'No',
+            onLeftTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            onRightTap: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ) ??
+        false;
+  }
+
+  Future<bool> addExtraLifeCustomDialog(BuildContext context) async {
+    final _timer = Timer(Duration(seconds: 5), () {
+      Navigator.of(context).pop();
+      finishTheGame();
+    });
+
+    return await showDialog<bool>(
+          barrierDismissible: false,
+          context: context,
+          builder: (c) => CustomAlertDialog(
+            title: 'Use extra life to continue?',
+            leftButtonIcon: 'assets/icons/no.svg',
+            leftButtonText: 'No',
+            rightButtonIcon: 'assets/icons/video_ad.svg',
+            rightButtonText: 'YES!',
+            onLeftTap: () {
+              _timer.cancel();
+              Navigator.of(context).pop();
+              finishTheGame();
+            },
+            onRightTap: () {
+              _timer.cancel();
+              Navigator.of(context).pop();
+              {
+                _rewardedAd!.show(
+                    onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
+                  gameProcess!.heartsCount++;
+                  setState(() {});
+                });
+              }
+            },
+          ),
+        ) ??
+        false;
   }
 }

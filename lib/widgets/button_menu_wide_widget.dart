@@ -28,7 +28,7 @@ class ButtonMenuWideWidget extends StatelessWidget {
           padding: const EdgeInsets.all(1),
           child: Container(
             height: 60,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                         'assets/buttons/wide_button_cut_bottom_edges.png'),
@@ -45,7 +45,7 @@ class ButtonMenuWideWidget extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title,
-                          style: oxygen18white,
+                          style: oxygen18whiteBold,
                         ),
                       ),
                       Padding(
@@ -53,7 +53,7 @@ class ButtonMenuWideWidget extends StatelessWidget {
                             horizontal: 20, vertical: 0),
                         child: Text(
                           details,
-                          style: oxygen18grey,
+                          style: oxygen18greyBold,
                         ),
                       ),
                       SvgPicture.asset(

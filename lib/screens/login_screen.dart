@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
-            child: Placeholder(),
+            child: const Placeholder(),
             //TODO: Implement login screen
           ),
         ),

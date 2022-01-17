@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../data/levels_collection.dart';
 import '../models/level_model.dart';
+import '../providers/level_provider.dart';
 import '../widgets/appbar_regular_widget.dart';
 import '../widgets/list_item_level_widget.dart';
 
@@ -13,18 +14,6 @@ class LevelsScreen extends StatefulWidget {
 }
 
 class _LevelsScreenState extends State<LevelsScreen> {
-  Future<List<LevelModel>> getLevels(String args) async {
-
-    switch(args){
-      case 'HARDCORE':
-        return await LevelsCollection().AddHardcoreLevel();
-      case 'TRAINING':
-        return await LevelsCollection().AddTrainingLevel();
-      default:
-        return await LevelsCollection().AddClassicLevel();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as String;
@@ -51,23 +40,23 @@ class _LevelsScreenState extends State<LevelsScreen> {
                 ),
                 Expanded(
                   child: FutureBuilder<List<LevelModel>>(
-                      future: getLevels(args),
+                      future: context
+                          .read<LevelProvider>()
+                          .addLevels(args),
                       builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else {
-                          return ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                return ListItemLevelWidget(
-                                  context: context,
-                                  level: snapshot.data![index],
-                                );
-                              });
-                        }
+                        return !snapshot.hasData
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  return ListItemLevelWidget(
+                                    context: context,
+                                    level: snapshot.data![index],
+                                  );
+                                });
                       }),
                 ),
               ],

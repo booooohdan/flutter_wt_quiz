@@ -3,11 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/level_model.dart';
 import '../utilities/constants.dart';
 
-class LevelsCollection {
+class DebugLevelsCollection {
   LevelModel? level;
   List<LevelModel> levels = [];
 
-  Future<List<LevelModel>> AddClassicLevel() async {
+  Future<List<LevelModel>> addClassicLevel() async {
     final prefs = await SharedPreferences.getInstance();
 
     level = LevelModel()
@@ -104,7 +104,7 @@ class LevelsCollection {
     return levels;
   }
 
-  Future<List<LevelModel>> AddHardcoreLevel() async {
+  Future<List<LevelModel>> addHardcoreLevel() async {
     final prefs = await SharedPreferences.getInstance();
 
     level = LevelModel()
@@ -151,7 +151,7 @@ class LevelsCollection {
     return levels;
   }
 
-  Future<List<LevelModel>> AddTrainingLevel() async {
+  Future<List<LevelModel>> addTrainingLevel() async {
     final prefs = await SharedPreferences.getInstance();
 
     level = LevelModel()

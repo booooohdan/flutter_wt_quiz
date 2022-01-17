@@ -3,48 +3,46 @@ import 'package:google_fonts/google_fonts.dart';
 
 //#region Colors
 
-final greyTextColor = Color(0xFF9DA5B6);
-final greenButtonColor = Color(0xFF73EF86);
+const greyTextColor = Color(0xFF9DA5B6);
+const greenButtonColor = Color(0xFF73EF86);
+const greyTransparentColor = Color(0x44808080);
 
 //#endregion
 
 //#region Text styles
 
-final chakra14white = GoogleFonts.chakraPetch(
+final chakra14whiteBold = GoogleFonts.chakraPetch(
     fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold);
 
-final chakra18white = GoogleFonts.chakraPetch(
+final chakra18whiteBold = GoogleFonts.chakraPetch(
     fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold);
 
-final chakra18grey = GoogleFonts.chakraPetch(
-    fontSize: 18, color: Color(0xFF9DA5B6), fontWeight: FontWeight.bold);
+final chakra18greyBold = GoogleFonts.chakraPetch(
+    fontSize: 18, color: greyTextColor, fontWeight: FontWeight.bold);
 
-final chakra22white = GoogleFonts.chakraPetch(
+final chakra22whiteBold = GoogleFonts.chakraPetch(
     fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold);
 
-final chakra48white = GoogleFonts.chakraPetch(
+final chakra48whiteBold = GoogleFonts.chakraPetch(
     fontSize: 48, color: Colors.white, fontWeight: FontWeight.bold);
 
-final oxygen10white = GoogleFonts.oxygen(
+final oxygen10whiteBold = GoogleFonts.oxygen(
     fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold);
 
-final oxygen10grey = GoogleFonts.oxygen(
-    fontSize: 10, color: Color(0xFF9DA5B6), fontWeight: FontWeight.bold);
+final oxygen10greyBold = GoogleFonts.oxygen(
+    fontSize: 10, color: greyTextColor, fontWeight: FontWeight.bold);
 
-final oxygen13whiteNormal = GoogleFonts.oxygen(
-    fontSize: 14, color: Colors.white);
-
-final oxygen14white = GoogleFonts.oxygen(
+final oxygen14whiteBold = GoogleFonts.oxygen(
     fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold);
 
-final oxygen14whiteNormal = GoogleFonts.oxygen(
+final oxygen14whiteRegular = GoogleFonts.oxygen(
     fontSize: 14, color: Colors.white, fontWeight: FontWeight.normal);
 
-final oxygen18white = GoogleFonts.oxygen(
+final oxygen18whiteBold = GoogleFonts.oxygen(
     fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold);
 
-final oxygen18grey = GoogleFonts.oxygen(
-    fontSize: 18, color: Color(0xFF9DA5B6), fontWeight: FontWeight.bold);
+final oxygen18greyBold = GoogleFonts.oxygen(
+    fontSize: 18, color: greyTextColor, fontWeight: FontWeight.bold);
 
 //#endregion
 

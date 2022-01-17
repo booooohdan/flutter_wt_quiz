@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../utilities/constants.dart';
 
 class AppBarRegularWidget extends StatelessWidget {
-  AppBarRegularWidget({
+  const AppBarRegularWidget({
     Key? key,
     required this.context,
     required this.isBackArrowShown,
@@ -38,7 +38,7 @@ class AppBarRegularWidget extends StatelessWidget {
               ),
               Text(
                 centerLabel,
-                style: chakra22white,
+                style: chakra22whiteBold,
               ),
               SizedBox(
                 width: 80,

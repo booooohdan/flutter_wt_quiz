@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../models/game_process_model.dart';
@@ -6,6 +7,7 @@ import '../models/level_model.dart';
 import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
+import '../utilities/debug_ad_helper.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../widgets/appbar_regular_widget.dart';
@@ -23,17 +25,30 @@ class _FinishScreenState extends State<FinishScreen> {
   //with SingleTickerProviderStateMixin {
   GameProcessModel? gameResult;
   LevelModel? level;
+  RewardedAd? rewardedAd;
   bool isSuccess = false;
   double answerAccuracy = 0.0;
   double averageTime = 0.0;
   double leaderboardPoints = 0.0;
+  bool isRewardedAdReady = false;
+  bool isFirstInit = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    gameResult = context.watch<GameProcessProvider>().currentGameProcess;
-    level = context.watch<LevelProvider>().currentLevel;
-    initResultData();
+    if (!isFirstInit) {
+      isFirstInit = true;
+      gameResult = context.watch<GameProcessProvider>().currentGameProcess;
+      level = context.watch<LevelProvider>().currentLevel;
+      initResultData();
+      loadRewardedAd();
+    }
+  }
+
+  @override
+  void dispose() {
+    rewardedAd!.dispose();
+    super.dispose();
   }
 
   void initResultData() {
@@ -50,7 +65,39 @@ class _FinishScreenState extends State<FinishScreen> {
 
     leaderboardPoints = gameResult!.correctAnswersCount * multiplier;
 
-    context.read<LevelProvider>().saveResultToPreferences(correctToTotalRatio, gameResult!.correctAnswersCount);
+    context.read<LevelProvider>().saveResultToPreferences(
+        correctToTotalRatio, gameResult!.correctAnswersCount);
+  }
+
+  void loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: doublePointRewardAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          rewardedAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              setState(() {
+                isRewardedAdReady = false;
+              });
+              //loadRewardedAd();
+            },
+          );
+
+          setState(() {
+            isRewardedAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a rewarded ad: ${err.message}');
+          setState(() {
+            isRewardedAdReady = false;
+          });
+        },
+      ),
+    );
   }
 
   @override
@@ -61,8 +108,8 @@ class _FinishScreenState extends State<FinishScreen> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: isSuccess
-                  ? AssetImage('assets/backgrounds/finish_success.png')
-                  : AssetImage('assets/backgrounds/finish_failed.png'),
+                  ? const AssetImage('assets/backgrounds/finish_success.png')
+                  : const AssetImage('assets/backgrounds/finish_failed.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -78,6 +125,16 @@ class _FinishScreenState extends State<FinishScreen> {
                   fit: BoxFit.cover,
                 ),
         ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            child: Stack(children: [
+              isSuccess
+                  ? Image.asset('assets/images/success.png')
+                  : Image.asset('assets/images/failed.png'),
+            ]),
+          ),
+        ),
         SafeArea(
           child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -90,71 +147,26 @@ class _FinishScreenState extends State<FinishScreen> {
                   icon: '',
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
                     alignment: Alignment.center,
                     width: 250,
                     child: Table(
-                      columnWidths: {
+                      columnWidths: const {
                         0: FlexColumnWidth(2),
                         1: FlexColumnWidth(1),
                       },
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.bottom,
                       children: [
-                        TableRow(children: [
-                          Text(
-                            'Average answer time: ',
-                            style: oxygen14whiteNormal,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${averageTime.toStringAsFixed(1)} s',
-                              style: chakra22white,
-                            ),
-                          )
-                        ]),
-                        TableRow(children: [
-                          Text(
-                            'Accuracy: ',
-                            style: oxygen14whiteNormal,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${answerAccuracy.toStringAsFixed(0)} %',
-                              style: chakra22white,
-                            ),
-                          )
-                        ]),
-
-                        TableRow(children: [
-                          Text(
-                            'Points: ',
-                            style: oxygen14whiteNormal,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${leaderboardPoints.toStringAsFixed(0)}',
-                              style: chakra22white,
-                            ),
-                          )
-                        ]),
-                        TableRow(children: [
-                          Text(
-                            'Hints used: ',
-                            style: oxygen14whiteNormal,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '1',
-                              style: chakra22white,
-                            ),
-                          )
-                        ]),
+                        buildTableRow('Average answer time: ',
+                            '${averageTime.toStringAsFixed(1)} s'),
+                        buildTableRow('Accuracy: ',
+                            '${answerAccuracy.toStringAsFixed(0)} %'),
+                        buildTableRow('Points: ',
+                            '${leaderboardPoints.toStringAsFixed(0)}'),
+                        buildTableRow(
+                            'Hints used: ', '${gameResult!.hintsUsed}'),
                       ],
                     ),
                   ),
@@ -162,30 +174,21 @@ class _FinishScreenState extends State<FinishScreen> {
                 Expanded(
                   flex: 2,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         '${level!.levelType}: ${level!.name}',
-                        style: chakra22white,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20, bottom: 30, left: 20, right: 20),
-                        child: Stack(children: [
-                          isSuccess
-                              ? Image.asset('assets/images/success.png')
-                              : Image.asset('assets/images/failed.png'),
-                        ]),
+                        style: chakra22whiteBold,
                       ),
                       RichText(
                         text: TextSpan(
-                          style: chakra48white,
+                          style: chakra48whiteBold,
                           children: [
                             TextSpan(
                                 text: '${gameResult!.correctAnswersCount}'),
                             TextSpan(
                                 text: '/${level!.questionCount}',
-                                style: chakra22white),
+                                style: chakra22whiteBold),
                           ],
                         ),
                       ),
@@ -198,7 +201,7 @@ class _FinishScreenState extends State<FinishScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Visibility(
-                          visible: false,
+                          visible: isRewardedAdReady,
                           maintainState: true,
                           maintainAnimation: true,
                           maintainSize: true,
@@ -206,7 +209,16 @@ class _FinishScreenState extends State<FinishScreen> {
                             context: context,
                             icon: '',
                             title: 'DOUBLE POINTS',
-                            onTap: () {},
+                            backgroundColor: greenButtonColor,
+                            textColor: Colors.black,
+                            onTap: () {
+                              rewardedAd!.show(onUserEarnedReward:
+                                  (RewardedAd ad, RewardItem reward) {
+                                final updatedReward = leaderboardPoints * 2;
+                                leaderboardPoints = updatedReward;
+                                setState(() {});
+                              });
+                            },
                           ),
                         ),
                         Padding(
@@ -229,15 +241,9 @@ class _FinishScreenState extends State<FinishScreen> {
                                           context, '/', (r) => false),
                                 ),
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
                               Expanded(
                                 flex: 1,
                                 child: Container(),
-                              ),
-                              SizedBox(
-                                width: 10,
                               ),
                               Expanded(
                                 flex: 1,
@@ -250,8 +256,11 @@ class _FinishScreenState extends State<FinishScreen> {
                                   text: '${isSuccess ? 'NEXT LEVEL' : 'RETRY'}',
                                   count: '',
                                   onTap: () {
-                                    Navigator.pushNamedAndRemoveUntil(context, '/', (r) => false);
-                                    Navigator.pushNamed(context, '/levels', arguments: level!.levelType!.toUpperCase());
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/', (r) => false);
+                                    Navigator.pushNamed(context, '/levels',
+                                        arguments:
+                                            level!.levelType!.toUpperCase());
                                   },
                                 ),
                               ),
@@ -260,11 +269,28 @@ class _FinishScreenState extends State<FinishScreen> {
                         ),
                       ],
                     )),
+                const SizedBox(height: 50)
               ],
             ),
           ),
         ),
       ],
     );
+  }
+
+  TableRow buildTableRow(String name, String value) {
+    return TableRow(children: [
+      Text(
+        name,
+        style: oxygen14whiteRegular,
+      ),
+      Align(
+        alignment: Alignment.centerRight,
+        child: Text(
+          value,
+          style: chakra22whiteBold,
+        ),
+      ),
+    ]);
   }
 }

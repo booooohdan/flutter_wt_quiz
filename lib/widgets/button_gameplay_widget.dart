@@ -7,7 +7,7 @@ import '../utilities/constants.dart';
 import '../utilities/svg_paths/wide_button_cut_bottom_edges.dart';
 
 class ButtonGameplayWidget extends StatelessWidget {
-  ButtonGameplayWidget({
+  const ButtonGameplayWidget({
     Key? key,
     required this.context,
     required this.onTap,
@@ -28,7 +28,7 @@ class ButtonGameplayWidget extends StatelessWidget {
           padding: const EdgeInsets.all(1),
           child: Container(
             height: 60,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                         'assets/buttons/wide_button_cut_bottom_edges.png'),

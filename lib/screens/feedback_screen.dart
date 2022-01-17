@@ -67,7 +67,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     return Stack(
       children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/backgrounds/finish_success.png'),
               fit: BoxFit.cover,
@@ -82,7 +82,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 AppBarRegularWidget(
                   context: context,
                   isBackArrowShown: true,
-                  centerLabel: 'Feedback',
+                  centerLabel: 'FEEDBACK',
                   icon: '',
                 ),
                 Expanded(
@@ -94,32 +94,32 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         onDoubleTap: () => showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                                  title: Text('Debug info'),
+                                  title: const Text('Debug info'),
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('App data',
+                                      const Text('App data',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      Divider(),
+                                      const Divider(),
                                       Text('App Name: $appName'),
                                       Text('Version: $version'),
                                       Text('Build Number: $buildNumber'),
-                                      Divider(),
-                                      Text('Device data',
+                                      const Divider(),
+                                      const Text('Device data',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      Divider(),
+                                      const Divider(),
                                       Text('Device Name: $deviceName'),
                                       Text('Device OS: $deviceOs'),
-                                      Divider(),
-                                      Text('Game data',
+                                      const Divider(),
+                                      const Text('Game data',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      Divider(),
-                                      Text('Last vehicle update: 2.13'),
+                                      const Divider(),
+                                      const Text('Last vehicle update: 2.13'),
                                     ],
                                   ),
                                   actions: <Widget>[
@@ -131,7 +131,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                         Navigator.of(context).pop();
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          SnackBar(
+                                          const SnackBar(
                                             content:
                                                 Text('Copied to clipboard'),
                                           ),
@@ -144,7 +144,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         child: Container(
                           width: 150,
                           height: 150,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.scaleDown,
                               image: AssetImage('assets/icons/icon.png'),
@@ -153,23 +153,19 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Text(
                         'Version $version',
-                        style: chakra18grey,
+                        style: chakra18greyBold,
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 0, horizontal: 40),
                         child: Text(
                           'WT Quiz is a trivia game with vehicles from the game War Thunder. '
                           'All images and description have been taken from wiki.warthunder.com',
-                          style: oxygen13whiteNormal,
+                          style: oxygen14whiteRegular,
                           textAlign: TextAlign.center,
                         ),
                       )
@@ -188,13 +184,13 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         backgroundColor: greenButtonColor,
                         textColor: Colors.black,
                         onTap: () async {
-                          final url =
+                          const url =
                               'https://github.com/booooohdan/flutter_wt_quiz/issues';
                           if (await canLaunch(url)) {
                             await launch(url);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text('Could not launch $url'),
                               ),
                             );
@@ -223,9 +219,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                 },
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Expanded(
                               flex: 1,
                               child: ButtonSquareWidget(
@@ -250,7 +244,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                 },
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Expanded(
@@ -267,8 +261,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                   showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
-                                      title: Text('Warning!'),
-                                      content: Text(
+                                      title: const Text('Warning!'),
+                                      content: const Text(
                                           'Please use the GitHub button for bug report or suggestions (Sign-in via Google). '
                                           '\nOn GitHub you are guaranteed to get an answer and a quick response'
                                           '\n\nemail: waveappfeedback@gmail.com'),
@@ -337,12 +331,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                   'assets/icons/privacy.svg',
                                   height: 20,
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
+                                const SizedBox(width: 10),
                                 Text(
                                   'PRIVACY',
-                                  style: oxygen10grey,
+                                  style: oxygen10greyBold,
                                 ),
                               ],
                             ),

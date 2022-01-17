@@ -1,7 +1,8 @@
 import '../models/vehicle_model.dart';
 import '../utilities/constants.dart';
 
-List<VehicleModel> planes = [
+//TODO: Prepare debug version of this list
+List<VehicleModel> debugPlanes = [
   VehicleModel(
     image: 'a2d',
     name: 'A2D',

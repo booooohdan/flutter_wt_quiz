@@ -35,7 +35,7 @@ class ButtonSquareWidget extends StatelessWidget {
               image: DecorationImage(
                   image: AssetImage(backgroundImage), fit: BoxFit.fill)),
           child: Material(
-            color: Colors.transparent,
+            color: count == '0' ? greyTransparentColor : Colors.transparent,
             child: InkWell(
               onTap: onTap,
               child: Stack(children: [
@@ -44,7 +44,7 @@ class ButtonSquareWidget extends StatelessWidget {
                   right: 10,
                   child: Text(
                     count,
-                    style: chakra14white,
+                    style: chakra14whiteBold,
                   ),
                 ),
                 Center(
@@ -57,7 +57,7 @@ class ButtonSquareWidget extends StatelessWidget {
                       ),
                       Text(
                         text,
-                        style: oxygen10white,
+                        style: oxygen10whiteBold,
                       ),
                     ],
                   ),

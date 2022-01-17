@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/game_process_provider.dart';
@@ -11,6 +12,8 @@ import '../screens/login_screen.dart';
 import '../screens/menu_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   runApp(
     MultiProvider(
       providers: [
@@ -23,16 +26,14 @@ void main() {
       ],
       child: MaterialApp(
         title: 'WT Quiz',
-        theme: ThemeData(
-          brightness: Brightness.light,
-        ),
+        theme: ThemeData(brightness: Brightness.light),
         routes: {
-          '/': (context) => MenuScreen(),
-          '/login': (context) => LoginScreen(),
-          '/levels': (context) => LevelsScreen(),
-          '/gameplay': (context) => GameplayScreen(),
-          '/finish': (context) => FinishScreen(),
-          '/feedback': (context) => FeedbackScreen(),
+          '/': (context) => const MenuScreen(),
+          '/login': (context) => const LoginScreen(),
+          '/levels': (context) => const LevelsScreen(),
+          '/gameplay': (context) => const GameplayScreen(),
+          '/finish': (context) => const FinishScreen(),
+          '/feedback': (context) => const FeedbackScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),
