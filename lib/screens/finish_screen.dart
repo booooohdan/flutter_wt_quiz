@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../models/game_process_model.dart';
@@ -23,17 +24,30 @@ class _FinishScreenState extends State<FinishScreen> {
   //with SingleTickerProviderStateMixin {
   GameProcessModel? gameResult;
   LevelModel? level;
+  RewardedAd? rewardedAd;
   bool isSuccess = false;
   double answerAccuracy = 0.0;
   double averageTime = 0.0;
   double leaderboardPoints = 0.0;
+  bool isRewardedAdReady = false;
+  bool isFirstInit = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    gameResult = context.watch<GameProcessProvider>().currentGameProcess;
-    level = context.watch<LevelProvider>().currentLevel;
-    initResultData();
+    if (!isFirstInit) {
+      isFirstInit = true;
+      gameResult = context.watch<GameProcessProvider>().currentGameProcess;
+      level = context.watch<LevelProvider>().currentLevel;
+      initResultData();
+      loadRewardedAd();
+    }
+  }
+
+  @override
+  void dispose() {
+    rewardedAd!.dispose();
+    super.dispose();
   }
 
   void initResultData() {
@@ -52,6 +66,37 @@ class _FinishScreenState extends State<FinishScreen> {
 
     context.read<LevelProvider>().saveResultToPreferences(
         correctToTotalRatio, gameResult!.correctAnswersCount);
+  }
+
+  void loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: doublePointRewardAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          rewardedAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              setState(() {
+                isRewardedAdReady = false;
+              });
+              //loadRewardedAd();
+            },
+          );
+
+          setState(() {
+            isRewardedAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a rewarded ad: ${err.message}');
+          setState(() {
+            isRewardedAdReady = false;
+          });
+        },
+      ),
+    );
   }
 
   @override
@@ -163,8 +208,16 @@ class _FinishScreenState extends State<FinishScreen> {
                             context: context,
                             icon: '',
                             title: 'DOUBLE POINTS',
-                            onTap: () {},
-                            //TODO: Implement double points
+                            backgroundColor: greenButtonColor,
+                            textColor: Colors.black,
+                            onTap: () {
+                              rewardedAd!.show(onUserEarnedReward:
+                                  (RewardedAd ad, RewardItem reward) {
+                                final updatedReward = leaderboardPoints * 2;
+                                leaderboardPoints = updatedReward;
+                                setState(() {});
+                              });
+                            },
                           ),
                         ),
                         Padding(

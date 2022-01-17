@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../models/game_process_model.dart';
@@ -28,6 +29,7 @@ class GameplayScreen extends StatefulWidget {
 class _GameplayScreenState extends State<GameplayScreen> {
   LevelModel? level;
   GameProcessModel? gameProcess;
+  InterstitialAd? _interstitialAd;
 
   //List<VehicleModel> vehicles = [];
   List<GameplayButtonModel> buttons = [];
@@ -41,6 +43,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
   var nationHintIcon = 'assets/icons/flag.svg';
   var ignoreClicks = false;
   var random = Random();
+  bool isInterstitialAdReady = false;
 
   @override
   void didChangeDependencies() {
@@ -57,11 +60,13 @@ class _GameplayScreenState extends State<GameplayScreen> {
     gameProcess =
         context.read<GameProcessProvider>().setLevelDifficultParams(level!);
     initNewQuestion();
+      loadInterstitialAd();
   }
 
   @override
   void dispose() {
     timer.cancel();
+    _interstitialAd!.dispose();
     super.dispose();
   }
 
@@ -78,6 +83,11 @@ class _GameplayScreenState extends State<GameplayScreen> {
     }
 
     selectQuestionsAndRandomAnswers();
+    if (isInterstitialAdReady) {
+      _interstitialAd?.show();
+    } else {
+      Navigator.pushReplacementNamed(context, '/finish');
+    }
   }
 
   void selectQuestionsAndRandomAnswers() {
@@ -194,6 +204,29 @@ class _GameplayScreenState extends State<GameplayScreen> {
     setState(() => correctButton.isGreenBlink = false);
   }
 
+  void loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              Navigator.pushReplacementNamed(context, '/finish');
+            },
+          );
+
+          isInterstitialAdReady = true;
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          isInterstitialAdReady = false;
+        },
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
