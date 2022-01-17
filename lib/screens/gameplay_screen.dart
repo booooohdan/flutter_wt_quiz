@@ -12,12 +12,14 @@ import '../models/vehicle_model.dart';
 import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
+import '../utilities/debug_ad_helper.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../utilities/svg_paths/button_no_cut.dart';
 import '../widgets/appbar_gameplay_widget.dart';
 import '../widgets/button_gameplay_widget.dart';
 import '../widgets/button_square_widget.dart';
+import '../widgets/custom_alert_dialog.dart';
 
 class GameplayScreen extends StatefulWidget {
   const GameplayScreen({Key? key}) : super(key: key);
@@ -30,8 +32,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
   LevelModel? level;
   GameProcessModel? gameProcess;
   InterstitialAd? _interstitialAd;
+  RewardedAd? _rewardedAd;
 
-  //List<VehicleModel> vehicles = [];
   List<GameplayButtonModel> buttons = [];
   late VehicleModel vehicleCorrectAnswer;
   late Timer timer;
@@ -44,29 +46,35 @@ class _GameplayScreenState extends State<GameplayScreen> {
   var ignoreClicks = false;
   var random = Random();
   bool isInterstitialAdReady = false;
+  bool isRewardedAdReady = false;
+  bool isFirstInit = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    level = context.watch<LevelProvider>().currentLevel;
+    if (!isFirstInit) {
+      isFirstInit = true;
+      level = context.watch<LevelProvider>().currentLevel;
 
-    buttons
-      ..add(button1)
-      ..add(button2)
-      ..add(button3)
-      ..add(button4);
+      buttons
+        ..add(button1)
+        ..add(button2)
+        ..add(button3)
+        ..add(button4);
 
-    //vehicles = ;
-    gameProcess =
-        context.read<GameProcessProvider>().setLevelDifficultParams(level!);
-    initNewQuestion();
+      gameProcess =
+          context.read<GameProcessProvider>().setLevelDifficultParams(level!);
+      initNewQuestion();
       loadInterstitialAd();
+      loadRewardedAd();
+    }
   }
 
   @override
   void dispose() {
     timer.cancel();
     _interstitialAd!.dispose();
+    _rewardedAd!.dispose();
     super.dispose();
   }
 
@@ -76,13 +84,27 @@ class _GameplayScreenState extends State<GameplayScreen> {
     final isQuestionOver =
         gameProcess!.questionCurrent > gameProcess!.questionsTotal;
     final isLivesOver = gameProcess!.heartsCount <= 0;
-    if (isQuestionOver || isLivesOver) {
-      context.read<GameProcessProvider>().setGameProcess(gameProcess!);
-      Navigator.pushReplacementNamed(context, '/finish');
+    if (isQuestionOver) {
+      finishTheGame();
       return;
     }
 
-    selectQuestionsAndRandomAnswers();
+    if (isLivesOver) {
+      if (isRewardedAdReady) {
+        addExtraLifeCustomDialog(context);
+      }else{
+        finishTheGame();
+      }
+    }
+
+    if (!isQuestionOver && !isLivesOver) {
+      selectQuestionsAndRandomAnswers();
+    }
+  }
+
+  void finishTheGame() {
+    context.read<GameProcessProvider>().setGameProcess(gameProcess!);
+
     if (isInterstitialAdReady) {
       _interstitialAd?.show();
     } else {
@@ -227,63 +249,43 @@ class _GameplayScreenState extends State<GameplayScreen> {
       ),
     );
   }
+
+  void loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: doublePointRewardAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              setState(() {
+                isRewardedAdReady = false;
+              });
+              loadRewardedAd();
+            },
+          );
+
+          setState(() {
+            isRewardedAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a rewarded ad: ${err.message}');
+          setState(() {
+            isRewardedAdReady = false;
+          });
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return await showDialog<bool>(
-              context: context,
-              builder: (c) => Dialog(
-                //backgroundColor: Colors.transparent,
-                child: Container(
-                  height: 150,
-                  width: MediaQuery.of(context).size.width * .9,
-                  child: Column(
-                    children: [
-                      const Text('Do you really want to exit?'),
-                      Row(
-                        children: [
-                          ButtonSquareWidget(
-                            context: context,
-                            clipper: ButtonCutLeftBottomEdge(),
-                            backgroundImage:
-                                'assets/buttons/button_cut_left_bottom_edge.png',
-                            leadingIcon: 'assets/icons/fifty_fifty.svg',
-                            text: 'Yes',
-                            count: '',
-                            onTap: () {},
-                          ),
-                          ButtonSquareWidget(
-                            context: context,
-                            clipper: ButtonCutRightBottomEdge(),
-                            backgroundImage:
-                                'assets/buttons/button_cut_right_bottom_edge.png',
-                            leadingIcon: 'assets/icons/fifty_fifty.svg',
-                            text: 'No',
-                            count: '',
-                            onTap: () {},
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                //backgroundColor: Colors.red,
-                // title: Text('Warning'),
-                // content: Text('Do you really want to exit?'),
-                // actions: [
-                //   TextButton(
-                //     child: Text('Yes'),
-                //     onPressed: () => Navigator.pop(c, true),
-                //   ),
-                //   TextButton(
-                //     child: Text('No'),
-                //     onPressed: () => Navigator.pop(c, false),
-                //   ),
-                // ],
-              ),
-            ) ??
-            false;
+        return await backButtonCustomDialog(context);
       },
       child: Stack(
         children: [
@@ -462,5 +464,63 @@ class _GameplayScreenState extends State<GameplayScreen> {
         ],
       ),
     );
+  }
+
+  Future<bool> backButtonCustomDialog(BuildContext context) async {
+    return await showDialog<bool>(
+          barrierDismissible: false,
+          context: context,
+          builder: (c) => CustomAlertDialog(
+            title: 'Do you really want to exit?',
+            leftButtonIcon: 'assets/icons/yes.svg',
+            leftButtonText: 'Yes',
+            rightButtonIcon: 'assets/icons/no.svg',
+            rightButtonText: 'No',
+            onLeftTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            onRightTap: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ) ??
+        false;
+  }
+
+  Future<bool> addExtraLifeCustomDialog(BuildContext context) async {
+    final _timer = Timer(Duration(seconds: 5), () {
+      Navigator.of(context).pop();
+      finishTheGame();
+    });
+
+    return await showDialog<bool>(
+          barrierDismissible: false,
+          context: context,
+          builder: (c) => CustomAlertDialog(
+            title: 'Use extra life to continue?',
+            leftButtonIcon: 'assets/icons/no.svg',
+            leftButtonText: 'No',
+            rightButtonIcon: 'assets/icons/video_ad.svg',
+            rightButtonText: 'YES!',
+            onLeftTap: () {
+              _timer.cancel();
+              Navigator.of(context).pop();
+              finishTheGame();
+            },
+            onRightTap: () {
+              _timer.cancel();
+              Navigator.of(context).pop();
+              {
+                _rewardedAd!.show(
+                    onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
+                  gameProcess!.heartsCount++;
+                  setState(() {});
+                });
+              }
+            },
+          ),
+        ) ??
+        false;
   }
 }

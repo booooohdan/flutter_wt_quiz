@@ -7,6 +7,7 @@ import '../models/level_model.dart';
 import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
+import '../utilities/debug_ad_helper.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../widgets/appbar_regular_widget.dart';
@@ -200,7 +201,7 @@ class _FinishScreenState extends State<FinishScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Visibility(
-                          visible: false,
+                          visible: isRewardedAdReady,
                           maintainState: true,
                           maintainAnimation: true,
                           maintainSize: true,
