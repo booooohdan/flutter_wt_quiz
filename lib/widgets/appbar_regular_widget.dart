@@ -19,10 +19,11 @@ class AppBarRegularWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         Container(
-          height: 50,
+          height: height / 16,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -32,7 +33,7 @@ class AppBarRegularWidget extends StatelessWidget {
                   width: 80,
                   child: isBackArrowShown
                       ? SvgPicture.asset('assets/icons/left_arrow.svg',
-                          height: 20)
+                          height: height / 40)
                       : Container(),
                 ),
               ),
@@ -54,8 +55,8 @@ class AppBarRegularWidget extends StatelessWidget {
         ),
         SvgPicture.asset(
           'assets/divider.svg',
-          height: 5,
-          fit: BoxFit.fitWidth
+          height: height / 150,
+          fit: BoxFit.fill,
         ),
       ],
     );

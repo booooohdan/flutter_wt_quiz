@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';
 
 import '../models/game_process_model.dart';
 import '../models/level_model.dart';
@@ -22,7 +23,6 @@ class FinishScreen extends StatefulWidget {
 }
 
 class _FinishScreenState extends State<FinishScreen> {
-  //with SingleTickerProviderStateMixin {
   GameProcessModel? gameResult;
   LevelModel? level;
   RewardedAd? rewardedAd;
@@ -102,6 +102,7 @@ class _FinishScreenState extends State<FinishScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Container(
@@ -116,10 +117,7 @@ class _FinishScreenState extends State<FinishScreen> {
         ),
         Center(
           child: isSuccess
-              ? Image.asset(
-                  'assets/images/glow_success.png',
-                  fit: BoxFit.cover,
-                )
+              ? Lottie.asset('assets/animations/success.json')
               : Image.asset(
                   'assets/images/glow_failed.png',
                   fit: BoxFit.cover,
@@ -150,7 +148,7 @@ class _FinishScreenState extends State<FinishScreen> {
                   flex: 2,
                   child: Container(
                     alignment: Alignment.center,
-                    width: 250,
+                    width: width/1.7,
                     child: Table(
                       columnWidths: const {
                         0: FlexColumnWidth(2),
@@ -221,9 +219,10 @@ class _FinishScreenState extends State<FinishScreen> {
                             },
                           ),
                         ),
-                        Padding(
+                        Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30, vertical: 0),
+                          width: 560,
                           child: Row(
                             children: [
                               Expanded(

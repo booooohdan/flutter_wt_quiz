@@ -49,6 +49,7 @@ class _LevelsScreenState extends State<LevelsScreen> {
                                 child: CircularProgressIndicator(),
                               )
                             : ListView.builder(
+                          shrinkWrap: true,
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {

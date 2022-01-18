@@ -27,7 +27,7 @@ class ButtonGameplayWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(1),
           child: Container(
-            height: 60,
+            width: 500,
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
@@ -44,7 +44,8 @@ class ButtonGameplayWidget extends StatelessWidget {
                       model.answerText,
                       style: GoogleFonts.oxygen(
                           fontSize: 16,
-                          color: model.isGreenBlink ? Colors.black : Colors.white,
+                          color:
+                              model.isGreenBlink ? Colors.black : Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
                   ],

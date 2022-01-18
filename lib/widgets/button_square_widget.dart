@@ -25,12 +25,13 @@ class ButtonSquareWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return ClipPath(
       clipper: clipper,
       child: Padding(
         padding: const EdgeInsets.all(1),
         child: Container(
-          height: 60,
+          height: height / 12,
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(backgroundImage), fit: BoxFit.fill)),

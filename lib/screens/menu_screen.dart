@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
 import '../utilities/constants.dart';
 import '../widgets/button_menu_wide_widget.dart';
@@ -13,6 +14,16 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  @override
+  void initState() {
+    super.initState();
+    initPlugin();
+  }
+
+  Future<void> initPlugin() async {
+    await AppTrackingTransparency.requestTrackingAuthorization();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -44,43 +55,57 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                        'Game modes:',
-                        style: chakra18greyBold,
+                      Expanded(flex: 3,
+                        child: Text(
+                          'Game modes:',
+                          style: chakra18greyBold,
+                        ),
                       ),
-                      ButtonMenuWideWidget(
-                        context: context,
-                        title: 'CLASSIC',
-                        details: '',
-                        route: '/levels',
+                      Expanded(flex: 1,child: Container()),
+                      Expanded(flex: 3,
+                        child: ButtonMenuWideWidget(
+                          context: context,
+                          title: 'CLASSIC',
+                          details: '',
+                          route: '/levels',
+                        ),
                       ),
-                      ButtonMenuWideWidget(
-                        context: context,
-                        title: 'HARDCORE',
-                        details: '',
-                        route: '/levels',
+                      Expanded(flex: 1, child: Container()),
+                      Expanded(flex: 3,
+                        child: ButtonMenuWideWidget(
+                          context: context,
+                          title: 'HARDCORE',
+                          details: '',
+                          route: '/levels',
+                        ),
                       ),
-                      ButtonMenuWideWidget(
-                        context: context,
-                        title: 'TRAINING',
-                        details: '',
-                        route: '/levels',
+                      Expanded(flex: 1,child: Container()),
+                      Expanded(flex: 3,
+                        child: ButtonMenuWideWidget(
+                          context: context,
+                          title: 'TRAINING',
+                          details: '',
+                          route: '/levels',
+                        ),
                       ),
-                      GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, '/feedback'),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'FEEDBACK',
-                              style: oxygen18greyBold,
-                            ),
-                            const SizedBox(width: 20),
-                            SvgPicture.asset(
-                              'assets/icons/right_arrow.svg',
-                              height: 20,
-                            ),
-                          ],
+                      Expanded(flex: 1,child: Container()),
+                      Expanded(flex: 3,
+                        child: GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, '/feedback'),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'FEEDBACK',
+                                style: oxygen18greyBold,
+                              ),
+                              const SizedBox(width: 20),
+                              SvgPicture.asset(
+                                'assets/icons/right_arrow.svg',
+                                height: 20,
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],

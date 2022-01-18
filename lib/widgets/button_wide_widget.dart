@@ -24,6 +24,7 @@ class ButtonWideWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
       child: ClipPath(
@@ -31,7 +32,8 @@ class ButtonWideWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(1),
           child: Container(
-            height: 60,
+            width: 500,
+            height: height / 12,
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(

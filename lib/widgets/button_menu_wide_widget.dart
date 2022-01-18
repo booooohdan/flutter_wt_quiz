@@ -27,7 +27,7 @@ class ButtonMenuWideWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(1),
           child: Container(
-            height: 60,
+            width: 500,
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
@@ -36,7 +36,8 @@ class ButtonMenuWideWidget extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () => Navigator.pushNamed(context, route, arguments: title),
+                onTap: () =>
+                    Navigator.pushNamed(context, route, arguments: title),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
