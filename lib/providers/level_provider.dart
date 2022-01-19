@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/debug_levels_collection.dart';
+import '../data/levels_collection.dart';
 import '../models/level_model.dart';
 
 class LevelProvider with ChangeNotifier {
@@ -36,13 +37,24 @@ class LevelProvider with ChangeNotifier {
   }
 
   Future<List<LevelModel>> addLevels(String args) async {
-    switch (args) {
-      case 'HARDCORE':
-        return await DebugLevelsCollection().addHardcoreLevel();
-      case 'TRAINING':
-        return await DebugLevelsCollection().addTrainingLevel();
-      default:
-        return await DebugLevelsCollection().addClassicLevel();
+    if (kDebugMode) {
+      switch (args) {
+        case 'HARDCORE':
+          return await DebugLevelsCollection().addHardcoreLevel();
+        case 'TRAINING':
+          return await DebugLevelsCollection().addTrainingLevel();
+        default:
+          return await DebugLevelsCollection().addClassicLevel();
+      }
+    } else {
+      switch (args) {
+        case 'HARDCORE':
+          return await LevelsCollection().addHardcoreLevel();
+        case 'TRAINING':
+          return await LevelsCollection().addTrainingLevel();
+        default:
+          return await LevelsCollection().addClassicLevel();
+      }
     }
   }
 }

@@ -258,8 +258,6 @@ class DebugLevelsCollection {
       ..periodOfTime = periodsCollection['cold_war'];
     levels.add(level!);
 
-
-
     return levels;
   }
 }

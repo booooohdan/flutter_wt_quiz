@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
@@ -102,6 +103,7 @@ class _FinishScreenState extends State<FinishScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -116,13 +118,9 @@ class _FinishScreenState extends State<FinishScreen> {
           ),
         ),
         Center(
-          child: isSuccess
-              ? Lottie.asset('assets/animations/success.json')
-              : Image.asset(
-                  'assets/images/glow_failed.png',
-                  fit: BoxFit.cover,
-                ),
-        ),
+            child: isSuccess
+                ? Lottie.asset('assets/animations/success.json')
+                : Lottie.asset('assets/animations/failed.json')),
         Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -148,7 +146,7 @@ class _FinishScreenState extends State<FinishScreen> {
                   flex: 2,
                   child: Container(
                     alignment: Alignment.center,
-                    width: width/1.7,
+                    width: width / 1.7,
                     child: Table(
                       columnWidths: const {
                         0: FlexColumnWidth(2),
@@ -157,12 +155,12 @@ class _FinishScreenState extends State<FinishScreen> {
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.bottom,
                       children: [
-                        buildTableRow('Average answer time: ',
-                            '${averageTime.toStringAsFixed(1)} s'),
+                        buildTableRow('Correct answers: ',
+                            '${gameResult!.correctAnswersCount}/${level!.questionCount}'),
                         buildTableRow('Accuracy: ',
-                            '${answerAccuracy.toStringAsFixed(0)} %'),
-                        buildTableRow('Points: ',
-                            '${leaderboardPoints.toStringAsFixed(0)}'),
+                            '${answerAccuracy.toStringAsFixed(0)}%'),
+                        buildTableRow('Average time: ',
+                            '${averageTime.toStringAsFixed(1)} s'),
                         buildTableRow(
                             'Hints used: ', '${gameResult!.hintsUsed}'),
                       ],
@@ -178,17 +176,22 @@ class _FinishScreenState extends State<FinishScreen> {
                         '${level!.levelType}: ${level!.name}',
                         style: chakra22whiteBold,
                       ),
-                      RichText(
-                        text: TextSpan(
-                          style: chakra48whiteBold,
-                          children: [
-                            TextSpan(
-                                text: '${gameResult!.correctAnswersCount}'),
-                            TextSpan(
-                                text: '/${level!.questionCount}',
-                                style: chakra22whiteBold),
-                          ],
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/star_circle.svg',
+                            color: Colors.white,
+                            height: height / 20,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '${leaderboardPoints.toStringAsFixed(0)}',
+                            style: chakra48whiteBold,
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
 import '../data/debug_planes_collection.dart';
+import '../data/planes_collection.dart';
 import '../models/game_process_model.dart';
 import '../models/level_model.dart';
 import '../models/vehicle_model.dart';
 import '../utilities/constants.dart';
-
 
 class GameProcessProvider with ChangeNotifier {
   late GameProcessModel _gameProcessModel;
@@ -62,17 +62,28 @@ class GameProcessProvider with ChangeNotifier {
   List<VehicleModel> addVehicles(LevelModel level) {
     // ignore: prefer_final_locals
     List<VehicleModel> vehicles = [];
-    if (level.isPlane!) {
-      vehicles.addAll(debugPlanes);
+    if (kDebugMode) {
+      if (level.isPlane!) {
+        vehicles.addAll(debugPlanes);
+      }
+      if (level.isTank!) {
+        //vehicles.addAll(tanks);
+      }
+      if (level.isTank!) {
+        //vehicles.addAll(ships);
+      }
+      return vehicles;
+    } else {
+      if (level.isPlane!) {
+        vehicles.addAll(planes);
+      }
+      if (level.isTank!) {
+        //vehicles.addAll(tanks);
+      }
+      if (level.isTank!) {
+        //vehicles.addAll(ships);
+      }
+      return vehicles;
     }
-    if (level.isTank!) {
-      //TODO: Uncomment when collection of tanks will be ready
-      //vehicles.addAll(tanks);
-    }
-    if (level.isTank!) {
-      //TODO: Uncomment when collection of ships will be ready
-      //vehicles.addAll(ships);
-    }
-    return vehicles;
   }
 }

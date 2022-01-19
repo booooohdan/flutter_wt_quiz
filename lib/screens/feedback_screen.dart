@@ -34,9 +34,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   void initState() {
+    super.initState();
     getPackageInfo();
     getDeviceInfo();
-    super.initState();
   }
 
   Future<void> getPackageInfo() async {

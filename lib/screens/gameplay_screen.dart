@@ -80,6 +80,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
     final isQuestionOver =
         gameProcess!.questionCurrent > gameProcess!.questionsTotal;
     final isLivesOver = gameProcess!.heartsCount <= 0;
+
     if (isQuestionOver) {
       finishTheGame();
       return;
