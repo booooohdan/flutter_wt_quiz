@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 import '../models/game_process_model.dart';
 import '../models/level_model.dart';
+import '../providers/ads_provider.dart';
 import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
-import '../utilities/debug_ad_helper.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../widgets/appbar_regular_widget.dart';
@@ -72,7 +72,7 @@ class _FinishScreenState extends State<FinishScreen> {
 
   void loadRewardedAd() {
     RewardedAd.load(
-      adUnitId: doublePointRewardAdUnitId,
+      adUnitId: context.watch<AdsProvider>().doublePointRewardId(),
       request: AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {

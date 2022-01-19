@@ -48,3 +48,6 @@ app.*.map.json
 # My rules
 /lib/data/levels_collection.dart
 /lib/data/planes_collection.dart
+/lib/data/tanks_collection.dart
+/lib/data/ships_collection.dart
+/lib/utilities/ads_collection.dart

@@ -18,20 +18,17 @@ class LevelProvider with ChangeNotifier {
   Future saveResultToPreferences(
       double correctToTotalRatio, int correctAnswersCount) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(
-        'level${currentLevel.number}_answers', correctAnswersCount);
+    await prefs.setInt('answers_${currentLevel.id}', correctAnswersCount);
 
     if (correctToTotalRatio >= 0.9) {
+      await prefs.setString('status_${currentLevel.id}', 'level_passed');
       await prefs.setString(
-          'level${currentLevel.number}_status', 'level_passed');
-      await prefs.setString(
-          'level${currentLevel.number! + 1}_status', 'level_unlocked');
+          'status_${currentLevel.id! + 1}', 'level_unlocked');
     }
     if (correctToTotalRatio == 1.0) {
+      await prefs.setString('status_${currentLevel.id}', 'level_starred');
       await prefs.setString(
-          'level${currentLevel.number}_status', 'level_starred');
-      await prefs.setString(
-          'level${currentLevel.number! + 1}_status', 'level_unlocked');
+          'status_${currentLevel.id! + 1}', 'level_unlocked');
     }
     notifyListeners();
   }
@@ -48,6 +45,7 @@ class LevelProvider with ChangeNotifier {
       }
     } else {
       switch (args) {
+        //FIXME: Comment code below if dart file isn't found
         case 'HARDCORE':
           return await LevelsCollection().addHardcoreLevel();
         case 'TRAINING':

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -9,10 +10,10 @@ import '../models/game_process_model.dart';
 import '../models/gameplay_button_model.dart';
 import '../models/level_model.dart';
 import '../models/vehicle_model.dart';
+import '../providers/ads_provider.dart';
 import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
-import '../utilities/debug_ad_helper.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../utilities/svg_paths/button_no_cut.dart';
@@ -111,8 +112,23 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   void selectQuestionsAndRandomAnswers() {
     final vehicles = context.read<GameProcessProvider>().addVehicles(level!);
-    final shuffledList = List.from(vehicles)..shuffle();
+    List<VehicleModel> shuffledList = List.from(vehicles)..shuffle();
     vehicleCorrectAnswer = shuffledList[random.nextInt(4)];
+
+    switch(vehicleCorrectAnswer.type){
+      case 'Plane':
+        shuffledList.removeWhere((element) => element.type == 'Tank');
+        shuffledList.removeWhere((element) => element.type == 'Ship');
+        break;
+      case 'Tank':
+        shuffledList.removeWhere((element) => element.type == 'Plane');
+        shuffledList.removeWhere((element) => element.type == 'Ship');
+        break;
+      case 'Ship':
+        shuffledList.removeWhere((element) => element.type == 'Plane');
+        shuffledList.removeWhere((element) => element.type == 'Tank');
+        break;
+    }
 
     buttons[0].answerText = shuffledList[0].name!;
     buttons[1].answerText = shuffledList[1].name!;
@@ -225,7 +241,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   void loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: interstitialAdUnitId,
+      adUnitId: context.watch<AdsProvider>().interstitialId(),
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -249,7 +265,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   void loadRewardedAd() {
     RewardedAd.load(
-      adUnitId: doublePointRewardAdUnitId,
+      adUnitId: context.watch<AdsProvider>().extraLifeRewardId(),
       request: AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
@@ -336,7 +352,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       child: InteractiveViewer(
                         child: Image(
                           image: AssetImage(
-                              'assets/planes/${vehicleCorrectAnswer.image}.png'),
+                              'assets/vehicles/${vehicleCorrectAnswer.image}.png'),
                           fit: BoxFit.fitHeight,
                         ),
                       ),

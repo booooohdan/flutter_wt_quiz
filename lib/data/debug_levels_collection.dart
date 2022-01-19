@@ -12,7 +12,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Level 1'
-      ..number = 1
+      ..id = 1
       ..questionCount = 5
       ..answeredCount = prefs.getInt('answers_1') ?? 0
       ..isPlane = true
@@ -23,7 +23,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Level 2'
-      ..number = 2
+      ..id = 2
       ..questionCount = 5
       ..answeredCount = prefs.getInt('answers_2') ?? 0
       ..isTank = true
@@ -34,7 +34,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Level 3'
-      ..number = 3
+      ..id = 3
       ..questionCount = 5
       ..answeredCount = prefs.getInt('answers_3') ?? 0
       ..isShip = true
@@ -45,7 +45,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Level 4'
-      ..number = 4
+      ..id = 4
       ..questionCount = 5
       ..answeredCount = prefs.getInt('answers_4') ?? 0
       ..isPlane = true
@@ -56,7 +56,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Level 5'
-      ..number = 5
+      ..id = 5
       ..questionCount = 5
       ..answeredCount = prefs.getInt('answers_5') ?? 0
       ..isTank = true
@@ -67,7 +67,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Level 6'
-      ..number = 6
+      ..id = 6
       ..questionCount = 5
       ..answeredCount = prefs.getInt('answers_6') ?? 0
       ..isShip = true
@@ -78,7 +78,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Level 7'
-      ..number = 7
+      ..id = 7
       ..questionCount = 5
       ..answeredCount = prefs.getInt('answers_7') ?? 0
       ..isPlane = true
@@ -91,7 +91,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Level 8'
-      ..number = 8
+      ..id = 8
       ..questionCount = 5
       ..answeredCount = prefs.getInt('answers_8') ?? 0
       ..isPlane = true
@@ -109,7 +109,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Hardcore Lite 😓'
-      ..number = 10001
+      ..id = 10001
       ..questionCount = 100
       ..answeredCount = prefs.getInt('answers_10001') ?? 0
       ..isPlane = true
@@ -122,7 +122,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Hardcore 💪'
-      ..number = 10002
+      ..id = 10002
       ..questionCount = 100
       ..answeredCount = prefs.getInt('answers_10002') ?? 0
       ..isPlane = true
@@ -136,7 +136,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = '💀 INSANE 💀'
-      ..number = 10003
+      ..id = 10003
       ..questionCount = 1000
       ..answeredCount = prefs.getInt('answers_10003') ?? 0
       ..isPlane = true
@@ -156,7 +156,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Only Planes'
-      ..number = 1001
+      ..id = 1001
       ..questionCount = 20
       ..answeredCount = prefs.getInt('answers_1001') ?? 0
       ..isPlane = true
@@ -168,7 +168,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Only Tanks'
-      ..number = 1002
+      ..id = 1002
       ..questionCount = 20
       ..answeredCount = prefs.getInt('answers_1002') ?? 0
       ..isTank = true
@@ -180,7 +180,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Only Ships'
-      ..number = 1003
+      ..id = 1003
       ..questionCount = 20
       ..answeredCount = prefs.getInt('answers_1003') ?? 0
       ..isShip = true
@@ -192,7 +192,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Only Pre-WWII'
-      ..number = 1004
+      ..id = 1004
       ..questionCount = 20
       ..answeredCount = prefs.getInt('answers_1004') ?? 0
       ..isPlane = true
@@ -206,7 +206,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Only WWII'
-      ..number = 1005
+      ..id = 1005
       ..questionCount = 20
       ..answeredCount = prefs.getInt('answers_1005') ?? 0
       ..isPlane = true
@@ -220,7 +220,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Only Cold War'
-      ..number = 1006
+      ..id = 1006
       ..questionCount = 20
       ..answeredCount = prefs.getInt('answers_1006') ?? 0
       ..isPlane = true
@@ -234,7 +234,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Tank and Planes'
-      ..number = 1007
+      ..id = 1007
       ..questionCount = 20
       ..answeredCount = prefs.getInt('answers_1007') ?? 0
       ..isPlane = true
@@ -247,7 +247,7 @@ class DebugLevelsCollection {
 
     level = LevelModel()
       ..name = 'Tank and Planes'
-      ..number = 1008
+      ..id = 1008
       ..questionCount = 20
       ..answeredCount = prefs.getInt('answers_1008') ?? 0
       ..isPlane = true
