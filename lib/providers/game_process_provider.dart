@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 import '../data/debug_planes_collection.dart';
+import '../data/debug_ships_collection.dart';
+import '../data/debug_tanks_collection.dart';
 import '../data/planes_collection.dart';
 import '../data/ships_collection.dart';
 import '../data/tanks_collection.dart';
@@ -69,10 +71,10 @@ class GameProcessProvider with ChangeNotifier {
         vehicles.addAll(debugPlanes);
       }
       if (level.isTank!) {
-        vehicles.addAll(tanks);
+        vehicles.addAll(debugTanks);
       }
       if (level.isTank!) {
-        vehicles.addAll(ships);
+        vehicles.addAll(debugShips);
       }
       return vehicles;
     } else {
