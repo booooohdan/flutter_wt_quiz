@@ -22,13 +22,11 @@ class LevelProvider with ChangeNotifier {
 
     if (correctToTotalRatio >= 0.9) {
       await prefs.setString('status_${currentLevel.id}', 'level_passed');
-      await prefs.setString(
-          'status_${currentLevel.id! + 1}', 'level_unlocked');
+      await prefs.setString('status_${currentLevel.id! + 1}', 'level_unlocked');
     }
     if (correctToTotalRatio == 1.0) {
       await prefs.setString('status_${currentLevel.id}', 'level_starred');
-      await prefs.setString(
-          'status_${currentLevel.id! + 1}', 'level_unlocked');
+      await prefs.setString('status_${currentLevel.id! + 1}', 'level_unlocked');
     }
     notifyListeners();
   }
@@ -44,8 +42,8 @@ class LevelProvider with ChangeNotifier {
           return await DebugLevelsCollection().addClassicLevel();
       }
     } else {
+      //FIXME: Comment code below if dart file isn't found and add "return await DebugLevelsCollection().addClassicLevel();"
       switch (args) {
-        //FIXME: Comment code below if dart file isn't found
         case 'HARDCORE':
           return await LevelsCollection().addHardcoreLevel();
         case 'TRAINING':
