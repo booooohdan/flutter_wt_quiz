@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -9,10 +10,10 @@ import '../models/game_process_model.dart';
 import '../models/gameplay_button_model.dart';
 import '../models/level_model.dart';
 import '../models/vehicle_model.dart';
+import '../providers/ads_provider.dart';
 import '../providers/game_process_provider.dart';
 import '../providers/level_provider.dart';
 import '../utilities/constants.dart';
-import '../utilities/debug_ad_helper.dart';
 import '../utilities/svg_paths/button_cut_left_bottom_edge.dart';
 import '../utilities/svg_paths/button_cut_right_bottom_edge.dart';
 import '../utilities/svg_paths/button_no_cut.dart';
@@ -56,11 +57,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
       isFirstInit = true;
       level = context.watch<LevelProvider>().currentLevel;
 
-      buttons
-        ..add(button1)
-        ..add(button2)
-        ..add(button3)
-        ..add(button4);
+      buttons..add(button1)..add(button2)..add(button3)..add(button4);
 
       gameProcess =
           context.read<GameProcessProvider>().setLevelDifficultParams(level!);
@@ -84,6 +81,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
     final isQuestionOver =
         gameProcess!.questionCurrent > gameProcess!.questionsTotal;
     final isLivesOver = gameProcess!.heartsCount <= 0;
+
     if (isQuestionOver) {
       finishTheGame();
       return;
@@ -92,7 +90,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
     if (isLivesOver) {
       if (isRewardedAdReady) {
         addExtraLifeCustomDialog(context);
-      }else{
+      } else {
         finishTheGame();
       }
     }
@@ -114,8 +112,23 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   void selectQuestionsAndRandomAnswers() {
     final vehicles = context.read<GameProcessProvider>().addVehicles(level!);
-    final shuffledList = List.from(vehicles)..shuffle();
+    List<VehicleModel> shuffledList = List.from(vehicles)..shuffle();
     vehicleCorrectAnswer = shuffledList[random.nextInt(4)];
+
+    switch(vehicleCorrectAnswer.type){
+      case 'Plane':
+        shuffledList.removeWhere((element) => element.type == 'Tank');
+        shuffledList.removeWhere((element) => element.type == 'Ship');
+        break;
+      case 'Tank':
+        shuffledList.removeWhere((element) => element.type == 'Plane');
+        shuffledList.removeWhere((element) => element.type == 'Ship');
+        break;
+      case 'Ship':
+        shuffledList.removeWhere((element) => element.type == 'Plane');
+        shuffledList.removeWhere((element) => element.type == 'Tank');
+        break;
+    }
 
     buttons[0].answerText = shuffledList[0].name!;
     buttons[1].answerText = shuffledList[1].name!;
@@ -228,7 +241,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   void loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: interstitialAdUnitId,
+      adUnitId: context.watch<AdsProvider>().interstitialId(),
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -252,7 +265,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   void loadRewardedAd() {
     RewardedAd.load(
-      adUnitId: doublePointRewardAdUnitId,
+      adUnitId: context.watch<AdsProvider>().extraLifeRewardId(),
       request: AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
@@ -283,6 +296,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async {
         return await backButtonCustomDialog(context);
@@ -319,7 +334,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           height: 10,
                         ),
                         SizedBox(
-                          width: 200,
+                          width: width / 2,
                           child: LinearProgressIndicator(
                             color: Colors.white,
                             backgroundColor: greyTextColor,
@@ -337,81 +352,80 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       child: InteractiveViewer(
                         child: Image(
                           image: AssetImage(
-                              'assets/planes/${vehicleCorrectAnswer.image}.png'),
+                              'assets/vehicles/${vehicleCorrectAnswer.image}.png'),
                           fit: BoxFit.fitHeight,
                         ),
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: IgnorePointer(
-                              ignoring: gameProcess!.hintFiftyFifty == 0,
-                              child: ButtonSquareWidget(
-                                context: context,
-                                clipper: ButtonCutLeftBottomEdge(),
-                                backgroundImage:
-                                    'assets/buttons/button_cut_left_bottom_edge.png',
-                                leadingIcon: 'assets/icons/fifty_fifty.svg',
-                                text: '50/50',
-                                count: '${gameProcess!.hintFiftyFifty}',
-                                onTap: () {
-                                  fiftyFiftyHints();
-                                },
-                              ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
+                    height: height / 8,
+                    width: 560,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: IgnorePointer(
+                            ignoring: gameProcess!.hintFiftyFifty == 0,
+                            child: ButtonSquareWidget(
+                              context: context,
+                              clipper: ButtonCutLeftBottomEdge(),
+                              backgroundImage:
+                                  'assets/buttons/button_cut_left_bottom_edge.png',
+                              leadingIcon: 'assets/icons/fifty_fifty.svg',
+                              text: '50/50',
+                              count: '${gameProcess!.hintFiftyFifty}',
+                              onTap: () {
+                                fiftyFiftyHints();
+                              },
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: IgnorePointer(
-                              ignoring: gameProcess!.hintNation == 0,
-                              child: ButtonSquareWidget(
-                                context: context,
-                                clipper: ButtonNoCut(),
-                                backgroundImage:
-                                    'assets/buttons/button_no_cut.png',
-                                leadingIcon: nationHintIcon,
-                                text: 'NATION',
-                                count: '${gameProcess!.hintNation}',
-                                onTap: () {
-                                  nationHint();
-                                },
-                              ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: IgnorePointer(
+                            ignoring: gameProcess!.hintNation == 0,
+                            child: ButtonSquareWidget(
+                              context: context,
+                              clipper: ButtonNoCut(),
+                              backgroundImage:
+                                  'assets/buttons/button_no_cut.png',
+                              leadingIcon: nationHintIcon,
+                              text: 'NATION',
+                              count: '${gameProcess!.hintNation}',
+                              onTap: () {
+                                nationHint();
+                              },
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: IgnorePointer(
-                              ignoring: gameProcess!.hintSkip == 0,
-                              child: ButtonSquareWidget(
-                                context: context,
-                                clipper: ButtonCutRightBottomEdge(),
-                                backgroundImage:
-                                    'assets/buttons/button_cut_right_bottom_edge.png',
-                                leadingIcon: 'assets/icons/skip.svg',
-                                text: 'SKIP',
-                                count: '${gameProcess!.hintSkip}',
-                                onTap: () {
-                                  skipHint();
-                                },
-                              ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: IgnorePointer(
+                            ignoring: gameProcess!.hintSkip == 0,
+                            child: ButtonSquareWidget(
+                              context: context,
+                              clipper: ButtonCutRightBottomEdge(),
+                              backgroundImage:
+                                  'assets/buttons/button_cut_right_bottom_edge.png',
+                              leadingIcon: 'assets/icons/skip.svg',
+                              text: 'SKIP',
+                              count: '${gameProcess!.hintSkip}',
+                              onTap: () {
+                                skipHint();
+                              },
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -421,38 +435,54 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Visibility(
-                            visible: buttons[0].answerText.isNotEmpty,
-                            child: ButtonGameplayWidget(
-                              context: context,
-                              onTap: () => answerButtonTapped(buttons[0]),
-                              model: buttons[0],
+                          Expanded(
+                            flex: 3,
+                            child: Visibility(
+                              visible: buttons[0].answerText.isNotEmpty,
+                              child: ButtonGameplayWidget(
+                                context: context,
+                                onTap: () => answerButtonTapped(buttons[0]),
+                                model: buttons[0],
+                              ),
                             ),
                           ),
-                          Visibility(
-                            visible: buttons[1].answerText.isNotEmpty,
-                            child: ButtonGameplayWidget(
-                              context: context,
-                              onTap: () => answerButtonTapped(buttons[1]),
-                              model: buttons[1],
+                          Expanded(flex: 1, child: Container()),
+                          Expanded(
+                            flex: 3,
+                            child: Visibility(
+                              visible: buttons[1].answerText.isNotEmpty,
+                              child: ButtonGameplayWidget(
+                                context: context,
+                                onTap: () => answerButtonTapped(buttons[1]),
+                                model: buttons[1],
+                              ),
                             ),
                           ),
-                          Visibility(
-                            visible: buttons[2].answerText.isNotEmpty,
-                            child: ButtonGameplayWidget(
-                              context: context,
-                              onTap: () => answerButtonTapped(buttons[2]),
-                              model: buttons[2],
+                          Expanded(flex: 1, child: Container()),
+                          Expanded(
+                            flex: 3,
+                            child: Visibility(
+                              visible: buttons[2].answerText.isNotEmpty,
+                              child: ButtonGameplayWidget(
+                                context: context,
+                                onTap: () => answerButtonTapped(buttons[2]),
+                                model: buttons[2],
+                              ),
                             ),
                           ),
-                          Visibility(
-                            visible: buttons[3].answerText.isNotEmpty,
-                            child: ButtonGameplayWidget(
-                              context: context,
-                              onTap: () => answerButtonTapped(buttons[3]),
-                              model: buttons[3],
+                          Expanded(flex: 1, child: Container()),
+                          Expanded(
+                            flex: 3,
+                            child: Visibility(
+                              visible: buttons[3].answerText.isNotEmpty,
+                              child: ButtonGameplayWidget(
+                                context: context,
+                                onTap: () => answerButtonTapped(buttons[3]),
+                                model: buttons[3],
+                              ),
                             ),
                           ),
+                          Expanded(flex: 1, child: Container()),
                         ],
                       ),
                     ),

@@ -34,9 +34,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   void initState() {
+    super.initState();
     getPackageInfo();
     getDeviceInfo();
-    super.initState();
   }
 
   Future<void> getPackageInfo() async {
@@ -69,7 +69,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/backgrounds/finish_success.png'),
+              image: AssetImage('assets/backgrounds/gameplay.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -159,9 +159,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         style: chakra18greyBold,
                       ),
                       const SizedBox(height: 20),
-                      Padding(
+                      Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 0, horizontal: 40),
+                        width: 500,
                         child: Text(
                           'WT Quiz is a trivia game with vehicles from the game War Thunder. '
                           'All images and description have been taken from wiki.warthunder.com',
@@ -197,9 +198,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           }
                         },
                       ),
-                      Padding(
+                      Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 30, vertical: 0),
+                        width: 560,
                         child: Row(
                           children: [
                             Expanded(

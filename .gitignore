@@ -44,3 +44,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# My rules
+/lib/data/levels_collection.dart
+/lib/data/planes_collection.dart
+/lib/data/tanks_collection.dart
+/lib/data/ships_collection.dart
+/lib/utilities/ads_collection.dart

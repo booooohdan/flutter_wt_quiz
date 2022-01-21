@@ -30,10 +30,11 @@ class AppBarGameplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         Container(
-          height: 50,
+          height: height / 16,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -52,7 +53,7 @@ class AppBarGameplayWidget extends StatelessWidget {
                       ),
                       SvgPicture.asset(
                         'assets/icons/checkmark.svg',
-                        width: 20,
+                        height: height / 70,
                       ),
                     ],
                   ),
@@ -62,17 +63,17 @@ class AppBarGameplayWidget extends StatelessWidget {
                 children: [
                   SvgPicture.asset(
                     'assets/icons/${heartsList()[0]}.svg',
-                    width: 20,
+                    height: height/50,
                   ),
                   const SizedBox(width: 10),
                   SvgPicture.asset(
                     'assets/icons/${heartsList()[1]}.svg',
-                    width: 20,
+                    height: height/50,
                   ),
                   const SizedBox(width: 10),
                   SvgPicture.asset(
                     'assets/icons/${heartsList()[2]}.svg',
-                    width: 20,
+                    height: height/50,
                   ),
                 ],
               ),
@@ -99,8 +100,8 @@ class AppBarGameplayWidget extends StatelessWidget {
         ),
         SvgPicture.asset(
           'assets/divider.svg',
-          height: 5,
-          fit: BoxFit.fitWidth,
+          height: height / 150,
+          fit: BoxFit.fill,
         ),
       ],
     );

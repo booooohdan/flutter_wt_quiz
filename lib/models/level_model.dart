@@ -1,7 +1,7 @@
 class LevelModel {
   LevelModel(
       {this.name,
-      this.number,
+      this.id,
       this.questionCount,
       this.answeredCount,
       this.isPlane = false,
@@ -12,7 +12,7 @@ class LevelModel {
       this.periodOfTime});
 
   String? name;
-  int? number;
+  int? id;
   int? questionCount;
   int? answeredCount;
   bool? isPlane;
