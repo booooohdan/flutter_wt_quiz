@@ -78,7 +78,7 @@ class GameProcessProvider with ChangeNotifier {
       }
       return vehicles;
     } else {
-      //FIXME: Comment this "else section" below if dart file isn't found
+      //FIXME: Comment this "else section" below if dart file isn't found and add "return vehicles;"
       if (level.isPlane! && level.periodOfTime == 'Pre-WWII') {
         vehicles.addAll(
             planes.where((element) => element.periodOfTime == 'Pre-WWII'));

@@ -8,7 +8,7 @@ class AdsProvider with ChangeNotifier {
     if (kDebugMode) {
       return DebugAdsCollection().interstitialAdUnitId();
     } else {
-      //FIXME: Comment code below if dart file isn't found
+      //FIXME: return '';
       return AdsCollection().interstitialAdUnitId();
     }
   }
@@ -17,7 +17,7 @@ class AdsProvider with ChangeNotifier {
     if (kDebugMode) {
       return DebugAdsCollection().doublePointRewardAdUnitId();
     } else {
-      //FIXME: Comment code below if dart file isn't found
+      //FIXME: return '';
       return AdsCollection().doublePointRewardAdUnitId();
     }
   }
@@ -26,7 +26,7 @@ class AdsProvider with ChangeNotifier {
     if (kDebugMode) {
       return DebugAdsCollection().extraLifeRewardAdUnitId();
     } else {
-      //FIXME: Comment code below if dart file isn't found
+      //FIXME: return '';
       return AdsCollection().extraLifeRewardAdUnitId();
     }
   }
