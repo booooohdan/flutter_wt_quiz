@@ -69,7 +69,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/backgrounds/finish_success.png'),
+              image: AssetImage('assets/backgrounds/gameplay.png'),
               fit: BoxFit.cover,
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utilities/constants.dart';
 import '../widgets/button_menu_wide_widget.dart';
@@ -43,26 +44,37 @@ class _MenuScreenState extends State<MenuScreen> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Center(
-                    child: Text(
-                      'WT QUIZ',
-                      style: chakra48whiteBold,
-                    ),
-                  ),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'WAR THUNDER',
+                          style: chakra22whiteBold,
+                        ),
+                        Text(
+                          'QUIZ',
+                          style: GoogleFonts.chakraPetch(
+                              fontSize: 72,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ]),
                 ),
                 Expanded(
                   flex: 1,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Expanded(flex: 3,
+                      Expanded(
+                        flex: 3,
                         child: Text(
                           'Game modes:',
                           style: chakra18greyBold,
                         ),
                       ),
-                      Expanded(flex: 1,child: Container()),
-                      Expanded(flex: 3,
+                      Expanded(flex: 1, child: Container()),
+                      Expanded(
+                        flex: 3,
                         child: ButtonMenuWideWidget(
                           context: context,
                           title: 'CLASSIC',
@@ -71,7 +83,8 @@ class _MenuScreenState extends State<MenuScreen> {
                         ),
                       ),
                       Expanded(flex: 1, child: Container()),
-                      Expanded(flex: 3,
+                      Expanded(
+                        flex: 3,
                         child: ButtonMenuWideWidget(
                           context: context,
                           title: 'HARDCORE',
@@ -79,8 +92,9 @@ class _MenuScreenState extends State<MenuScreen> {
                           route: '/levels',
                         ),
                       ),
-                      Expanded(flex: 1,child: Container()),
-                      Expanded(flex: 3,
+                      Expanded(flex: 1, child: Container()),
+                      Expanded(
+                        flex: 3,
                         child: ButtonMenuWideWidget(
                           context: context,
                           title: 'TRAINING',
@@ -88,10 +102,12 @@ class _MenuScreenState extends State<MenuScreen> {
                           route: '/levels',
                         ),
                       ),
-                      Expanded(flex: 1,child: Container()),
-                      Expanded(flex: 3,
+                      Expanded(flex: 1, child: Container()),
+                      Expanded(
+                        flex: 3,
                         child: GestureDetector(
-                          onTap: () => Navigator.pushNamed(context, '/feedback'),
+                          onTap: () =>
+                              Navigator.pushNamed(context, '/feedback'),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
