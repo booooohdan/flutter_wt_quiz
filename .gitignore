@@ -51,3 +51,5 @@ app.*.map.json
 /lib/data/tanks_collection.dart
 /lib/data/ships_collection.dart
 /lib/utilities/ads_collection.dart
+*.keyInfo
+*.keystore
