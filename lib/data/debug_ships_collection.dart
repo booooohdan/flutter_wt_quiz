@@ -2,108 +2,99 @@ import '../models/vehicle_model.dart';
 import '../utilities/constants.dart';
 
 List<VehicleModel> debugShips = [
+
   VehicleModel(
-    image: 'clemson',
-    name: 'Clemson (DD-336)',
-    nation: 'USA',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['pre_ww2'],
-  ),
-  VehicleModel(
-    image: 'farragut',
-    name: 'Farragut (DD-355)',
-    nation: 'USA',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['pre_ww2'],
-  ),
-  VehicleModel(
-    image: 'somers',
-    name: 'Somers (DD-381)',
-    nation: 'USA',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['pre_ww2'],
-  ),
-  VehicleModel(
-    image: 'trenton',
-    name: 'USS Trenton (CL-11)',
-    nation: 'USA',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['pre_ww2'],
-  ),
-  VehicleModel(
-    image: 'brooklyn',
-    name: 'USS Brooklyn (CL-40)',
-    nation: 'USA',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['pre_ww2'],
-  ),
-  VehicleModel(
-    image: 'sc497',
-    name: '110 ft SC-497',
+    image: 'us_elco_77ft_pt59',
+    name: 'PT-59',
     nation: 'USA',
     type: vehicleTypes['ship'],
     periodOfTime: periodsCollection['ww_2'],
   ),
+
   VehicleModel(
-    image: 'pc451',
-    name: '165 ft PC-451',
+    image: 'us_tucumcari_pgh2',
+    name: 'USS Tucumcari',
     nation: 'USA',
+    type: vehicleTypes['ship'],
+    periodOfTime: periodsCollection['cold_war'],
+  ),
+
+  VehicleModel(
+    image: 'germ_vs10_hydrofoil',
+    name: 'VS-10',
+    nation: 'Germany',
     type: vehicleTypes['ship'],
     periodOfTime: periodsCollection['ww_2'],
   ),
+
   VehicleModel(
-    image: 'pt3',
-    name: '58 ft PT-3',
-    nation: 'USA',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['ww_2'],
-  ),
-  VehicleModel(
-    image: 'eclo77pt59',
-    name: 'Elco 77 ft PT-59',
-    nation: 'USA',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['ww_2'],
-  ),
-  VehicleModel(
-    image: 'higgins78pt200',
-    name: 'Higgins 78 ft PT-200',
-    nation: 'USA',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['ww_2'],
-  ),
-  VehicleModel(
-    image: 'jaguar',
-    name: 'Type 140/141 Jaguar',
+    image: 'germ_type143_albatros',
+    name: 'Albatros',
     nation: 'Germany',
     type: vehicleTypes['ship'],
     periodOfTime: periodsCollection['cold_war'],
   ),
+
   VehicleModel(
-    image: 'mz1',
-    name: 'MZ1',
-    nation: 'Germany',
+    image: 'ussr_cruiser_kirov',
+    name: 'Kirov',
+    nation: 'USSR',
     type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['cold_war'],
+    periodOfTime: periodsCollection['ww_2'],
   ),
+
   VehicleModel(
-    image: 'albatroz',
-    name: 'Type 143 Albatros',
-    nation: 'Germany',
-    type: vehicleTypes['ship'],
-    periodOfTime: periodsCollection['cold_war'],
-  ),
-  VehicleModel(
-    image: 'komsomolets',
-    name: 'Pr. 123K Komsomolets',
+    image: 'ussr_cruiser_chapayev',
+    name: 'Chapayev',
     nation: 'USSR',
     type: vehicleTypes['ship'],
     periodOfTime: periodsCollection['cold_war'],
   ),
+
   VehicleModel(
-    image: 'pr1204',
-    name: 'Pr. 1204 late',
-    nation: 'USSR',
+    image: 'uk_fairmile_a_ml100',
+    name: 'Fairmile A (ML100)',
+    nation: 'Britain',
+    type: vehicleTypes['ship'],
+    periodOfTime: periodsCollection['ww_2'],
+  ),
+
+  VehicleModel(
+    image: 'uk_isles_class_trawler',
+    name: 'HMS Liscomb',
+    nation: 'Britain',
+    type: vehicleTypes['ship'],
+    periodOfTime: periodsCollection['ww_2'],
+  ),
+
+  VehicleModel(
+    image: 'jp_pg02',
+    name: 'PG 02',
+    nation: 'Japan',
+    type: vehicleTypes['ship'],
+    periodOfTime: periodsCollection['ww_2'],
+  ),
+
+  VehicleModel(
+    image: 'jp_escort_chikugo_class',
+    name: 'Chikugo',
+    nation: 'Japan',
+    type: vehicleTypes['ship'],
+    periodOfTime: periodsCollection['cold_war'],
+  ),
+
+  VehicleModel(
+    image: 'it_destroyer_soldati_serie1_camicianera',
+    name: 'RN Corazziere',
+    nation: 'Italy',
+    type: vehicleTypes['ship'],
+    periodOfTime: periodsCollection['ww_2'],
+  ),
+
+  VehicleModel(
+    image: 'it_p493_freccia',
+    name: 'Freccia P-493',
+    nation: 'Italy',
     type: vehicleTypes['ship'],
     periodOfTime: periodsCollection['cold_war'],
   ),
