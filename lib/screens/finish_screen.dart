@@ -146,7 +146,7 @@ class _FinishScreenState extends State<FinishScreen> {
                   flex: 2,
                   child: Container(
                     alignment: Alignment.center,
-                    width: width / 1.7,
+                    width: width / 1.6,
                     child: Table(
                       columnWidths: const {
                         0: FlexColumnWidth(2),
