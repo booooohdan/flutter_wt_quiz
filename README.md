@@ -1,7 +1,7 @@
 # War Thunder Quiz
 
 Started: ***25.12.2021***
-Published: ***22.01.2022***
+Published: ***23.01.2022***
 Status: ***Supported***
 
 ### Used:
