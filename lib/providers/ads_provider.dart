@@ -5,29 +5,20 @@ import '../utilities/debug_ads_collection.dart';
 
 class AdsProvider with ChangeNotifier {
   String interstitialId() {
-    if (kDebugMode) {
-      return DebugAdsCollection().interstitialAdUnitId();
-    } else {
-      //FIXME: return '';
-      return AdsCollection().interstitialAdUnitId();
-    }
+    return AdsCollection().interstitialAdUnitId();
+    //FIXME: Comment code above, and uncomment below if dart file isn't found
+    //return DebugAdsCollection().interstitialAdUnitId();
   }
 
   String doublePointRewardId() {
-    if (kDebugMode) {
-      return DebugAdsCollection().doublePointRewardAdUnitId();
-    } else {
-      //FIXME: return '';
-      return AdsCollection().doublePointRewardAdUnitId();
-    }
+    return AdsCollection().doublePointRewardAdUnitId();
+    //FIXME: Comment code above, and uncomment below if dart file isn't found
+    //return DebugAdsCollection().doublePointRewardAdUnitId();
   }
 
   String extraLifeRewardId() {
-    if (kDebugMode) {
-      return DebugAdsCollection().extraLifeRewardAdUnitId();
-    } else {
-      //FIXME: return '';
-      return AdsCollection().extraLifeRewardAdUnitId();
-    }
+    return AdsCollection().extraLifeRewardAdUnitId();
+    //FIXME: Comment code above, and uncomment below if dart file isn't found
+    //return DebugAdsCollection().extraLifeRewardAdUnitId();
   }
 }

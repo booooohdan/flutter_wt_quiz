@@ -32,25 +32,23 @@ class LevelProvider with ChangeNotifier {
   }
 
   Future<List<LevelModel>> addLevels(String args) async {
-    if (kDebugMode) {
-      switch (args) {
-        case 'HARDCORE':
-          return await DebugLevelsCollection().addHardcoreLevel();
-        case 'TRAINING':
-          return await DebugLevelsCollection().addTrainingLevel();
-        default:
-          return await DebugLevelsCollection().addClassicLevel();
-      }
-    } else {
-      //FIXME: Comment code below if dart file isn't found and add "return await DebugLevelsCollection().addClassicLevel();"
-      switch (args) {
-        case 'HARDCORE':
-          return await LevelsCollection().addHardcoreLevel();
-        case 'TRAINING':
-          return await LevelsCollection().addTrainingLevel();
-        default:
-          return await LevelsCollection().addClassicLevel();
-      }
+    switch (args) {
+      case 'HARDCORE':
+        return await LevelsCollection().addHardcoreLevel();
+      case 'TRAINING':
+        return await LevelsCollection().addTrainingLevel();
+      default:
+        return await LevelsCollection().addClassicLevel();
     }
+
+    //FIXME: Comment code above, and uncomment below if dart file isn't found
+    // switch (args) {
+    //   case 'HARDCORE':
+    //     return await DebugLevelsCollection().addHardcoreLevel();
+    //   case 'TRAINING':
+    //     return await DebugLevelsCollection().addTrainingLevel();
+    //   default:
+    //     return await DebugLevelsCollection().addClassicLevel();
+    // }
   }
 }

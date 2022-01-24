@@ -17,7 +17,7 @@ List<VehicleModel> debugPlanes = [
     periodOfTime: periodsCollection['ww_2'],
   ),
   VehicleModel(
-    image: 'f-104c',
+    image: 'f104c',
     name: 'F-104C',
     nation: 'USA',
     type: vehicleTypes['plane'],

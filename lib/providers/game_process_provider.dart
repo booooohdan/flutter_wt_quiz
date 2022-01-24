@@ -66,68 +66,68 @@ class GameProcessProvider with ChangeNotifier {
   List<VehicleModel> addVehicles(LevelModel level) {
     // ignore: prefer_final_locals
     List<VehicleModel> vehicles = [];
-    if (kDebugMode) {
-      if (level.isPlane!) {
-        vehicles.addAll(debugPlanes);
-      }
-      if (level.isTank!) {
-        vehicles.addAll(debugTanks);
-      }
-      if (level.isTank!) {
-        vehicles.addAll(debugShips);
-      }
-      return vehicles;
-    } else {
-      //FIXME: Comment this "else section" below if dart file isn't found and add "return vehicles;"
-      if (level.isPlane! && level.periodOfTime == 'Pre-WWII') {
-        vehicles.addAll(
-            planes.where((element) => element.periodOfTime == 'Pre-WWII'));
-      }
-      if (level.isPlane! && level.periodOfTime == 'World War II') {
-        vehicles.addAll(
-            planes.where((element) => element.periodOfTime == 'World War II'));
-      }
-      if (level.isPlane! && level.periodOfTime == 'Cold War') {
-        vehicles.addAll(
-            planes.where((element) => element.periodOfTime == 'Cold War'));
-      }
-      if (level.isPlane! && level.periodOfTime == 'All times') {
-        vehicles.addAll(planes);
-      }
 
-      if (level.isTank! && level.periodOfTime == 'Pre-WWII') {
-        vehicles.addAll(
-            tanks.where((element) => element.periodOfTime == 'Pre-WWII'));
-      }
-      if (level.isTank! && level.periodOfTime == 'World War II') {
-        vehicles.addAll(
-            tanks.where((element) => element.periodOfTime == 'World War II'));
-      }
-      if (level.isTank! && level.periodOfTime == 'Cold War') {
-        vehicles.addAll(
-            tanks.where((element) => element.periodOfTime == 'Cold War'));
-      }
-      if (level.isTank! && level.periodOfTime == 'All times') {
-        vehicles.addAll(tanks);
-      }
-
-      if (level.isShip! && level.periodOfTime == 'Pre-WWII') {
-        vehicles.addAll(
-            ships.where((element) => element.periodOfTime == 'Pre-WWII'));
-      }
-      if (level.isShip! && level.periodOfTime == 'World War II') {
-        vehicles.addAll(
-            ships.where((element) => element.periodOfTime == 'World War II'));
-      }
-      if (level.isShip! && level.periodOfTime == 'Cold War') {
-        vehicles.addAll(
-            ships.where((element) => element.periodOfTime == 'Cold War'));
-      }
-      if (level.isShip! && level.periodOfTime == 'All times') {
-        vehicles.addAll(ships);
-      }
-      
-      return vehicles;
+    if (level.isPlane! && level.periodOfTime == 'Pre-WWII') {
+      vehicles.addAll(
+          planes.where((element) => element.periodOfTime == 'Pre-WWII'));
     }
+    if (level.isPlane! && level.periodOfTime == 'World War II') {
+      vehicles.addAll(
+          planes.where((element) => element.periodOfTime == 'World War II'));
+    }
+    if (level.isPlane! && level.periodOfTime == 'Cold War') {
+      vehicles.addAll(
+          planes.where((element) => element.periodOfTime == 'Cold War'));
+    }
+    if (level.isPlane! && level.periodOfTime == 'All times') {
+      vehicles.addAll(planes);
+    }
+
+    if (level.isTank! && level.periodOfTime == 'Pre-WWII') {
+      vehicles
+          .addAll(tanks.where((element) => element.periodOfTime == 'Pre-WWII'));
+    }
+    if (level.isTank! && level.periodOfTime == 'World War II') {
+      vehicles.addAll(
+          tanks.where((element) => element.periodOfTime == 'World War II'));
+    }
+    if (level.isTank! && level.periodOfTime == 'Cold War') {
+      vehicles
+          .addAll(tanks.where((element) => element.periodOfTime == 'Cold War'));
+    }
+    if (level.isTank! && level.periodOfTime == 'All times') {
+      vehicles.addAll(tanks);
+    }
+
+    if (level.isShip! && level.periodOfTime == 'Pre-WWII') {
+      vehicles
+          .addAll(ships.where((element) => element.periodOfTime == 'Pre-WWII'));
+    }
+    if (level.isShip! && level.periodOfTime == 'World War II') {
+      vehicles.addAll(
+          ships.where((element) => element.periodOfTime == 'World War II'));
+    }
+    if (level.isShip! && level.periodOfTime == 'Cold War') {
+      vehicles
+          .addAll(ships.where((element) => element.periodOfTime == 'Cold War'));
+    }
+    if (level.isShip! && level.periodOfTime == 'All times') {
+      vehicles.addAll(ships);
+    }
+
+    return vehicles;
+
+    //FIXME: Comment "if section" above, and uncomment below if dart file isn't found
+
+    // if (level.isPlane!) {
+    //   vehicles.addAll(debugPlanes);
+    // }
+    // if (level.isTank!) {
+    //   vehicles.addAll(debugTanks);
+    // }
+    // if (level.isShip!) {
+    //   vehicles.addAll(debugShips);
+    // }
+    // return vehicles;
   }
 }
