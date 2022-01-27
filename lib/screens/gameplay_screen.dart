@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +31,7 @@ class GameplayScreen extends StatefulWidget {
 class _GameplayScreenState extends State<GameplayScreen> {
   LevelModel? level;
   GameProcessModel? gameProcess;
+  List<VehicleModel>? vehicles;
   InterstitialAd? _interstitialAd;
   RewardedAd? _rewardedAd;
 
@@ -57,10 +57,17 @@ class _GameplayScreenState extends State<GameplayScreen> {
       isFirstInit = true;
       level = context.watch<LevelProvider>().currentLevel;
 
-      buttons..add(button1)..add(button2)..add(button3)..add(button4);
+      buttons
+        ..add(button1)
+        ..add(button2)
+        ..add(button3)
+        ..add(button4);
 
       gameProcess =
           context.read<GameProcessProvider>().setLevelDifficultParams(level!);
+
+      vehicles = context.read<GameProcessProvider>().addVehicles(level!);
+
       initNewQuestion();
       loadInterstitialAd();
       loadRewardedAd();
@@ -111,11 +118,20 @@ class _GameplayScreenState extends State<GameplayScreen> {
   }
 
   void selectQuestionsAndRandomAnswers() {
-    final vehicles = context.read<GameProcessProvider>().addVehicles(level!);
-    List<VehicleModel> shuffledList = List.from(vehicles)..shuffle();
+
+    //reload vehicles list when they count is over
+    if (vehicles!.length <= 4) {
+      vehicles = context.read<GameProcessProvider>().addVehicles(level!);
+    }
+
+    List<VehicleModel> shuffledList = List.from(vehicles!)..shuffle();
     vehicleCorrectAnswer = shuffledList[random.nextInt(4)];
 
-    switch(vehicleCorrectAnswer.type){
+    //except repetitive questions ability
+    vehicles!
+        .removeWhere((element) => element.name == vehicleCorrectAnswer.name);
+
+    switch (vehicleCorrectAnswer.type) {
       case 'Plane':
         shuffledList.removeWhere((element) => element.type == 'Tank');
         shuffledList.removeWhere((element) => element.type == 'Ship');
