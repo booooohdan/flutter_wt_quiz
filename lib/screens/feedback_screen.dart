@@ -217,6 +217,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                 onTap: () async {
                                   if (await inAppReview.isAvailable()) {
                                     inAppReview.requestReview();
+                                  } else {
+                                    inAppReview.openStoreListing(
+                                        appStoreId: '1606469760');
                                   }
                                 },
                               ),
@@ -238,8 +241,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                     url =
                                         'https://play.google.com/store/apps/details?id=com.wave.wtquiz';
                                   } else if (Platform.isIOS) {
-                                    //TODO: Add appstore url when app will be published
-                                    url = '';
+                                    url =
+                                        'https://apps.apple.com/us/app/thunder-quiz/id1606469760';
                                   }
                                   Share.share(
                                       'Check this cool quiz for War Thunder: $url');
