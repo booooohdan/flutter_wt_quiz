@@ -46,17 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'WAR THUNDER',
-                          style: chakra22whiteBold,
-                        ),
-                        Text(
-                          'QUIZ',
-                          style: GoogleFonts.chakraPetch(
-                              fontSize: 72,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        Container(),
                       ]),
                 ),
                 Expanded(

@@ -110,9 +110,7 @@ class _FinishScreenState extends State<FinishScreen> {
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: isSuccess
-                  ? const AssetImage('assets/backgrounds/finish_success.png')
-                  : const AssetImage('assets/backgrounds/finish_failed.png'),
+              image:AssetImage('assets/backgrounds/gameplay.png'),
               fit: BoxFit.cover,
             ),
           ),

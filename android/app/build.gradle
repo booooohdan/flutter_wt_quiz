@@ -48,7 +48,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.wave.wtquiz"
+        applicationId "com.wave.wotquiz"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()

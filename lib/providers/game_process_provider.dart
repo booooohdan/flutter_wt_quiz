@@ -1,10 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../data/debug_planes_collection.dart';
-import '../data/debug_ships_collection.dart';
 import '../data/debug_tanks_collection.dart';
-import '../data/planes_collection.dart';
-import '../data/ships_collection.dart';
 import '../data/tanks_collection.dart';
 import '../models/game_process_model.dart';
 import '../models/level_model.dart';
@@ -67,22 +63,6 @@ class GameProcessProvider with ChangeNotifier {
     // ignore: prefer_final_locals
     List<VehicleModel> vehicles = [];
 
-    if (level.isPlane! && level.periodOfTime == 'Pre-WWII') {
-      vehicles.addAll(
-          planes.where((element) => element.periodOfTime == 'Pre-WWII'));
-    }
-    if (level.isPlane! && level.periodOfTime == 'World War II') {
-      vehicles.addAll(
-          planes.where((element) => element.periodOfTime == 'World War II'));
-    }
-    if (level.isPlane! && level.periodOfTime == 'Cold War') {
-      vehicles.addAll(
-          planes.where((element) => element.periodOfTime == 'Cold War'));
-    }
-    if (level.isPlane! && level.periodOfTime == 'All times') {
-      vehicles.addAll(planes);
-    }
-
     if (level.isTank! && level.periodOfTime == 'Pre-WWII') {
       vehicles
           .addAll(tanks.where((element) => element.periodOfTime == 'Pre-WWII'));
@@ -97,22 +77,6 @@ class GameProcessProvider with ChangeNotifier {
     }
     if (level.isTank! && level.periodOfTime == 'All times') {
       vehicles.addAll(tanks);
-    }
-
-    if (level.isShip! && level.periodOfTime == 'Pre-WWII') {
-      vehicles
-          .addAll(ships.where((element) => element.periodOfTime == 'Pre-WWII'));
-    }
-    if (level.isShip! && level.periodOfTime == 'World War II') {
-      vehicles.addAll(
-          ships.where((element) => element.periodOfTime == 'World War II'));
-    }
-    if (level.isShip! && level.periodOfTime == 'Cold War') {
-      vehicles
-          .addAll(ships.where((element) => element.periodOfTime == 'Cold War'));
-    }
-    if (level.isShip! && level.periodOfTime == 'All times') {
-      vehicles.addAll(ships);
     }
 
     return vehicles;

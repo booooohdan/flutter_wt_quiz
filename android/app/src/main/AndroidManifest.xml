@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wave.wtquiz">
+    package="com.wave.wotquiz">
    <application
-        android:label="WT Quiz"
+        android:label="WoT Quiz"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -35,7 +35,7 @@
         </activity>
        <meta-data
            android:name="com.google.android.gms.ads.APPLICATION_ID"
-           android:value="ca-app-pub-8211072909515345~1557340700"/>
+           android:value="ca-app-pub-8211072909515345~7469743677"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

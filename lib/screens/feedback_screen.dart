@@ -119,7 +119,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
                                       const Divider(),
-                                      const Text('Last vehicle update: 2.13'),
+                                      const Text('Last vehicle update: 1.15'),
                                     ],
                                   ),
                                   actions: <Widget>[
@@ -164,8 +164,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             vertical: 0, horizontal: 40),
                         width: 500,
                         child: Text(
-                          'WT Quiz is a trivia game with vehicles from the game War Thunder. '
-                          'All images and description have been taken from wiki.warthunder.com',
+                          'WoT Quiz is a trivia game with vehicles from the game World of Tanks. '
+                          'All images and description have been taken from wiki.wargaming.net',
                           style: oxygen14whiteRegular,
                           textAlign: TextAlign.center,
                         ),
@@ -239,13 +239,13 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                   var url = '';
                                   if (Platform.isAndroid) {
                                     url =
-                                        'https://play.google.com/store/apps/details?id=com.wave.wtquiz';
+                                        'https://play.google.com/store/apps/details?id=com.wave.wotquiz';
                                   } else if (Platform.isIOS) {
                                     url =
                                         'https://apps.apple.com/us/app/thunder-quiz/id1606469760';
                                   }
                                   Share.share(
-                                      'Check this cool quiz for War Thunder: $url');
+                                      'Check this cool quiz for World of Tanks: $url');
                                 },
                               ),
                             ),
