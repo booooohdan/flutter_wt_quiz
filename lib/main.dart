@@ -29,7 +29,7 @@ void main() {
         ),
       ],
       child: MaterialApp(
-        title: 'WoT Quiz',
+        title: 'Guess the Tank?',
         theme: ThemeData(brightness: Brightness.light),
         routes: {
           '/': (context) => const MenuScreen(),

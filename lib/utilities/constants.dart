@@ -11,37 +11,37 @@ const greyTransparentColor = Color(0x44808080);
 
 //#region Text styles
 
-final chakra14whiteBold = GoogleFonts.chakraPetch(
+final chakra14whiteBold = GoogleFonts.robotoCondensed(
     fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold);
 
-final chakra18whiteBold = GoogleFonts.chakraPetch(
+final chakra18whiteBold = GoogleFonts.robotoCondensed(
     fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold);
 
-final chakra18greyBold = GoogleFonts.chakraPetch(
+final chakra18greyBold = GoogleFonts.robotoCondensed(
     fontSize: 18, color: greyTextColor, fontWeight: FontWeight.bold);
 
-final chakra22whiteBold = GoogleFonts.chakraPetch(
+final chakra22whiteBold = GoogleFonts.robotoCondensed(
     fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold);
 
-final chakra48whiteBold = GoogleFonts.chakraPetch(
+final chakra48whiteBold = GoogleFonts.robotoCondensed(
     fontSize: 48, color: Colors.white, fontWeight: FontWeight.bold);
 
-final oxygen10whiteBold = GoogleFonts.oxygen(
+final oxygen10whiteBold = GoogleFonts.roboto(
     fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold);
 
-final oxygen10greyBold = GoogleFonts.oxygen(
+final oxygen10greyBold = GoogleFonts.roboto(
     fontSize: 10, color: greyTextColor, fontWeight: FontWeight.bold);
 
-final oxygen14whiteBold = GoogleFonts.oxygen(
+final oxygen14whiteBold = GoogleFonts.roboto(
     fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold);
 
-final oxygen14whiteRegular = GoogleFonts.oxygen(
+final oxygen14whiteRegular = GoogleFonts.roboto(
     fontSize: 14, color: Colors.white, fontWeight: FontWeight.normal);
 
-final oxygen18whiteBold = GoogleFonts.oxygen(
+final oxygen18whiteBold = GoogleFonts.roboto(
     fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold);
 
-final oxygen18greyBold = GoogleFonts.oxygen(
+final oxygen18greyBold = GoogleFonts.roboto(
     fontSize: 18, color: greyTextColor, fontWeight: FontWeight.bold);
 
 //#endregion

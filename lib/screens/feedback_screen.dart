@@ -164,7 +164,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             vertical: 0, horizontal: 40),
                         width: 500,
                         child: Text(
-                          'WoT Quiz is a trivia game with vehicles from the game World of Tanks. '
+                          'Guess the tank? is a trivia game with vehicles from the game World of Tanks.'
                           'All images and description have been taken from wiki.wargaming.net',
                           style: oxygen14whiteRegular,
                           textAlign: TextAlign.center,
@@ -314,10 +314,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               String url = '';
                               if (Platform.isAndroid) {
                                 url =
-                                    'https://pages.flycricket.io/war-thunder-quiz/privacy.html';
+                                    'https://pages.flycricket.io/guess-the-tank-wot/privacy.html';
                               } else if (Platform.isIOS) {
                                 url =
-                                    'https://pages.flycricket.io/thunder-quiz/privacy.html';
+                                    'https://pages.flycricket.io/guess-the-tank/privacy.html';
                               }
                               if (await canLaunch(url)) {
                                 await launch(url);
